@@ -6,7 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrganizationSetupController;
 use App\Http\Controllers\AgentRecordController;
 use App\Http\Controllers\AirlineSetupController;
-
+use App\Http\Controllers\CountrySetupController;
+use App\Http\Controllers\SaleCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,3 +48,9 @@ Route::post('/get_city_info', [AgentRecordController::class, 'get_city_info'])->
 
 // Airline setup 
 Route::get('/airline-setup', [AirlineSetupController::class, "create"])->name('airline-setup');
+
+// Country setup 
+Route::get('/country-setup', [CountrySetupController::class, "create"])->name('country-setup');
+
+// Sale category 
+Route::get('/sale-category', [SaleCategoryController::class, "create"])->name('sale-category');
