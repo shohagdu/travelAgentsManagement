@@ -20,3 +20,33 @@
     width: 40px;;
     height: 40px;
 }
+.airlineTh{
+    width: 25%;
+}
+.fareTh{
+    width: 9%;
+}
+.TaxTh{
+    width: 9%;
+}
+.totalFareTd{
+    width: 10%;
+}
+.commissionTh{
+    width: 10%;
+}
+.aitTh{
+    width: 9%;
+}
+.addTd{
+    width: 9%;
+}
+.amountTh{
+    width: 10%;
+}
+.actionTh{
+    width: 4%;
+}
+.FlightPlusBtn{
+    color: white;
+}

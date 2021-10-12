@@ -31,13 +31,10 @@
             </ul>
           </li>
           <li class="sidebar-item">
-            <a
-              class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('organization-setup')}}"
+            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{{ route('sale')}}"
               aria-expanded="false"
-              ><i class="mdi mdi-image-filter-vintage"></i
-              ><span class="hide-menu">Organization Setup</span></a
-            >
+              ><i class="mdi mdi-cart"></i><span class="hide-menu">Sale</span></a>
           </li>
           <li class="sidebar-item">
             <a
@@ -59,6 +56,21 @@
               href="{{ route('sale-category')}}"
               aria-expanded="false"
               ><i class="mdi mdi-format-list-bulleted-type"></i><span class="hide-menu">Sale Category</span></a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{{ route('sale-category-list')}}"
+              aria-expanded="false"
+              ><i class="mdi mdi-format-list-bulleted-type"></i><span class="hide-menu">Sale Category List</span></a>
+          </li>
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{{ route('organization-setup')}}"
+              aria-expanded="false"
+              ><i class="mdi mdi-image-filter-vintage"></i
+              ><span class="hide-menu">Organization Setup</span></a
+            >
           </li>
           <li class="sidebar-item">
             <a

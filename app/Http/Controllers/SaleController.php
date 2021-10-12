@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\SaleCategory;
-use Illuminate\Support\Facades\Auth;
-use Session;
 
-class SaleCategoryController extends Controller
+class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +13,7 @@ class SaleCategoryController extends Controller
      */
     public function index()
     {
-        $category_info = SaleCategory::all();
-
-        return view('sale_category.sale_category_list',compact('category_info'));
+        //
     }
 
     /**
@@ -28,7 +23,7 @@ class SaleCategoryController extends Controller
      */
     public function create()
     {
-        return view('sale_category.sale_category');
+        return view('sale.sale');
     }
 
     /**
@@ -39,28 +34,7 @@ class SaleCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => ['required'],
-            'type'  => ['required'],
-        ]);
-
-        $category = new SaleCategory();
-
-        $category->title      = $request->title;
-        $category->type       = $request->type;
-        $category->is_active  = 1;
-        $category->created_by = Auth::user()->id;
-        $category->created_ip = request()->ip();
-        $category->created_at = date('Y-m-d H:i:s');
-
-        $save = $category->save();
-
-        if($save){
-            return redirect()->route('sale-category')->with('flash.message', 'Sale Category Sucessfully Added!')->with('flash.class', 'success');
-        }else{
-            return redirect()->route('sale-category')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
-        }
-
+        //
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Http\Controllers\AgentRecordController;
 use App\Http\Controllers\AirlineSetupController;
 use App\Http\Controllers\CountrySetupController;
 use App\Http\Controllers\SaleCategoryController;
+use App\Http\Controllers\SaleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,7 +41,6 @@ Route::get('/user-delete/{id}', [UserController::class, "destroy"])->name('user-
 // Organization setup 
 Route::get('/organization-setup', [OrganizationSetupController::class, "create"])->name('organization-setup');
 
-
 // Agent record setup 
 Route::get('/add-agent', [AgentRecordController::class, "create"])->name('add-agent');
 
@@ -53,4 +53,9 @@ Route::get('/airline-setup', [AirlineSetupController::class, "create"])->name('a
 Route::get('/country-setup', [CountrySetupController::class, "create"])->name('country-setup');
 
 // Sale category 
+Route::get('/sale-category-list', [SaleCategoryController::class, "index"])->name('sale-category-list');
 Route::get('/sale-category', [SaleCategoryController::class, "create"])->name('sale-category');
+Route::post('/sale-category-save', [SaleCategoryController::class, "store"])->name('sale-category-save');
+
+// Sale 
+Route::get('/sale', [SaleController::class, "create"])->name('sale');
