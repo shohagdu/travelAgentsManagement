@@ -46,10 +46,25 @@
             >
           </li>
           <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{{ route('airline-setup-list')}}"
+              aria-expanded="false"
+              ><i class="mdi mdi-relative-scale"></i
+              ><span class="hide-menu">Airline Setup list</span></a
+            >
+          </li>
+          <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link"
               href="{{ route('country-setup')}}"
               aria-expanded="false"
               ><i class="mdi mdi-pencil"></i><span class="hide-menu">Country Setup</span></a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{{ route('country-setup-list')}}"
+              aria-expanded="false"
+              ><i class="mdi mdi-pencil"></i><span class="hide-menu">Country Setup List</span></a>
           </li>
           <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link"

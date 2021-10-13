@@ -56,9 +56,9 @@ class SaleCategoryController extends Controller
         $save = $category->save();
 
         if($save){
-            return redirect()->route('sale-category')->with('flash.message', 'Sale Category Sucessfully Added!')->with('flash.class', 'success');
+            return redirect()->route('sale-category-list')->with('flash.message', 'Sale Category Sucessfully Added!')->with('flash.class', 'success');
         }else{
-            return redirect()->route('sale-category')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+            return redirect()->route('sale-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
 
     }
@@ -82,7 +82,9 @@ class SaleCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category_info = SaleCategory::find($id);
+
+        return view('sale_category.sale_category_edit', compact('category_info'));
     }
 
     /**
@@ -94,7 +96,27 @@ class SaleCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'title' => ['required'],
+            'type'  => ['required'],
+        ]);
+
+        $category =  SaleCategory::find($id);
+
+        $category->title      = $request->title;
+        $category->type       = $request->type;
+        $category->is_active  = 1;
+        $category->updated_by = Auth::user()->id;
+        $category->updated_ip = request()->ip();
+        $category->updated_at = date('Y-m-d H:i:s');
+
+        $save = $category->save();
+
+        if($save){
+            return redirect()->route('sale-category-list')->with('flash.message', 'Sale Category Sucessfully Updated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('sale-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
     }
 
     /**
@@ -105,6 +127,13 @@ class SaleCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = SaleCategory::find($id);
+        $delete->delete();
+        
+        if($delete){
+            return redirect()->route('sale-category-list')->with('flash.message', 'Sale Category Sucessfully delated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('sale-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
     }
 }

@@ -9,14 +9,6 @@
           <div class="card-body">
             <h4 class="card-title"> Sale  </h4>
             <div class="form-group row">
-                <label for="country_code" class="col-sm-2 text-end control-label col-form-label"> Agent</label>
-                <div class="col-sm-4">
-                    <select name="type" id="type" class="form-control">
-                        <option value=""> Select Agent</option>
-                        <option value="1"> Jabed </option>
-                        <option value="1"> Humayon </option>
-                    </select>
-                </div>
                 <label for="country_code" class="col-sm-2 text-end control-label col-form-label"> Sale Category</label>
                 <div class="col-sm-4">
                     <select name="type" id="type" class="form-control">
@@ -30,61 +22,69 @@
                         <option value="7"> Others </option>
                     </select>
                 </div>
+                <label for="country_code" class="col-sm-2 text-end control-label col-form-label"> Agent</label>
+                <div class="col-sm-4">
+                    <select name="type" id="type" class="form-control">
+                        <option value=""> Select Agent</option>
+                        <option value="1"> Jabed </option>
+                        <option value="1"> Humayon </option>
+                    </select>
+                </div>
             </div>
             <div class="row">
-                <hr>
-                <div class="col-md-12 element1"  id="flightAreaDiv_1">
+                <div class="col-md-12">
                     <h5> Flight Information</h5>
-                    <table border="1" class="table table-bordered">
+                    <table border="1" class="table table-responsive-sm table-bordered SaleTable">
                         <tr>
+                            <th class="actionTh"> Action</th>
                             <th class="airlineTh"> Airline</th>
                             <th class="fareTh"> Fare</th>
                             <th class="TaxTh"> Tax</th>
                             <th class="totalFareTh"> Total fare</th>
                             <th class="commissionTh"> Commission</th>
-                            <th class="aitTh"> Ait</th>
+                            <th class="aitTh"> AIT</th>
                             <th class="addTh"> Add </th>
                             <th class="amountTh"> Amount</th>
-                            <th class="actionTh"> Action</th>
                         </tr>
-                        <tr>
+                        <tr  class="element1"  id="flightAreaDiv_1">
+                            <td>
+                            </td>
                             <td>
                                 <select class="form-control" name="flight_id" id="flight_id">
                                     <option value=""> Select Flight</option>
                                 </select>
                             </td>
                             <td>
-                                <input name="fare" id="fare" type="text" class="form-control" placeholder="0.00"/>
+                                <input name="fare" id="fare" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="tax" type="text" class="form-control" placeholder="0.00"/>
+                                <input name="tax" id="tax" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="tax" type="text" class="form-control" placeholder="0.00"/>
+                                <input name="tax" id="tax" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="commission" id="commission" type="text" class="form-control" placeholder="0.00"/>
+                                <input name="commission" id="commission" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="ait" id="ait" type="text" class="form-control" placeholder="0.00"/>
+                                <input name="ait" id="ait" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="add" id="add" type="text" class="form-control" placeholder="0.00"/>
+                                <input name="add" id="add" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="amount" id="amount" type="text" class="form-control" placeholder="0.00"/>
-                            </td>
-                            <td>
-                                <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> </button>
+                                <input name="amount" id="amount" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                         </tr>
+                        </div>
                     </table>
+                    <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
             </div>
             </div>
           </div>
           <div class="border-top">
             <div class="card-body">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary FlightSaveBtn">
                 Save
               </button>
             </div>

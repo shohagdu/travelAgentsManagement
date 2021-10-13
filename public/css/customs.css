@@ -3,7 +3,7 @@
     margin-bottom: 15px;
 }
 .SubmitBtnLeft{
-    margin-left: 185px;
+    margin-left: 162px;
 }
 .organization_preview_img {
     margin-top: 5px;
@@ -30,23 +30,40 @@
     width: 9%;
 }
 .totalFareTd{
-    width: 10%;
+    width: 12%;
 }
 .commissionTh{
     width: 10%;
 }
 .aitTh{
-    width: 9%;
+    width: 8%;
 }
 .addTd{
-    width: 9%;
+    width: 8%;
 }
 .amountTh{
     width: 10%;
 }
 .actionTh{
-    width: 4%;
+    width: 5%;
 }
 .FlightPlusBtn{
     color: white;
 }
+.FlightSaveBtn{
+    text-align: center;
+    margin-left: 400px;
+}
+.element1 
+input::-webkit-input-placeholder {
+    font-size: 10px;
+    line-height: 3;
+}
+ .SaleTable th{
+    font-size: 12px;
+} 
+.element1 select{
+    font-size: 10px;;
+}
+
+

@@ -3,12 +3,6 @@
 @section('main_content')
 <div class="row">
     <div class="col-md-12">
-      @if (session()->has('flash.message'))
-        <div class="alert alert-{{ session('flash.class') }} alert-dismissible fade show" role="alert">
-          {{ session('flash.message') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      @endif
       <div class="card">
         <form class="form-horizontal" method="POST" action="{{ route('sale-category-save')}}">
                 @csrf
@@ -29,13 +23,14 @@
                 <label for="country_code" class="col-sm-2 text-end control-label col-form-label"> Type</label>
                 <div class="col-sm-4">
                     <select name="type" id="type" class="form-control">
-                        <option value=""> Select</option>
+                        <option value="">  Select</option>
                         <option value="1"> Flights </option>
                         <option value="2"> Hotels </option>
                         <option value="3"> Transfers </option>
                         <option value="4"> Activities </option>
-                        <option value="5"> Holidays, Visa </option>
-                        <option value="6"> Others </option>
+                        <option value="5"> Holidays</option>
+                        <option value="6"> Visa </option>
+                        <option value="7"> Others </option>
                     </select>
                 </div>
             </div>
