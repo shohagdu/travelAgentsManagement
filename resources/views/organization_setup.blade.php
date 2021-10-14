@@ -6,77 +6,77 @@
 @section('main_content')
 <div class="row">
     @if (session()->has('flash.message'))
-    <div class="alert alert-{{ session('flash.class') }}">
-        {{ session('flash.message') }}
+    <div class="alert alert-{{ session('flash.class') }} alert-dismissible fade show" role="alert">
+      {{ session('flash.message') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-
     <div class="col-md-12">
       <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('user-register') }}">
+        <form class="form-horizontal" method="POST" action="{{ route('organization-setup-save',$organization_info->id) }}" enctype="multipart/form-data">
                 @csrf
           <div class="card-body">
             <h4 class="card-title">Organization Setup</h4>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 text-end control-label col-form-label"> Organization Name</label>
                 <div class="col-sm-10">
-                    <input type="text" name="name" id="name" class="form-control"  placeholder="Organization Name">
+                    <input type="text" name="name" id="name" class="form-control"  value="{{$organization_info->name}}" placeholder="Organization Name">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="address" class="col-sm-2 text-end control-label col-form-label">Address</label>
                 <div class="col-sm-10">
-                    <textarea name="address" id="address" class="form-control"  placeholder="Address"></textarea>
+                    <textarea name="address" id="address" class="form-control"  placeholder="Address">{{$organization_info->address}}</textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="mobile" class="col-sm-2 text-end control-label col-form-label">Mobile</label>
                 <div class="col-sm-4">
-                    <input type="text" name="mobile"  id="text" class="form-control"  required  placeholder="Mobile">
+                    <input type="text" name="mobile"  id="text" class="form-control" value="{{$organization_info->mobile}}" required  placeholder="Mobile">
                 </div>
                 <label for="email" class="col-sm-2 text-end control-label col-form-label">Email</label>
                 <div class="col-sm-4">
-                    <input type="text" name="email" id="email"  class="form-control" required placeholder="Email">
+                    <input type="text" name="email" id="email"  class="form-control" value="{{$organization_info->email}}" required placeholder="Email">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="telephone" class="col-sm-2 text-end control-label col-form-label">Telephone</label>
                 <div class="col-sm-4">
-                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="Telephone">
+                    <input type="text" name="telephone" id="telephone" class="form-control"value="{{$organization_info->telephone}}" placeholder="Telephone">
                 </div>
                 <label for="website_address" class="col-sm-2 text-end control-label col-form-label">Website address</label>
                 <div class="col-sm-4">
-                    <input type="text" name="website_address" id="website_address" class="form-control" placeholder="Wsebsite address">
+                    <input type="text" name="website_address" id="website_address" class="form-control" value="{{$organization_info->website_address}}" placeholder="Wsebsite address">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="telephone" class="col-sm-2 text-end control-label col-form-label">Tradelicense No</label>
                 <div class="col-sm-4">
-                    <input type="text" name="tradelicense_no" id="tradelicense_no" class="form-control" placeholder="Tradelicense No">
+                    <input type="text" name="tradelicense_no" id="tradelicense_no" class="form-control" value="{{$organization_info->tradelicense_no}}" placeholder="Tradelicense No">
                 </div>
                 <label for="website_address" class="col-sm-2 text-end control-label col-form-label">Vat No</label>
                 <div class="col-sm-4">
-                    <input type="text" name="vat_no" id="vat_no" class="form-control" placeholder="Vat No">
+                    <input type="text" name="vat_no" id="vat_no" class="form-control" value="{{$organization_info->vat_no}}" placeholder="Vat No">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="website_address" class="col-sm-2 text-end control-label col-form-label">Tax Amount(%)</label>
                 <div class="col-sm-4">
-                    <input type="text" name="tax_amount" id="tax_amount" class="form-control" placeholder="Tax Amount">
+                    <input type="text" name="tax_amount" id="tax_amount" class="form-control" value="{{$organization_info->tax_amount}}" placeholder="Tax Amount">
                 </div>
                 <label for="per_invoice_deduction_amount" class="col-sm-2 text-end control-label col-form-label"> Deduction Amount	</label>
                 <div class="col-sm-4">
-                    <input type="text" name="per_invoice_deduction_amount" id="per_invoice_deduction_amount" class="form-control" placeholder="Per Invoice Deduction Amount">
+                    <input type="text" name="per_invoice_deduction_amount" id="per_invoice_deduction_amount" class="form-control"  value="{{$organization_info->per_invoice_deduction_amount}}" placeholder="Per Invoice Deduction Amount">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="ait" class="col-sm-2 text-end control-label col-form-label">AIT(%)</label>
                 <div class="col-sm-4">
-                    <input type="text" name="ait" id="ait" class="form-control" placeholder="AIT">
+                    <input type="text" name="ait" id="ait" class="form-control" value="{{$organization_info->ait}}" placeholder="AIT">
                 </div>
                 <label for="footer_text" class="col-sm-2 text-end control-label col-form-label"> Footer Text</label>
                 <div class="col-sm-4">
-                    <input type="text" name="footer_text" id="footer_text" class="form-control" placeholder="Footer Text">
+                    <input type="text" name="footer_text" id="footer_text" class="form-control" value="{{$organization_info->footer_text}}" placeholder="Footer Text">
                 </div>
             </div>
             <div class="form-group row">
@@ -85,7 +85,7 @@
                     <select name="currency" id="currency" class="select2 form-select shadow-none ">
                         <option value=""> Select </option>
                         @foreach ($currency_list as $key=> $item )
-                        <option value="{{ $key}}"> {{$key}} ({{$item}}) </option>
+                        <option value="{{ $key}}" @if($organization_info->currency == $key) echo Selected @endif> {{$key}} ({{$item}}) </option>
                         @endforeach
                     </select>
                 </div>
@@ -94,7 +94,7 @@
                     <select name="time_zone" id="time_zone" class="select2 form-select shadow-none">
                         <option value=""> Select </option>
                         @foreach ($time_zone_list as $key=>  $item)
-                        <option value="{{ $item}}"> {{$key}} </option>
+                        <option value="{{ $item}}" @if($organization_info->time_zone == $item) echo Selected @endif> {{$key}} </option>
                         @endforeach
                     </select>
                 </div>
@@ -104,14 +104,16 @@
                 <div class="col-sm-4">
                     <input type="file" name="logo" id="logo" class="form-control">
                     <div class="organization_preview_img">
-                        <img id="organization_logo_preview" src="assets/images/users/1.jpg" class="organization_logo"/>
+                        <img id="organization_logo_preview" src="{{ asset('assets/images')}}/{{$organization_info->logo}}" class="organization_logo"/>
+                        <input type="hidden" name="pre_logo" id="pre_logo" value="{{$organization_info->logo}}" > 
                     </div>
                 </div>
                 <label for="templete_logo" class="col-sm-2 text-end control-label col-form-label"> Templete logo</label>
                 <div class="col-sm-4">
                     <input type="file" name="templete_logo" id="templete_logo" class="form-control">
                     <div class="organization_preview_img">
-                        <img id="organization_templete_logo_preview" src="assets/images/users/1.jpg" class="organization_templete_logo_preview"/>
+                        <img id="organization_templete_logo_preview" src="{{ asset('assets/images')}}/{{$organization_info->templete_logo}}"class="organization_templete_logo_preview"/>
+                        <input type="hidden" name="pre_templete_logo" id="pre_templete_logo" value="{{$organization_info->templete_logo}}" > 
                     </div>
                 </div>
             </div>
@@ -120,7 +122,8 @@
                 <div class="col-sm-4">
                     <input type="file" name="favicon" id="favicon" class="form-control">
                     <div class="organization_preview_img">
-                        <img id="organization_favicon_preview" src="assets/images/users/1.jpg" class="organization_favicon_preview"/>
+                        <img id="organization_favicon_preview" src="{{ asset('assets/images')}}/{{$organization_info->favicon}}"class="organization_favicon_preview"/>
+                        <input type="hidden" name="pre_favicon" id="pre_favicon" value="{{$organization_info->favicon}}" > 
                     </div>
                 </div>
             </div>
