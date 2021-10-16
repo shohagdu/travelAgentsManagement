@@ -43,8 +43,12 @@ Route::get('/organization-setup', [OrganizationSetupController::class, "index"])
 Route::post('/organization-setup-save/{id}', [OrganizationSetupController::class, "organization_save"])->name('organization-setup-save');
 
 // Agent record setup 
+Route::get('/agent-list', [AgentRecordController::class, "index"])->name('agent-list');
 Route::get('/add-agent', [AgentRecordController::class, "create"])->name('add-agent');
 Route::post('/save-agent', [AgentRecordController::class, "store"])->name('save-agent');
+Route::get('/agent-edit/{id}', [AgentRecordController::class, "edit"])->name('agent-edit');
+Route::post('/agent-update/{id}', [AgentRecordController::class, "update"])->name('agent-update');
+Route::get('/agent-delete/{id}', [AgentRecordController::class, "destroy"])->name('agent-delete');
 
 Route::post('/get_city_info', [AgentRecordController::class, 'get_city_info'])->name('get_city_info');
 
@@ -55,6 +59,7 @@ Route::get('/airline-setup-list', [AirlineSetupController::class, "index"])->nam
 Route::get('/airline-setup-edit/{id}', [AirlineSetupController::class, "edit"])->name('airline-setup-edit');
 Route::post('/airline-setup-update/{id}', [AirlineSetupController::class, "update"])->name('airline-setup-update');
 Route::get('/airline-setup-delete/{id}', [AirlineSetupController::class, "destroy"])->name('airline-setup-delete');
+Route::post('/airline_info_all', [AirlineSetupController::class, "airline_info_all"])->name('airline_info_all');
 
 // Country setup 
 Route::get('/country-setup-list', [CountrySetupController::class, "index"])->name('country-setup-list');

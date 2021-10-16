@@ -140,4 +140,8 @@ class AirlineSetupController extends Controller
             return redirect()->route('airline-setup-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
     }
+    public function airline_info_all(){
+        $data = AirlineSetup::all();
+        return json_encode($data);
+    }
 }

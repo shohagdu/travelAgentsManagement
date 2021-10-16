@@ -28,6 +28,12 @@
                   ><span class="hide-menu"> Add Agent </span></a
                 >
               </li>
+              <li class="sidebar-item">
+                <a href="{{ route('agent-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu">  Agent List </span></a
+                >
+              </li>
             </ul>
           </li>
           <li class="sidebar-item">

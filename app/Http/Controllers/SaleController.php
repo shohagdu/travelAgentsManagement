@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AgentRecord;
+use App\Models\AirlineSetup;
 
 class SaleController extends Controller
 {
@@ -23,7 +25,10 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sale.sale');
+        $agent_info   = AgentRecord::all();
+        $airline_info = AirlineSetup::all();
+        
+        return view('sale.sale', compact('agent_info', 'airline_info'));
     }
 
     /**

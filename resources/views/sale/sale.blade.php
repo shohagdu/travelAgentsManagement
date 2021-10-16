@@ -26,8 +26,9 @@
                 <div class="col-sm-4">
                     <select name="type" id="type" class="form-control">
                         <option value=""> Select Agent</option>
-                        <option value="1"> Jabed </option>
-                        <option value="1"> Humayon </option>
+                        @foreach ($agent_info as $item)
+                          <option value="{{ $item->id}}"> {{ $item->name}} </option> 
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -50,30 +51,34 @@
                             <td>
                             </td>
                             <td>
-                                <select class="form-control" name="flight_id" id="flight_id">
+                                <select class="form-control " name="flight_id" id="flight_id_1">
                                     <option value=""> Select Flight</option>
+                                    @foreach ($airline_info as $item)
+                                        <option value="{{ $item->id}}"> {{ $item->airline_title}}</option>
+                                    @endforeach
+                                   
                                 </select>
                             </td>
                             <td>
-                                <input name="fare" id="fare" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="fare" id="fare_1" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="tax" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="tax" id="tax_1" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="tax" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="tax" id="tax_1" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="commission" id="commission" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="commission" id="commission_1" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="ait" id="ait" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="ait" id="ait_1" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="add" id="add" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="add" id="add_1" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="amount" id="amount" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="amount" id="amount_1" type="text" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                         </tr>
                         </div>

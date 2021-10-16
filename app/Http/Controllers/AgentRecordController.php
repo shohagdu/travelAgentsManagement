@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\AgentRecord;
 use App\Models\Country;
 use App\Models\State;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+Use DB;
 use Session;
 
 class AgentRecordController extends Controller
@@ -18,7 +22,13 @@ class AgentRecordController extends Controller
      */
     public function index()
     {
-        //
+        $agent_info = DB::table('agent_records')
+                        ->select('agent_records.*', 'countries.name as country_name', 'states.name as city_name')
+                        ->leftJoin('countries', 'countries.id', '=', 'agent_records.country')
+                        ->leftJoin('states', 'states.id', '=', 'agent_records.city')
+                        ->get();
+
+        return view('agent.agent_list', compact('agent_info'));
     }
 
     /**
@@ -66,10 +76,29 @@ class AgentRecordController extends Controller
 
         $save = $agent_data->save();
 
-        if($save){
-            return redirect()->route('add-agent')->with('flash.message', ' Sucessfully Added!')->with('flash.class', 'success');
+        // agent primary id
+       // $agent_id = $save->id;
+        $agent_id = DB::getPdo()->lastInsertId();
+
+
+      //  echo $agent_id;exit;
+
+        $user_data = new User();
+        
+        $user_data->record_id  = $agent_id;
+        $user_data->name       = $request->name;
+        $user_data->email      = $request->email;
+        $user_data->password   = Hash::make($request['mobile']);
+        $user_data->created_by = Auth::user()->id;
+        $user_data->created_ip = request()->ip();
+        $user_data->created_at = date('Y-m-d H:i:s');
+
+        $user_save =  $user_data->save();
+
+        if($user_data){
+            return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully Added!')->with('flash.class', 'success');
         }else{
-            return redirect()->route('add-agent')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+            return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
     }
 
@@ -92,7 +121,11 @@ class AgentRecordController extends Controller
      */
     public function edit($id)
     {
-        //
+        $country    = Country::all();
+        $state      = State::all();
+        $agent_data = AgentRecord::find($id);
+
+        return view('agent.edit_agent', compact('country', 'state','agent_data'));
     }
 
     /**
@@ -104,7 +137,36 @@ class AgentRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'name'         => ['required'],
+            'mobile'       => ['required'],
+            'company_name' => ['required'],
+        ]);
+
+        $agent_data = AgentRecord::find($id);
+
+        $agent_data->name            = $request->name;
+        $agent_data->mobile          = $request->mobile;
+        $agent_data->email           = $request->email;
+        $agent_data->company_name    = $request->company_name;
+        $agent_data->address         = $request->address;
+        $agent_data->country         = $request->country;
+        $agent_data->city            = $request->city;
+        $agent_data->zip_code        = $request->zip_code;
+        $agent_data->office_phone    = $request->office_phone;
+        $agent_data->opening_balance = $request->opening_balance;
+        $agent_data->is_active       = 1;
+        $agent_data->updated_by      = Auth::user()->id;
+        $agent_data->updated_ip      = request()->ip();
+        $agent_data->created_at      = date('Y-m-d H:i:s');
+
+        $save = $agent_data->save();
+
+        if($save){
+            return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully Updated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
     }
 
     /**
@@ -115,7 +177,14 @@ class AgentRecordController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = AgentRecord::find($id);
+        $delete->delete();
+        
+        if($delete){
+            return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully delated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
     }
 
     // Get City
