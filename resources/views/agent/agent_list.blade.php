@@ -14,51 +14,51 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title mb-0">Agent Record List</h5>
-      </div>
+        <form method="post" action="" class="form-horizontal" enctype="multipart/form-data" style="padding-right: 100px">
+          @csrf
+          <input type="hidden" name="asset" id="asset" value="{{ asset('')}}">
+        <div class="form-group row">
+          <label for="currency" class="col-sm-1 text-end control-label col-form-label"> Country</label>
+          <div class="col-sm-2">
+              <select name="country" id="country"   onchange="getCity(this.value, 'city_id')" class="select2 form-select shadow-none ">
+              <option value=""> Select </option>
+              @foreach ($country as $item )
+                  <option value="{{$item->id}}"> {{$item->name}} </option>
+              @endforeach   
+              </select>
+          </div>
+          <label for="city" class="col-sm-1 text-end control-label col-form-label"> City</label>
+          <div class="col-sm-2">
+              <select name="city" id="city" class="select2 form-select shadow-none">
+                  <option value=""> Select </option>
+                  @foreach ($state as $item )
+                  <option value="{{$item->id}}"> {{$item->name}} </option>
+                  @endforeach  
+              </select>
+          </div>
+          <label for="mobile" class="col-sm-1 text-end control-label col-form-label"> Mobile</label>
+          <div class="col-sm-2">
+              <input name="mobile" id="mobile" class="form-control" placeholder="Mobile"/>
+          </div>
+          <div class="col-sm-1">
+            <button type="button" onclick="search_agent_list()" id="" class="btn btn-primary">Search</button>
+        </div>
+      </div><br>
 
+        <h5 class="card-title mb-0"> Agent Record List </h5>
       <div class="table-responsive">
-        <table id="zero_config" class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Sl</th>
-              <th scope="col">Name</th>
-              <th scope="col">Mobile</th>
-              <th scope="col">Email</th>
-              <th scope="col">Company Name</th>
-              <th scope="col">Country</th>
-              <th scope="col">City</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            @php $i = 1; @endphp
-            @foreach ($agent_info as $item )
-            <tr>
-              <th scope="row">{{ $i++}}</th>
-              <td>{{$item->name}}</td>
-              <td> {{$item->mobile}} </td>
-              <td>{{$item->email}}</td>
-              <td>{{$item->company_name}}</td>
-              <td>{{$item->country_name}}</td>
-              <td>{{$item->city_name}}</td>
-              <td> <a href="{{ route('agent-edit',$item->id)}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
-                Edit
-              </a> 
-              <a onclick="return confirm('Are you sure you want to delete?')" href="{{ route('agent-delete',$item->id)}}" class="btn btn-danger btn-sm text-white">
-                <span class="mdi mdi-delete-circle"></span>  Delete
-              </a>
-            </td>
-            </tr>
-            @endforeach
-          </tbody>
+        <table id="agent_list_table" class="table table-striped table-bordered">
+          
         </table>
       </div>
+    </form>
     </div>
   </div>
 </div>
 @endsection
 @section('js')
-<script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{ asset('')}}js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('')}}js/dataTables.bootstrap.min.js"></script>
 <script src="{{ asset('js/global.js')}}"></script>
 @endsection

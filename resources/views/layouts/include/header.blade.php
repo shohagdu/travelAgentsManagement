@@ -6,25 +6,22 @@
         <!-- ============================================================== -->
         <a class="navbar-brand" href="index.html">
           <!-- Logo icon -->
-          <b class="logo-icon ps-2">
+          <b class="logo-icon ps-0">
             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
             <!-- Dark Logo icon -->
-            <img
-              src="{{ asset('')}}assets/images/logo-icon.png"
-              alt="homepage"
-              class="light-logo"
-              width="25"
-            />
+            @php  $setup_data =  App\Models\OrganizationSetup::first(); @endphp
+            {{-- <img src="{{ asset('')}}assets/images/logo-icon.png" alt="homepage" class="light-logo" width="25"/> --}}
           </b>
           <!--End Logo icon -->
           <!-- Logo text -->
           <span class="logo-text ms-2">
             <!-- dark Logo text -->
-            <img
-              src="{{ asset('')}}assets/images/logo-text.png"
-              alt="homepage"
-              class="light-logo"
-            />
+            @if(isset($setup_data))
+            <img src="{{ asset('')}}assets/images/{{$setup_data->templete_logo}}" alt="Logo" class="light-logo AdminLogo"/>
+            @else
+            <img src="{{ asset('')}}assets/images/logo-text.png" alt="Logo" class="light-logo"/>
+            @endif
+            
           </span>
           <!-- Logo icon -->
           <!-- <b class="logo-icon"> -->

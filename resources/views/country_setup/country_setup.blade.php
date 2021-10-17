@@ -7,6 +7,8 @@
         <form class="form-horizontal" method="POST" action="{{ route('country-setup-save')}}">
                 @csrf
           <div class="card-body">
+            <a href="{{ route('country-setup-list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
+              Country Setup List </a>
             <h4 class="card-title"> Country Setup </h4>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 text-end control-label col-form-label"> Name</label>

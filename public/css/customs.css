@@ -65,5 +65,17 @@ input::-webkit-input-placeholder {
 .element1 select{
     font-size: 10px;;
 }
-
-
+.lefttButtonText{
+    float: left;
+}
+.rightButton{
+    float: right;
+}
+.rightButtonairline{
+    float: right;
+    margin-top: -10px;;
+}
+.AdminLogo{
+    width: 200px;
+    height: 50px;;
+}

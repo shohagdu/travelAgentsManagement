@@ -40,7 +40,7 @@ Route::get('/user-delete/{id}', [UserController::class, "destroy"])->name('user-
 
 // Organization setup 
 Route::get('/organization-setup', [OrganizationSetupController::class, "index"])->name('organization-setup');
-Route::post('/organization-setup-save/{id}', [OrganizationSetupController::class, "organization_save"])->name('organization-setup-save');
+Route::post('/organization-setup-save', [OrganizationSetupController::class, "organization_save"])->name('organization-setup-save');
 
 // Agent record setup 
 Route::get('/agent-list', [AgentRecordController::class, "index"])->name('agent-list');
@@ -49,6 +49,7 @@ Route::post('/save-agent', [AgentRecordController::class, "store"])->name('save-
 Route::get('/agent-edit/{id}', [AgentRecordController::class, "edit"])->name('agent-edit');
 Route::post('/agent-update/{id}', [AgentRecordController::class, "update"])->name('agent-update');
 Route::get('/agent-delete/{id}', [AgentRecordController::class, "destroy"])->name('agent-delete');
+Route::post('/get_agent_list_info', [AgentRecordController::class, "get_agent_list_data"])->name('get_agent_list_data');
 
 Route::post('/get_city_info', [AgentRecordController::class, 'get_city_info'])->name('get_city_info');
 

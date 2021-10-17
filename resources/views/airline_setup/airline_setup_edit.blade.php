@@ -7,6 +7,8 @@
         <form class="form-horizontal" method="POST" action="{{ route('airline-setup-update', $airline_info->id)}}">
                 @csrf
           <div class="card-body">
+            <a href="{{ route('airline-setup-list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
+              Airline Setup List </a>
             <h4 class="card-title"> Airline Setup Update</h4>
             <div class="form-group row">
                 <label for="airline_title" class="col-sm-2 text-end control-label col-form-label"> Airline Title</label>

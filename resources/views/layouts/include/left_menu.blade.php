@@ -43,55 +43,80 @@
               ><i class="mdi mdi-cart"></i><span class="hide-menu">Sale</span></a>
           </li>
           <li class="sidebar-item">
-            <a
-              class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('airline-setup')}}"
+            <a class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
               aria-expanded="false"
               ><i class="mdi mdi-relative-scale"></i
-              ><span class="hide-menu">Airline Setup</span></a
+              ><span class="hide-menu">Airline Setup </span></a
             >
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{{ route('airline-setup')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Add Airline Setup </span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('airline-setup-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu">  Airline Setup  List </span></a
+                >
+              </li>
+            </ul>
           </li>
           <li class="sidebar-item">
-            <a
-              class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('airline-setup-list')}}"
+            <a class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
               aria-expanded="false"
-              ><i class="mdi mdi-relative-scale"></i
-              ><span class="hide-menu">Airline Setup list</span></a
-            >
+              ><i class="mdi mdi-pencil"></i
+              ><span class="hide-menu">Country Setup </span></a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{{ route('country-setup')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Add Country Setup </span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('country-setup-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu">  Country Setup  List </span></a
+                >
+              </li>
+            </ul>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('country-setup')}}"
+            <a class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
               aria-expanded="false"
-              ><i class="mdi mdi-pencil"></i><span class="hide-menu">Country Setup</span></a>
+              ><i class="mdi mdi-format-list-bulleted-type"></i
+              ><span class="hide-menu">Sale Category </span></a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{{ route('sale-category')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Add Sale Category </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('sale-category-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Sale Category  List </span></a>
+              </li>
+            </ul>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('country-setup-list')}}"
-              aria-expanded="false"
-              ><i class="mdi mdi-pencil"></i><span class="hide-menu">Country Setup List</span></a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('sale-category')}}"
-              aria-expanded="false"
-              ><i class="mdi mdi-format-list-bulleted-type"></i><span class="hide-menu">Sale Category</span></a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('sale-category-list')}}"
-              aria-expanded="false"
-              ><i class="mdi mdi-format-list-bulleted-type"></i><span class="hide-menu">Sale Category List</span></a>
-          </li>
-          <li class="sidebar-item">
-            <a
-              class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('organization-setup')}}"
+            <a class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
               aria-expanded="false"
               ><i class="mdi mdi-image-filter-vintage"></i
-              ><span class="hide-menu">Organization Setup</span></a
-            >
+              ><span class="hide-menu">Setting </span></a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{{ route('organization-setup')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Organization Setup </span></a>
+              </li>
+            </ul>
           </li>
           <li class="sidebar-item">
             <a

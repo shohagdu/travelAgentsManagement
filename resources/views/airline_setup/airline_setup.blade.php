@@ -4,10 +4,13 @@
 <div class="row">
     <div class="col-md-12">
       <div class="card">
+        
         <form class="form-horizontal" method="POST" action="{{ route('airline-setup-save')}}">
                 @csrf
           <div class="card-body">
-            <h4 class="card-title"> Airline Setup </h4>
+            <a href="{{ route('airline-setup-list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
+              Airline Setup List </a>
+            <h4 class="card-title "> Airline Setup </h4>
             <div class="form-group row">
                 <label for="airline_title" class="col-sm-2 text-end control-label col-form-label"> Airline Title</label>
                 <div class="col-sm-10">

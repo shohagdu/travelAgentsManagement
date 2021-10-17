@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('title', 'Country Setup List')
+@section('css')
+<link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
+@endsection
 @section('main_content')
 <div class="row">
   <div class="col-12">
@@ -11,9 +14,11 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title mb-0">Country Setup List</h5>
+        <h5 class="card-title mb-0 lefttButtonText">Country Setup List</h5>
+        <a href="{{ route('country-setup')}}" class="btn btn-success btn-sm text-white rightButton">
+          Add Country Setup </a>
       </div>
-      <table class="table table-bordered">
+      <table id="zero_config" class="table table-bordered">
         <thead>
           <tr>
             <th scope="col">Sl</th>
@@ -43,4 +48,8 @@
     </div>
   </div>
 </div>
+@endsection
+@section('js')
+<script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<script src="{{ asset('js/global.js')}}"></script>
 @endsection

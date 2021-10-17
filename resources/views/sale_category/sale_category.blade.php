@@ -7,6 +7,8 @@
         <form class="form-horizontal" method="POST" action="{{ route('sale-category-save')}}">
                 @csrf
           <div class="card-body">
+            <a href="{{ route('sale-category-list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
+              Sale Category List </a>
             <h4 class="card-title"> Sale Category </h4>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 text-end control-label col-form-label"> Title</label>
