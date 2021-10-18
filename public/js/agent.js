@@ -9,6 +9,14 @@ var url  = $('meta[name = path]').attr("content");
 var csrf = $('mata[name = csrf-token]').attr("content");
 
 
+$(document).ready(function(){
+    get_agent_info_list();
+    $(".select2").select2();
+  }); 
+
+
+
+
 // agent list
 var token_table;
 
@@ -86,3 +94,4 @@ function search_agent_reports ()
 
     token_table.ajax.reload();
   }
+  

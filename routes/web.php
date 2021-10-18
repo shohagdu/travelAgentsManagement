@@ -80,3 +80,4 @@ Route::get('/sale-category-delete/{id}', [SaleCategoryController::class, "destro
 
 // Sale 
 Route::get('/sale', [SaleController::class, "create"])->name('sale');
+Route::post('/get_flight_setup_info', [SaleController::class, "get_flight_setup_info"])->name('get_flight_setup_info');

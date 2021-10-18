@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="{{ asset('assets/datatable/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/datatable/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/datatable/css/buttons.bootstrap4.min.css')}}"> 
+<!-- Select2 -->
+<link rel="stylesheet" type="text/css"href="{{ asset('assets/libs/select2/dist/css/select2.min.css')}}"/>    
 
 @endsection
 @section('main_content')
@@ -22,7 +24,7 @@
         <div class="form-group row">
           <label for="currency" class="col-sm-1 text-end control-label col-form-label"> Country</label>
           <div class="col-sm-2">
-              <select name="country" id="country"   onchange="getCity(this.value, 'city_id')" class="select2 form-select shadow-none ">
+              <select name="country" id="country"   onchange="getCity(this.value, 'city_id')" class="select2 form-select shadow-none">
               <option value=""> Select </option>
               @foreach ($country as $item )
                   <option value="{{$item->id}}"> {{$item->name}} </option>
@@ -58,18 +60,12 @@
 </div>
 @endsection
 @section('js')
-
 <!-- DataTables  -->
 <script src="{{ asset('assets/datatable/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('assets/datatable/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{ asset('assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
-<script type="text/javascript">
- // var user_csrf = '@php echo csrf_token() @endphp';
- $(document).ready(function(){
-    get_agent_info_list();
-  }); 
-
-</script>
+<script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{ asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
 <script src="{{ asset('js/agent.js')}}"></script>
 @endsection

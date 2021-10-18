@@ -51,7 +51,7 @@
                             <td>
                             </td>
                             <td>
-                                <select class="form-control " name="flight_id" id="flight_id_1">
+                                <select class="form-control FlightInfo " name="flight_id" id="flight_id_1">
                                     <option value=""> Select Flight</option>
                                     @foreach ($airline_info as $item)
                                         <option value="{{ $item->id}}"> {{ $item->airline_title}}</option>
@@ -60,30 +60,39 @@
                                 </select>
                             </td>
                             <td>
-                                <input name="fare" id="fare_1" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="fare" id="fare_1" type="text" onkeyup="filghtCaculation(1)"  class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="tax_1" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="tax" id="tax_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="tax_1" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="tax" id="totalFare_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="commission" id="commission_1" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="commission" id="commission_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="ait" id="ait_1" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="ait" id="ait_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="add" id="add_1" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="add" id="add_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="amount" id="amount_1" type="text" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="amount" id="amount_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm Amount" placeholder="0.00"/>
                             </td>
                         </tr>
                         </div>
                     </table>
-                    <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
+                        </div>
+                        <div class="col-md-1"> <label> Total </label> </div>
+                        <div class="col-md-3">
+                            
+                             <input id="NetTotal" name="net_total" type="text" class="form-control" >
+                        </div>
+                    </div>
             </div>
             </div>
           </div>
@@ -101,5 +110,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/global.js')}}"></script>
+    <script src="{{ asset('js/sale.js')}}"></script>
 @endsection

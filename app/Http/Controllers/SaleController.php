@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AgentRecord;
 use App\Models\AirlineSetup;
+use App\Models\OrganizationSetup;
 
 class SaleController extends Controller
 {
@@ -85,5 +86,24 @@ class SaleController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function get_flight_setup_info(Request $request){
+
+        $filght_id = $request->filght_value_id;
+        $filght_info = AirlineSetup::where('id', $filght_id)->first();
+        $organization_info = OrganizationSetup::first();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data get successfully',
+            'data' => [
+                'flight_data'       => $filght_info,
+                'organization_data' => $organization_info,
+            ]
+        ]);    
+
+        // echo "<pre>";
+        // print_r($organization_data);exit;
+        
     }
 }
