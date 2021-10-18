@@ -31,13 +31,44 @@ class AgentRecordController extends Controller
     {
         $country = Country::all();
         $state   = State::all();
-        $agent_info = DB::table('agent_records')
-                        ->select('agent_records.*', 'countries.name as country_name', 'states.name as city_name')
-                        ->leftJoin('countries', 'countries.id', '=', 'agent_records.country')
-                        ->leftJoin('states', 'states.id', '=', 'agent_records.city')
-                        ->get();
+        // $agent_info = DB::table('agent_records')
+        //                 ->select('agent_records.*', 'countries.name as country_name', 'states.name as city_name')
+        //                 ->leftJoin('countries', 'countries.id', '=', 'agent_records.country')
+        //                 ->leftJoin('states', 'states.id', '=', 'agent_records.city')
+        //                 ->get();
 
-        return view('agent.agent_list', compact('agent_info', 'country', 'state'));
+        return view('agent.agent_list', compact('country', 'state'));
+    }
+    public function get_agent_list_data(Request $request)
+    {
+        header("Content-Type: application/json");
+         $country   = $request->country;
+         $city      = $request->city;
+         $mobile    = $request->mobile;
+
+        $start = $request->start;
+        $limit = $request->length;
+        $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
+
+
+        $request_data = [
+            'start'   => $start,
+            'limit'   => $limit,
+            'country' => $country,
+            'city'    => $city,
+            'mobile'  => $mobile,
+        ];
+
+        // echo "<pre>";
+        // print_r($request_data);exit;
+
+        $response = $this->agent_model->agent_list_data($request_data, $search_content);
+        $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
+        $response['recordsTotal']    = $count;
+        $response['recordsFiltered'] = $count;
+        $response['draw']            = $request->draw;
+        
+        echo json_encode($response);
     }
 
     /**
@@ -190,40 +221,6 @@ class AgentRecordController extends Controller
         }else{
             return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
-    }
-
-    public function get_agent_list_data(Request $request)
-    {
-
-
-        header("Content-Type: application/json");
-         $country   = $request->country;
-         $city      = $request->city;
-         $mobile    = $request->mobile;
-
-        $start = $request->start;
-        $limit = $request->length;
-        $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
-
-
-        $request_data = [
-            'start'   => $start,
-            'limit'   => $limit,
-            'country' => $country,
-            'city'    => $city,
-            'mobile'  => $mobile,
-        ];
-
-        // echo "<pre>";
-        // print_r($request_data);exit;
-
-        $response = $this->agent_model->agent_list_data($request_data, $search_content);
-        $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
-        $response['recordsTotal']    = $count;
-        $response['recordsFiltered'] = $count;
-        $response['draw']            = $request->draw;
-        
-        echo json_encode($response);
     }
 
     // Get City

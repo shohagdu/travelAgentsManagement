@@ -1,7 +1,11 @@
 @extends('layouts.master')
 @section('title', 'Agent Record List')
 @section('css')
-<link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('assets/datatable/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/datatable/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/datatable/css/buttons.bootstrap4.min.css')}}"> 
+
 @endsection
 @section('main_content')
 <div class="row">
@@ -14,9 +18,7 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <form method="post" action="" class="form-horizontal" enctype="multipart/form-data" style="padding-right: 100px">
-          @csrf
-          <input type="hidden" name="asset" id="asset" value="{{ asset('')}}">
+        <input type="hidden" name="asset" id="asset" value="{{ asset('')}}">
         <div class="form-group row">
           <label for="currency" class="col-sm-1 text-end control-label col-form-label"> Country</label>
           <div class="col-sm-2">
@@ -41,24 +43,33 @@
               <input name="mobile" id="mobile" class="form-control" placeholder="Mobile"/>
           </div>
           <div class="col-sm-1">
-            <button type="button" onclick="search_agent_list()" id="" class="btn btn-primary">Search</button>
+            <button onclick="search_agent_reports()" id="" class="btn btn-primary">Search</button>
         </div>
       </div><br>
 
-        <h5 class="card-title mb-0"> Agent Record List </h5>
+      <h5 class="card-title mb-0"> Agent Record List </h5><br>
       <div class="table-responsive">
-        <table id="agent_list_table" class="table table-striped table-bordered">
+        <table id="agent_list_table" class="table table-bordered table-striped">
           
         </table>
       </div>
-    </form>
     </div>
   </div>
 </div>
 @endsection
 @section('js')
-<!-- DataTables -->
-<script src="{{ asset('')}}js/jquery.dataTables.min.js"></script>
-<script src="{{ asset('')}}js/dataTables.bootstrap.min.js"></script>
-<script src="{{ asset('js/global.js')}}"></script>
+
+<!-- DataTables  -->
+<script src="{{ asset('assets/datatable/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('assets/datatable/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
+<script type="text/javascript">
+ // var user_csrf = '@php echo csrf_token() @endphp';
+ $(document).ready(function(){
+    get_agent_info_list();
+  }); 
+
+</script>
+<script src="{{ asset('js/agent.js')}}"></script>
 @endsection

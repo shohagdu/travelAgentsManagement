@@ -49,7 +49,7 @@ Route::post('/save-agent', [AgentRecordController::class, "store"])->name('save-
 Route::get('/agent-edit/{id}', [AgentRecordController::class, "edit"])->name('agent-edit');
 Route::post('/agent-update/{id}', [AgentRecordController::class, "update"])->name('agent-update');
 Route::get('/agent-delete/{id}', [AgentRecordController::class, "destroy"])->name('agent-delete');
-Route::post('/get_agent_list_info', [AgentRecordController::class, "get_agent_list_data"])->name('get_agent_list_data');
+Route::post('/get_agent_list_data', [AgentRecordController::class, "get_agent_list_data"])->name('get_agent_list_data');
 
 Route::post('/get_city_info', [AgentRecordController::class, 'get_city_info'])->name('get_city_info');
 

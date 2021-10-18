@@ -11,6 +11,7 @@ $.ajaxSetup({
 
 
 $("#zero_config").DataTable();
+
 // $(".select2").select2();
 
 function airline_info_all(){
@@ -86,75 +87,3 @@ function removeNewFlight(id){
 	var deleteindex = id;
 	$("#flightAreaDiv_" + deleteindex).remove();
 }
-
-// agent
-// Token list
-var token_table;
-function get_agent_list() {
-    let target = $("#asset").val();
-    token_table = $('#agent_list_table').DataTable({
-        scrollCollapse: true,
-        autoWidth: false,
-        responsive: true,
-        serverSide: true,
-        processing: true,
-        ajax:{
-            dataType: "JSON",
-            type: "post",
-            url: target + "/get_agent_list_info",
-            data: {
-               // _token : user_csrf
-            },
-        },
-        columns:[
-             {
-             	title: "SL",
-                data: null,
-                render: function(){
-                    return token_table.page.info().start + token_table.column(0).nodes().length;
-                }           
-            },
-            {
-            	title: "Name",
-                data: "name"
-            },
-            {
-            	title: "Mobil",
-                data: "mobile"
-            },
-            {
-            	title: "Email",
-                data: "email"
-            },
-            {
-            	title: "Country",
-                data: "country_name"
-            },
-            {
-            	title: "City",
-                data: "city_name"
-            },
-            {
-            	title: "Action",
-                data: null,
-                render: function(data, type, row, meta){
-                 
-                     return  "<a  ><p class='btn btn-sm btn-info'> <i class='fa fa-pencil' aria-hidden='true'> Edit </i> </p> </a> <a href='#" + data.id + "' ><p class='btn btn-sm btn-danger'> <i class='fa fa-trash' aria-hidden='true'></i></p> </a>";
-                }
-            },
-        ],
-    });
-}
-
-function search_agent_list()
-{
-    country = $("#country").val();
-    city    = $("#city").val();
-    mobile  = $("#mobile").val();
-
-    $("#agent_list_table").dataTable().fnSettings().ajax.data.country  = country;
-    $("#agent_list_table").dataTable().fnSettings().ajax.data.city     = city;
-    $("#agent_list_table").dataTable().fnSettings().ajax.data.mobile   = mobile;
-
-    token_table.ajax.reload();
-  }

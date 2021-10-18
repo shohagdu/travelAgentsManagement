@@ -23,7 +23,7 @@ class AgentRecord extends Model
            
              })		
             
-    		->select(DB::raw('SQL_CALC_FOUND_ROWS AGNT.id'), 'AGNT.name','AGNT.mobile','AGNT.mobile', 'CNT.name as country_name','STE.name as city_name')
+    		->select(DB::raw('SQL_CALC_FOUND_ROWS AGNT.id'), 'AGNT.name','AGNT.mobile','AGNT.email', 'CNT.name as country_name','STE.name as city_name')
 
             ->offset($receive['start'])
             ->limit($receive['limit'])
@@ -39,7 +39,7 @@ class AgentRecord extends Model
 		if($receive['country'] !=''){
                 $query->Where("AGNT.country", "=", $receive['country']);
             }
-        if($receive['district_id'] !=''){
+        if($receive['city'] !=''){
                 $query->Where("AGNT.city", "=", $receive['city']);
             }    
         if($receive['mobile'] !=''){
