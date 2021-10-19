@@ -68,7 +68,7 @@ function addNewFlight(){
  if(total_element < max ){
   $(".element1:last").after("<tr class='element1' id='flightAreaDiv_"+ nextindex +"'></tr>");
 
-  $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-sm btn-danger FlightPlusBtn"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class="airlineTh"> <select class="form-control FlightInfo" name="flight_id" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class="fareTh"><input name="fare" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="form-control" placeholder="0.00"/></td> <td class="TaxTh"><input name="tax" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="form-control" placeholder="0.00"/></td><td class="totalFareTd"><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="form-control" placeholder="0.00"/></td><td class="commissionTh"><input name="commission" id="commission_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')"class="form-control" placeholder="0.00"/></td><td class="aitTh"><input name="ait" id="ait_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="form-control" placeholder="0.00"/></td><td class="addTd"><input name="add" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="form-control" placeholder="0.00"/></td><td class="amountTh"><input name="amount" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="form-control Amount" placeholder="0.00"/></td>');
+  $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-xs btn-danger FlightPlusBtn"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class=""> <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class=""><input name="fare[]" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="fareTd" placeholder="0.00"/></td> <td class=""><input name="tax[]" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="taxTd" placeholder="0.00"/></td><td class=""><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="totalFareTd" placeholder="0.00"/></td><td class=""><input name="commission[]" id="commission_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="commissionTd" placeholder="0.00"/></td><td class=""><input name="ait[]" id="ait_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="aitTd" placeholder="0.00"/></td><td class=""><input name="add[]" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="AddTd" placeholder="0.00"/></td><td class="amountTh"><input name="amount[]" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="amountTd Amount" placeholder="0.00"/></td>');
 
  }
 }
@@ -110,8 +110,100 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
 
                    totalSummation()
 
-               // console.log(response.data.flight_data.airline_title);
-
              }
              });
  });
+
+
+ 
+$(document).ready(function(){
+    get_sale_info_list();
+}); 
+
+// sale list
+var token_table;
+
+function get_sale_info_list() {
+    let target = $("#asset").val();
+
+    token_table = $('#sale_list_table').DataTable({
+        scrollCollapse: true,
+        autoWidth: false,
+        responsive: true,
+        serverSide: true,
+        processing: true,
+        "paging": true,
+        "searching": { "regex": true },
+        "pageLength": 10,
+        
+        ajax:{
+            dataType: "JSON",
+            type: "post",
+            url: target + "get_sale_list_data",
+            data: {
+               // _token : user_csrf
+            },
+        },
+        columns:[
+             {
+             	title: "SL",
+                data: null,
+                render: function(){
+                    return token_table.page.info().start + token_table.column(0).nodes().length;
+                }           
+            },
+            {
+            	title: "Agent Name",
+                data: "agent_name"
+            },
+            {
+                title: "Sale Category",
+                data: null,
+                render: function (data) {
+                    if(data.sale_category_id==1){
+                        return 'Flights';
+                    }
+                    else if(data.sale_category_id==2){
+                        return 'Hotels';
+                    }
+                    else if(data.sale_category_id==4){
+                        return 'Activities';
+                    }
+                    else if(data.sale_category_id==5){
+                        return 'Holidays';
+                    }
+                    else if(data.sale_category_id==6){
+                        return 'Visa';
+                    }
+                    else if(data.sale_category_id==7){
+                        return 'Others';
+                    }
+                }
+            },
+            {
+                title: "Amount",
+                data: "amount"
+            },
+            {
+            	title: "Action",
+                data: null,
+                render: function(data, type, row, meta){
+                 
+                    return '<a href="" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a onclick="return confirm(\'Are you sure you want to delete?\')" href="" class="btn btn-danger btn-sm text-white"><span class="mdi mdi-delete-circle"></span>  Delete </a>';
+                }
+            },
+        ],
+    });
+}
+
+// search sale report
+function search_sale_reports ()
+{
+    sale_category_id  = $("#sale_category_id").val();
+    agent_id          = $("#agent_id").val();
+
+    $("#sale_list_table").dataTable().fnSettings().ajax.data.sale_category_id = sale_category_id;
+    $("#sale_list_table").dataTable().fnSettings().ajax.data.agent_id    = agent_id;
+
+    token_table.ajax.reload();
+}

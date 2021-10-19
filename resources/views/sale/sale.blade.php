@@ -3,15 +3,21 @@
 @section('main_content')
 <div class="row">
     <div class="col-md-12">
+        @if (session()->has('flash.message'))
+        <div class="alert alert-{{ session('flash.class') }} alert-dismissible fade show" role="alert">
+          {{ session('flash.message') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
       <div class="card">
-        <form class="form-horizontal" method="POST" action="">
+        <form class="form-horizontal" method="POST" action="{{ route('sale-save')}}">
                 @csrf
           <div class="card-body">
-            <h4 class="card-title"> Sale  </h4>
+            <h4 class="card-tisale_category_idtle"> Sale  </h4>
             <div class="form-group row">
-                <label for="country_code" class="col-sm-2 text-end control-label col-form-label"> Sale Category</label>
+                <label for="sale_category_id" class="col-sm-2 text-end control-label col-form-label"> Sale Category</label>
                 <div class="col-sm-4">
-                    <select name="type" id="type" class="form-control">
+                    <select name="sale_category_id" id="sale_category_id" class="form-control @error('sale_category_id') is-invalid @enderror">
                         <option value=""> Select</option>
                         <option value="1"> Flights </option>
                         <option value="2"> Hotels </option>
@@ -21,21 +27,31 @@
                         <option value="6"> Visa </option>
                         <option value="7"> Others </option>
                     </select>
+                    @error('sale_category_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror 
                 </div>
-                <label for="country_code" class="col-sm-2 text-end control-label col-form-label"> Agent</label>
+                <label for="agent_id" class="col-sm-2 text-end control-label col-form-label"> Agent</label>
                 <div class="col-sm-4">
-                    <select name="type" id="type" class="form-control">
+                    <select id="agent_id" name="agent_id" class="form-control @error('agent_id') is-invalid @enderror">
                         <option value=""> Select Agent</option>
                         @foreach ($agent_info as $item)
                           <option value="{{ $item->id}}"> {{ $item->name}} </option> 
                         @endforeach
                     </select>
+                    @error('agent_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror 
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 ">
                     <h5> Flight Information</h5>
-                    <table border="1" class="table table-responsive-sm table-bordered SaleTable">
+                    <table  class="FlightSaleTable SaleTable">
                         <tr>
                             <th class="actionTh"> Action</th>
                             <th class="airlineTh"> Airline</th>
@@ -48,10 +64,10 @@
                             <th class="amountTh"> Amount</th>
                         </tr>
                         <tr  class="element1"  id="flightAreaDiv_1">
-                            <td>
+                            <td class="actionTh">
                             </td>
                             <td>
-                                <select class="form-control FlightInfo " name="flight_id" id="flight_id_1">
+                                <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_1">
                                     <option value=""> Select Flight</option>
                                     @foreach ($airline_info as $item)
                                         <option value="{{ $item->id}}"> {{ $item->airline_title}}</option>
@@ -60,39 +76,43 @@
                                 </select>
                             </td>
                             <td>
-                                <input name="fare" id="fare_1" type="text" onkeyup="filghtCaculation(1)"  class="form-control input-sm" placeholder="0.00"/>
+                                <input name="fare[]" id="fare_1" type="text" onkeyup="filghtCaculation(1)"  class="fareTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="tax_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="tax[]" id="tax_1" type="text"  onkeyup="filghtCaculation(1)" class="taxTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="tax" id="totalFare_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="total_fare[]" id="totalFare_1" type="text"  onkeyup="filghtCaculation(1)" class="totalFareTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="commission" id="commission_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCaculation(1)" class="commissionTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="ait" id="ait_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="ait[]" id="ait_1" type="text"  onkeyup="filghtCaculation(1)" class="aitTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="add" id="add_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm" placeholder="0.00"/>
+                                <input name="add[]" id="add_1" type="text"  onkeyup="filghtCaculation(1)" class="AddTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="amount" id="amount_1" type="text"  onkeyup="filghtCaculation(1)" class="form-control input-sm Amount" placeholder="0.00"/>
+                                <input name="amount[]" id="amount_1" type="text"  onkeyup="filghtCaculation(1)" class="amountTd Amount" placeholder="0.00"/>
                             </td>
                         </tr>
-                        </div>
                     </table>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
-                        </div>
-                        <div class="col-md-1"> <label> Total </label> </div>
-                        <div class="col-md-3">
-                            
-                             <input id="NetTotal" name="net_total" type="text" class="form-control" >
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8"><br>
+                    <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
+                </div>
+                <div class="col-md-1"><br> <label> Total </label> </div>
+                <div class="col-md-3"><br>
+                     <input id="NetTotal" name="net_total" type="text" class=" @error('net_total') is-invalid @enderror">
+                     @error('net_total')
+                     <span class="invalid-feedback" role="alert">
+                         <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror 
+                </div>
             </div>
             </div>
           </div>

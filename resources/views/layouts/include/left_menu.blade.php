@@ -10,8 +10,27 @@
               href="{{asset('/dashboard')}}"
               aria-expanded="false"
               ><i class="mdi mdi-view-dashboard"></i
-              ><span class="hide-menu">Dashboard</span></a
-            >
+              ><span class="hide-menu">Dashboard</span></a>
+          </li>
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
+              aria-expanded="false"
+              ><i class="mdi mdi-cart"></i
+              ><span class="hide-menu"> Sale </span></a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{{ route('sale')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Sale </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('sale-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu">  Sale List </span></a>
+              </li>
+            </ul>
           </li>
           <li class="sidebar-item">
             <a
@@ -19,48 +38,36 @@
               href="javascript:void(0)"
               aria-expanded="false"
               ><i class="mdi mdi-receipt"></i
-              ><span class="hide-menu">Agent Record </span></a
-            >
+              ><span class="hide-menu">Agent Record </span></a>
             <ul aria-expanded="false" class="collapse first-level">
               <li class="sidebar-item">
                 <a href="{{ route('add-agent')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Add Agent </span></a
-                >
+                  ><span class="hide-menu"> Add Agent </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('agent-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu">  Agent List </span></a
-                >
+                  ><span class="hide-menu">  Agent List </span></a>
               </li>
             </ul>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-              href="{{ route('sale')}}"
-              aria-expanded="false"
-              ><i class="mdi mdi-cart"></i><span class="hide-menu">Sale</span></a>
           </li>
           <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark"
               href="javascript:void(0)"
               aria-expanded="false"
               ><i class="mdi mdi-relative-scale"></i
-              ><span class="hide-menu">Airline Setup </span></a
-            >
+              ><span class="hide-menu">Airline Setup </span></a>
             <ul aria-expanded="false" class="collapse first-level">
               <li class="sidebar-item">
                 <a href="{{ route('airline-setup')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Add Airline Setup </span></a
-                >
+                  ><span class="hide-menu"> Add Airline Setup </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('airline-setup-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu">  Airline Setup  List </span></a
-                >
+                  ><span class="hide-menu">  Airline Setup  List </span></a>
               </li>
             </ul>
           </li>
@@ -74,14 +81,12 @@
               <li class="sidebar-item">
                 <a href="{{ route('country-setup')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Add Country Setup </span></a
-                >
+                  ><span class="hide-menu"> Add Country Setup </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('country-setup-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu">  Country Setup  List </span></a
-                >
+                  ><span class="hide-menu">  Country Setup  List </span></a>
               </li>
             </ul>
           </li>

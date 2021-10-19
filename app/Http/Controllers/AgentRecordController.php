@@ -31,12 +31,6 @@ class AgentRecordController extends Controller
     {
         $country = Country::all();
         $state   = State::all();
-        // $agent_info = DB::table('agent_records')
-        //                 ->select('agent_records.*', 'countries.name as country_name', 'states.name as city_name')
-        //                 ->leftJoin('countries', 'countries.id', '=', 'agent_records.country')
-        //                 ->leftJoin('states', 'states.id', '=', 'agent_records.city')
-        //                 ->get();
-
         return view('agent.agent_list', compact('country', 'state'));
     }
     public function get_agent_list_data(Request $request)
