@@ -13,10 +13,15 @@ function saleCategory(categoryId){
         $("#headingText").text("Flight Information!");
         $('.FlightSaleTable').show();
         $('.HotelSaleTable').hide();
+        $('.HotelPlusBtn').hide();
+        $('.FlightPlusBtn').show();
     }else if(categoryId == 2){
         $("#headingText").text("Hotel Information!");
         $('.HotelSaleTable').show();
+        $('.HotelPlusBtn').show();
+        $('.FlightPlusBtn').hide();
         $('.FlightSaleTable').hide();
+       
     }
 }
  function airline_info_all(){
@@ -161,7 +166,49 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
              });
  });
 
+ function TotalEmptycheckHotel(row_id){
 
+    // var fare        = parseFloat($('#fare_'+row_id).val());
+    // var tax         = parseFloat($('#tax_'+row_id).val());
+    // var commission  = parseFloat($('#commission_'+row_id).val());
+    // var ait         = parseFloat($('#ait_'+row_id).val());
+    // var add         = parseFloat($('#add_'+row_id).val());
+
+    var NetTotalEmpty = 1;
+
+    return NetTotalEmpty;
+   
+}
+
+ // addNewHotel
+
+function addNewHotel(){
+    var total_element = $(".element1").length;
+   
+    var lastid = $(".element1:last").attr("id");
+    var split_id = lastid.split("_");
+    var nextindex = Number(split_id[1]) + 1;
+   
+   
+    if(TotalEmptycheckHotel(nextindex-1) > 0){
+   
+       var max = 20;
+   
+       if(total_element < max ){
+       $(".element1:last").after("<tr class='element1' id='hotelAreaDiv_"+ nextindex +"'></tr>");
+   
+       $("#hotelAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewHotel('+nextindex+');" class="btn btn-xs btn-danger "><i class="mdi mdi-minus-box-outline"></i> </button></td>  <td><textarea name="details[]" id="details_'+nextindex+'" class="detailsTd" placeholder="Details"></textarea></td><td><input name="amount[]" id="amount_'+nextindex+'" type="text"  onkeyup="HotelCaculation(1)" class="AmountHotel" placeholder="0.00"/></td><td><input name="discount[]" id="discount_'+nextindex+'" type="text"  onkeyup="HotelCaculation(1)" class="DiscountHotel" placeholder="0.00"/></td><td><input name="net_total[]" id="netTotal_'+nextindex+'" type="text"  onkeyup="HotelCaculation(1)" class="NetamountTd Amount" placeholder="0.00" readonly/></td>');
+   
+       }
+   
+    }else{
+        alert("Please Enter Amount");
+    }
+}
+function removeNewHotel(id){
+	var deleteindex = id;
+	$("#hotelAreaDiv_" + deleteindex).remove();
+}
  
 $(document).ready(function(){
     get_sale_info_list();

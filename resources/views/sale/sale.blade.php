@@ -106,28 +106,28 @@
                             <th class="DiscountTh"> Discount</th>
                             <th class="netTotalTh"> Net Total</th>
                         </tr>
-                        <tr  class="element1"  id="flightAreaDiv_1">
+                        <tr  class="element1"  id="hotelAreaDiv_1">
                             <td class="actionTh">
                             </td>
                             <td>
                                 <textarea name="details[]" id="details_1" class="detailsTd" placeholder="Details"></textarea>
-                                
                             </td>
                             <td>
-                                <input name="amount[]" id="amount_1" type="text"  onkeyup="HotelCaculation(1)" class="taxTd" placeholder="0.00"/>
+                                <input name="amount[]" id="amount_1" type="text"  onkeyup="HotelCaculation(1)" class="AmountHotel" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="net[]" id="ait_1" type="text"  onkeyup="HotelCaculation(1)" class="aitTd" placeholder="0.00"/>
+                                <input name="discount[]" id="discount_1" type="text"  onkeyup="HotelCaculation(1)" class="DiscountHotel" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="net_total[]" id="netTotal_1" type="text"  onkeyup="HotelCaculation(1)" class="amountTd Amount" placeholder="0.00" readonly/>
+                                <input name="net_total[]" id="netTotal_1" type="text"  onkeyup="HotelCaculation(1)" class="NetamountTd Amount" placeholder="0.00" readonly/>
                             </td>
                         </tr>
                     </table>
 
                 </div>
             </div><br>
-            <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
+            <button type="button" id="FlightPlusBtn" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
+            <button type="button" id="HotelPlusBtn" onclick="addNewHotel();" class="btn btn-sm btn-success HotelPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
             <div class="row">
                 <div class="col-md-8"></div>
                 <div class="col-md-4" >

@@ -130,14 +130,32 @@ input::-webkit-input-placeholder {
     display: none;
   }
   
- .FlightSaleTable, td, th {
+.FlightSaleTable, td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 3px;
   }
   
-  .FlightSaleTable, tr:nth-child(even) {
+.FlightSaleTable, tr:nth-child(even) {
     background-color: #fff;
     font-size: 12px;
     width: 100%;
   }
+.detailsTd{
+      width: 450px;
+  }
+.HotelPlusBtn{
+      display: none;
+      color: white;
+  }
+.AmountHotel{
+      width: 150px;;
+  }
+.DiscountHotel{
+    width: 150px;;
+}
+.NetamountTd{
+    width: 190px;;
+}
+
+
