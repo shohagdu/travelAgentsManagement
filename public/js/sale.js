@@ -7,6 +7,18 @@ $.ajaxSetup({
     }
 });
 
+function saleCategory(categoryId){
+    
+    if(categoryId == 1){
+        $("#headingText").text("Flight Information!");
+        $('.FlightSaleTable').show();
+        $('.HotelSaleTable').hide();
+    }else if(categoryId == 2){
+        $("#headingText").text("Hotel Information!");
+        $('.HotelSaleTable').show();
+        $('.FlightSaleTable').hide();
+    }
+}
  function airline_info_all(){
     $.ajax({
         url:url + "/airline_info_all",
@@ -36,6 +48,19 @@ function filghtCaculation(row_id){
     totalSummation();
    
 }
+function TotalEmptycheck(row_id){
+
+    var fare        = parseFloat($('#fare_'+row_id).val());
+    var tax         = parseFloat($('#tax_'+row_id).val());
+    var commission  = parseFloat($('#commission_'+row_id).val());
+    var ait         = parseFloat($('#ait_'+row_id).val());
+    var add         = parseFloat($('#add_'+row_id).val());
+
+    var NetTotalEmpty = (fare+tax+ait+add)- commission;
+
+    return NetTotalEmpty;
+   
+}
 // summation
 function totalSummation(){
 
@@ -45,32 +70,54 @@ function totalSummation(){
 
     });
 
-    parseFloat($('#NetTotal').val(sum));   
+    $('#NetTotal').val(sum.toFixed(2));   
+
+    var discount = $('#Discount').val();
+
+    var InvoiceAmount = (sum-discount);   
+   // console.log(InvoiceAmount);
+
+    $('#invoice_amount').val(InvoiceAmount.toFixed(2));
 }
 
+function DiscountSale(){
 
+    var NetTotalAmount = $('#NetTotal').val();
+    var discount       = $('#Discount').val();
 
+    var TotalInvAmount = (NetTotalAmount-discount);
+
+    $('#invoice_amount').val(TotalInvAmount.toFixed(2));
+}
 
  // addNewFlight
 
 function addNewFlight(){
-    var total_element = $(".element1").length;
+ var total_element = $(".element1").length;
 
  var lastid = $(".element1:last").attr("id");
  var split_id = lastid.split("_");
  var nextindex = Number(split_id[1]) + 1;
 
- //console.log(nextindex);
- airline_info_all();
 
- var max = 20;
+ if(TotalEmptycheck(nextindex-1) > 0){
+    
+    airline_info_all();
 
- if(total_element < max ){
-  $(".element1:last").after("<tr class='element1' id='flightAreaDiv_"+ nextindex +"'></tr>");
+    var max = 20;
 
-  $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-xs btn-danger FlightPlusBtn"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class=""> <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class=""><input name="fare[]" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="fareTd" placeholder="0.00"/></td> <td class=""><input name="tax[]" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="taxTd" placeholder="0.00"/></td><td class=""><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="totalFareTd" placeholder="0.00"/></td><td class=""><input name="commission[]" id="commission_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="commissionTd" placeholder="0.00"/></td><td class=""><input name="ait[]" id="ait_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="aitTd" placeholder="0.00"/></td><td class=""><input name="add[]" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="AddTd" placeholder="0.00"/></td><td class="amountTh"><input name="amount[]" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="amountTd Amount" placeholder="0.00"/></td>');
+    if(total_element < max ){
+    $(".element1:last").after("<tr class='element1' id='flightAreaDiv_"+ nextindex +"'></tr>");
 
+    $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-xs btn-danger FlightPlusBtn"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class=""> <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class=""><input name="fare[]" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="fareTd" placeholder="0.00"/></td> <td class=""><input name="tax[]" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="taxTd" placeholder="0.00"/></td><td class=""><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="totalFareTd" placeholder="0.00"/></td><td class=""><input name="commission[]" id="commission_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="commissionTd" placeholder="0.00"/></td><td class=""><input name="ait[]" id="ait_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="aitTd" placeholder="0.00"/></td><td class=""><input name="add[]" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="AddTd" placeholder="0.00"/></td><td class="amountTh"><input name="amount[]" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="amountTd Amount" placeholder="0.00" readonly/></td>');
+
+    }
+
+ }else{
+     alert("Please Enter Amount");
  }
+
+ 
 }
 function removeNewFlight(id){
 	var deleteindex = id;
@@ -98,7 +145,7 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
                     var ait        = parseFloat(response.data.organization_data.ait);
                     var add        = parseFloat(response.data.flight_data.add);
                     var total_fare = parseFloat(fare+tax);
-                    var total_amount = parseFloat((fare+tax+ait+add)-commission);
+                    var total_amount = parseFloat((fare+tax+ait+add)-commission).toFixed(2);
 
                    $('#fare_'+lastChar).val(fare);
                    $('#tax_'+lastChar).val(tax);

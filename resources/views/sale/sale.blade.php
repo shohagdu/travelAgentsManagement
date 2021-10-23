@@ -17,7 +17,7 @@
             <div class="form-group row">
                 <label for="sale_category_id" class="col-sm-2 text-end control-label col-form-label"> Sale Category</label>
                 <div class="col-sm-4">
-                    <select name="sale_category_id" id="sale_category_id" class="form-control @error('sale_category_id') is-invalid @enderror">
+                    <select name="sale_category_id" id="sale_category_id" onchange="saleCategory(this.value)" class="form-control @error('sale_category_id') is-invalid @enderror">
                         <option value=""> Select</option>
                         <option value="1"> Flights </option>
                         <option value="2"> Hotels </option>
@@ -50,7 +50,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 ">
-                    <h5> Flight Information</h5>
+                    <h5 id="headingText"> Information </h5>
                     <table  class="FlightSaleTable SaleTable">
                         <tr>
                             <th class="actionTh"> Action</th>
@@ -94,33 +94,75 @@
                                 <input name="add[]" id="add_1" type="text"  onkeyup="filghtCaculation(1)" class="AddTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="amount[]" id="amount_1" type="text"  onkeyup="filghtCaculation(1)" class="amountTd Amount" placeholder="0.00"/>
+                                <input name="amount[]" id="amount_1" type="text"  onkeyup="filghtCaculation(1)" class="amountTd Amount" placeholder="0.00" readonly/>
                             </td>
                         </tr>
                     </table>
+                    <table  class="HotelSaleTable SaleTable">
+                        <tr>
+                            <th class="actionTh"> Action</th>
+                            <th class="DetailsTh"> Details</th>
+                            <th class="amountTh"> Amount</th>
+                            <th class="DiscountTh"> Discount</th>
+                            <th class="netTotalTh"> Net Total</th>
+                        </tr>
+                        <tr  class="element1"  id="flightAreaDiv_1">
+                            <td class="actionTh">
+                            </td>
+                            <td>
+                                <textarea name="details[]" id="details_1" class="detailsTd" placeholder="Details"></textarea>
+                                
+                            </td>
+                            <td>
+                                <input name="amount[]" id="amount_1" type="text"  onkeyup="HotelCaculation(1)" class="taxTd" placeholder="0.00"/>
+                            </td>
+                            <td>
+                                <input name="net[]" id="ait_1" type="text"  onkeyup="HotelCaculation(1)" class="aitTd" placeholder="0.00"/>
+                            </td>
+                            <td>
+                                <input name="net_total[]" id="netTotal_1" type="text"  onkeyup="HotelCaculation(1)" class="amountTd Amount" placeholder="0.00" readonly/>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
-            </div>
+            </div><br>
+            <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
             <div class="row">
-                <div class="col-md-8"><br>
-                    <button type="button" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
-                </div>
-                <div class="col-md-1"><br> <label> Total </label> </div>
-                <div class="col-md-3"><br>
-                     <input id="NetTotal" name="net_total" type="text" class=" @error('net_total') is-invalid @enderror">
-                     @error('net_total')
-                     <span class="invalid-feedback" role="alert">
-                         <strong>{{ $message }}</strong>
-                     </span>
-                     @enderror 
+                <div class="col-md-8"></div>
+                <div class="col-md-4" >
+                   <p> <span style="width: 100px"> Net Total</span> 
+                        <input id="NetTotal" name="net_total" type="text" class="saleFooterText @error('net_total') is-invalid @enderror" placeholder="0.00">
+                        @error('net_total')
+                            <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </p>
+                   <p> <span style="width: 100px"> Discount</span> 
+                    <input id="Discount" onkeyup="DiscountSale()" name="discount" type="text" class="saleFooterText" value="0.00">
+                   </p>
+                   <p> <span style="width: 100px"> Invoice Amount</span> 
+                    <input id="invoice_amount" name="invoice_amount" type="text" class="saleFooterText @error('invoice_amount') is-invalid @enderror" placeholder="0.00">
+                    @error('invoice_amount')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                   </p>
+                   <p>
+                    <button type="submit" class="btn btn-primary FlightSaveBtn">
+                        Save
+                      </button>
+                   </p>
+        
                 </div>
             </div>
             </div>
           </div>
           <div class="border-top">
             <div class="card-body">
-              <button type="submit" class="btn btn-primary FlightSaveBtn">
-                Save
-              </button>
+              
             </div>
           </div>
         </form>

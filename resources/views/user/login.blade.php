@@ -9,21 +9,31 @@
      <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta
       name="keywords"
-      content="admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Matrix lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Matrix admin lite design, Matrix admin lite dashboard bootstrap 5 dashboard template"
+      content="Tripayan dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Matrix lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Matrix admin lite design, Matrix admin lite dashboard bootstrap 5 dashboard template"
     />
     <meta
       name="description"
-      content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
+      content="Tripayan Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
     />
     <meta name="robots" content="noindex,nofollow" />
     <title>Login - Global Travel Service</title>
+    @php  $setup_data =  App\Models\OrganizationSetup::first(); @endphp
     <!-- Favicon icon -->
+    @if(isset($setup_data))
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="{{ asset('assets/images/favicon.png')}}"
+      href="{{ asset('assets/images')}}/{{$setup_data->favicon}}"
     />
+    @else
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="{{ asset('assets/images/favicon.png')}}"
+  />
+    @endif
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.min.css')}}" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,13 +66,19 @@
           align-items-center
           bg-dark
         "
-      >
-        <div class="auth-box bg-dark border-top border-secondary">
+       style="min-height: 100vh">
+        <div class="auth-box bg-dark">
           <div id="loginform">
             <div class="text-center pt-3 pb-3">
               <span class="db"
-                ><img src="{{ asset('assets/images/logo.png')}}" alt="logo"
-              /></span>
+                >
+                @if(isset($setup_data))
+                  <img src="{{ asset('assets/images')}}/{{$setup_data->logo}}" alt="logo"/>
+                @else
+                <img src="{{ asset('assets/images/logo.png')}}" alt="logo"/>
+                @endif
+
+              </span>
             </div>
             <!-- Form -->
             <form   class="form-horizontal mt-3" id="loginform" method="POST" action="{{ route('login') }}">

@@ -13,17 +13,27 @@
     />
     <meta
       name="description"
-      content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
+      content="Step Tech Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
     />
     <meta name="robots" content="noindex,nofollow" />
     <title> @yield('title') </title>
+    @php  $setup_data =  App\Models\OrganizationSetup::first(); @endphp
     <!-- Favicon icon -->
+    @if(isset($setup_data))
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="{{ asset('')}}assets/images/favicon.png"
+      href="{{ asset('')}}assets/images/{{$setup_data->favicon}}"
     />
+    @else
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="{{ asset('')}}assets/images/favicon.png"
+  />
+    @endif
     <!-- Custom CSS -->
     <link href="{{ asset('assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
     <!-- Custom CSS -->

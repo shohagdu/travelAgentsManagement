@@ -94,11 +94,13 @@ class SaleController extends Controller
         $sale_data = [
             'sale_category_id' => $request->sale_category_id,
             'agent_id'         => $request->agent_id,
-            'amount'           => $request->net_total,
+            'sale_amount'      => $request->net_total,
+            'discount'         => $request->discount,
+            'amount'           => $request->invoice_amount,
             "is_active"        => 1,
             'created_by'       => Auth::user()->id,
             'created_ip'       => request()->ip(),
-            'created_at' => date('Y-m-d H:i:s'),
+            'created_at'       => date('Y-m-d H:i:s'),
         ];
 
         $sale_save = DB::table('sales')->insert($sale_data);

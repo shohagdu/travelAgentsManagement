@@ -53,7 +53,9 @@
 }
 .FlightSaveBtn{
     text-align: center;
-    margin-left: 400px;
+    width: 58%;
+    margin-top: 20px;
+    float: right;
 }
 .element1 
 input::-webkit-input-placeholder {
@@ -94,9 +96,10 @@ input::-webkit-input-placeholder {
   .FlightSaleTable, tr:nth-child(even) {
     background-color: #fff;
     font-size: 12px;
+    width: 100%;
   }
 .FlightTd{
-    width: 150px;
+    width: 170px;
     height: 25px;
 }
 .fareTd{
@@ -117,6 +120,24 @@ input::-webkit-input-placeholder {
 .AddTd{
     width: 100px;
 }
-.amountTd{
-    width: 120px;
+.saleFooterText{
+    float: right;
 }
+.FlightSaleTable, table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+    display: none;
+  }
+  
+ .FlightSaleTable, td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 3px;
+  }
+  
+  .FlightSaleTable, tr:nth-child(even) {
+    background-color: #fff;
+    font-size: 12px;
+    width: 100%;
+  }
