@@ -61,9 +61,29 @@ function getCity(country_id, target_id){
 
                 $("#"+target_id).html("<option value=''>Not Found</option>");
             }
-
         }
-
      });
+}
+
+function AirlineTotalFare(){
+    fare       = isNaN($("#fare").val()) ? 0 :      parseFloat($("#fare").val());
+    tax_amount = isNaN($("#tax_amount").val()) ? 0 : parseFloat($("#tax_amount").val());
+    total_fare =  parseFloat(fare+tax_amount);
+    $("#total_fare").val(isNaN(total_fare) ? 0.00 : total_fare);
+
+    commission = isNaN($("#commission").val()) ? 0 : parseFloat($("#commission").val());
+    commissionAmount = (fare*commission/100);
+    $("#commission_amount").val(isNaN(commissionAmount) ? 0.00 : commissionAmount);
+    
+    ait = isNaN($("#ait").val()) ? 0 : parseFloat($("#ait").val());
+    aitAmount = (fare*ait/100);
+    var ait_amount = $("#ait_amount").val(isNaN(aitAmount) ? 0.00 : aitAmount);
+
+    add = isNaN($("#add").val()) ? 0 : parseFloat($("#add").val());
+
+    var invoiceAmount = parseFloat((total_fare+aitAmount+add)-commissionAmount);
+
+    $("#invoice_total").val(isNaN(invoiceAmount) ? 0.00 : invoiceAmount);
+
 }
 

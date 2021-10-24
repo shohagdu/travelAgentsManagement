@@ -70,7 +70,7 @@
                                 <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_1">
                                     <option value=""> Select Flight</option>
                                     @foreach ($airline_info as $item)
-                                        <option value="{{ $item->id}}"> {{ $item->airline_title}}</option>
+                                        <option value="{{ $item->id}}"> {{ $item->airline_name}} (@if($item->category==1) INTL @elseif($item->category==2) DOM @endif) </option>
                                     @endforeach
                                    
                                 </select>
@@ -86,9 +86,11 @@
                             </td>
                             <td>
                                 <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCaculation(1)" class="commissionTd" placeholder="0.00"/>
+                                <input name="commissionPer[]" id="commissionPer_1" type="hidden"/>
                             </td>
                             <td>
                                 <input name="ait[]" id="ait_1" type="text"  onkeyup="filghtCaculation(1)" class="aitTd" placeholder="0.00"/>
+                                <input name="aitPer[]" id="aitPer_1" type="hidden"/>
                             </td>
                             <td>
                                 <input name="add[]" id="add_1" type="text"  onkeyup="filghtCaculation(1)" class="AddTd" placeholder="0.00"/>
@@ -110,16 +112,16 @@
                             <td class="actionTh">
                             </td>
                             <td>
-                                <textarea name="details[]" id="details_1" class="detailsTd" placeholder="Details"></textarea>
+                                <textarea name="details[]" id="details_1" rows="1" class="detailsTd" placeholder="Details"></textarea>
                             </td>
                             <td>
-                                <input name="amount[]" id="amount_1" type="text"  onkeyup="HotelCaculation(1)" class="AmountHotel" placeholder="0.00"/>
+                                <input name="amount[]" id="amountHotel_1" type="text"  onkeyup="HotelCaculation(1)" class="AmountHotel" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="discount[]" id="discount_1" type="text"  onkeyup="HotelCaculation(1)" class="DiscountHotel" placeholder="0.00"/>
+                                <input name="discount[]" id="discountHotel_1" type="text"  onkeyup="HotelCaculation(1)" class="DiscountHotel" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="net_total[]" id="netTotal_1" type="text"  onkeyup="HotelCaculation(1)" class="NetamountTd Amount" placeholder="0.00" readonly/>
+                                <input name="net_total[]" id="netTotal_1" type="text"  class="NetamountTd Amount" placeholder="0.00" readonly/>
                             </td>
                         </tr>
                     </table>

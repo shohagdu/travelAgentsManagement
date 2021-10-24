@@ -40,21 +40,27 @@ class AirlineSetupController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'airline_title' => ['required'],
-            'country_name'  => ['required'],
+            'airline_name' => ['required'],
+            'category'     => ['required'],
         ]);
 
         $airline_data = new AirlineSetup();
 
-        $airline_data->airline_title = $request->airline_title;
-        $airline_data->country_name  = $request->country_name;
-        $airline_data->fare          = $request->fare;
-        $airline_data->commission    = $request->commission;
-        $airline_data->add           = $request->add;
-        $airline_data->is_active     = 1;
-        $airline_data->created_by    = Auth::user()->id;
-        $airline_data->created_ip    = request()->ip();
-        $airline_data->created_at    = date('Y-m-d H:i:s');
+        $airline_data->airline_name     = $request->airline_name;
+        $airline_data->category         = $request->category;
+        $airline_data->fare             = $request->fare;
+        $airline_data->total_fare       = $request->total_fare;
+        $airline_data->commission       = $request->commission;
+        $airline_data->commission_amount= $request->commission_amount;
+        $airline_data->tax_amount       = $request->tax_amount;
+        $airline_data->ait              = $request->ait;
+        $airline_data->ait_amount       = $request->ait_amount;
+        $airline_data->add              = $request->add;
+        $airline_data->invoice_total    = $request->invoice_total;
+        $airline_data->is_active        = 1;
+        $airline_data->created_by       = Auth::user()->id;
+        $airline_data->created_ip       = request()->ip();
+        $airline_data->created_at       = date('Y-m-d H:i:s');
 
         $save = $airline_data->save();
 
@@ -99,21 +105,27 @@ class AirlineSetupController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'airline_title' => ['required'],
-            'country_name'  => ['required'],
+            'airline_name' => ['required'],
+            'category'     => ['required'],
         ]);
 
         $airline_data =  AirlineSetup::find($id);
 
-        $airline_data->airline_title = $request->airline_title;
-        $airline_data->country_name  = $request->country_name;
-        $airline_data->fare          = $request->fare;
-        $airline_data->commission    = $request->commission;
-        $airline_data->add           = $request->add;
-        $airline_data->is_active     = 1;
-        $airline_data->created_by    = Auth::user()->id;
-        $airline_data->created_ip    = request()->ip();
-        $airline_data->created_at    = date('Y-m-d H:i:s');
+        $airline_data->airline_name     = $request->airline_name;
+        $airline_data->category         = $request->category;
+        $airline_data->fare             = $request->fare;
+        $airline_data->total_fare       = $request->total_fare;
+        $airline_data->commission       = $request->commission;
+        $airline_data->commission_amount= $request->commission_amount;
+        $airline_data->tax_amount       = $request->tax_amount;
+        $airline_data->ait              = $request->ait;
+        $airline_data->ait_amount       = $request->ait_amount;
+        $airline_data->add              = $request->add;
+        $airline_data->invoice_total    = $request->invoice_total;
+        $airline_data->is_active        = 1;
+        $airline_data->updated_by       = Auth::user()->id;
+        $airline_data->updated_ip       = request()->ip();
+        $airline_data->updated_at       = date('Y-m-d H:i:s');
 
         $save = $airline_data->save();
 

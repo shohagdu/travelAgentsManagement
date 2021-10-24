@@ -50,6 +50,7 @@
 
 .FlightPlusBtn{
     color: white;
+    display: none;
 }
 .FlightSaveBtn{
     text-align: center;
@@ -123,7 +124,7 @@ input::-webkit-input-placeholder {
 .saleFooterText{
     float: right;
 }
-.FlightSaleTable, table {
+.FlightSaleTable{
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 50%;
@@ -140,6 +141,9 @@ input::-webkit-input-placeholder {
     background-color: #fff;
     font-size: 12px;
     width: 100%;
+  }
+  .HotelSaleTable{
+      display: none;
   }
 .detailsTd{
       width: 450px;

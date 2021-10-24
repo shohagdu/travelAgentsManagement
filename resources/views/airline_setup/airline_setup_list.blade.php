@@ -22,11 +22,15 @@
         <thead>
           <tr>
             <th scope="col">Sl</th>
-            <th scope="col">Airline Title</th>
-            <th scope="col">Country Name</th>
+            <th scope="col">Airline Name</th>
+            <th scope="col">Category</th>
             <th scope="col">Fare</th>
-            <th scope="col">Commission(%)</th>
-            <th scope="col">Add(%)</th>
+            <th scope="col">Tax</th>
+            <th scope="col">Total Fare</th>
+            <th scope="col">Commission</th>
+            <th scope="col">AIT</th>
+            <th scope="col">Add </th>
+            <th scope="col">Invoice Total </th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -35,11 +39,21 @@
           @foreach ($airline_info as $item )
           <tr>
             <th scope="row">{{ $i++}}</th>
-            <td>{{$item->airline_title}}</td>
-            <td> {{$item->country_name}} </td>
+            <td>{{$item->airline_name}}</td>
+            <td>
+              @if($item->category == 1)
+              International
+              @elseif($item->category ==1)
+              Domestic
+              @endif
+            </td>
             <td>{{$item->fare}}</td>
-            <td>{{$item->commission}}</td>
+            <td>{{$item->tax_amount}}</td>
+            <td>{{$item->fare+$item->tax_amount}}</td>
+            <td>{{$item->commission_amount}}</td>
+            <td>{{$item->ait_amount}}</td>
             <td>{{$item->add}}</td>
+            <td>{{$item->invoice_total}}</td>
             <td> <a href="{{ route('airline-setup-edit',$item->id)}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
               Edit
             </a> 
