@@ -94,22 +94,22 @@ function filghtCaculation(row_id){
     totalSummation();
    
 }
-// function TotalEmptycheck(row_id){
+function TotalEmptycheck(row_id){
 
-//     var fare        = isNaN($('#fare_'+row_id-1).val()) ? 0 : parseFloat($('#fare_'+row_id-1).val());
-//     var tax         = isNaN($('#tax_'+row_id-1).val()) ? 0 : parseFloat($('#tax_'+row_id-1).val());
-//     var commission  = isNaN($('#commissionPer_'+row_id-1).val()) ? 0 : parseFloat($('#commissionPer_'+row_id-1).val());
-//     var ait         = isNaN($('#aitPer_'+row_id-1).val()) ? 0 : parseFloat($('#aitPer_'+row_id-1).val());
-//     var add         = isNaN($('#add_'+row_id-1).val()) ? 0 : parseFloat($('#add_'+row_id-1).val());
+    var fare        = isNaN($('#fare_'+row_id).val()) ? 0 : parseFloat($('#fare_'+row_id).val());
+    var tax         = isNaN($('#tax_'+row_id).val()) ? 0 : parseFloat($('#tax_'+row_id).val());
+    var commission  = isNaN($('#commissionPer_'+row_id).val()) ? 0 : parseFloat($('#commissionPer_'+row_id).val());
+    var ait         = isNaN($('#aitPer_'+row_id).val()) ? 0 : parseFloat($('#aitPer_'+row_id).val());
+    var add         = isNaN($('#add_'+row_id).val()) ? 0 : parseFloat($('#add_'+row_id).val());
 
-//     var commissionAmount = (fare*commission)/100;
-//     var AITAmount = (fare*ait)/100;
+    var commissionAmount = (fare*commission)/100;
+    var AITAmount = (fare*ait)/100;
 
-//     var NetTotalEmpty = (fare+tax+AITAmount+add)- commissionAmount;
+    var NetTotalEmpty = (fare+tax+AITAmount+add)- commissionAmount;
 
-//     return 1;
+    return NetTotalEmpty;
    
-// }
+}
 // summation
 function totalSummation(){
 
@@ -142,16 +142,16 @@ function DiscountSale(){
  // addNewFlight
 
 function addNewFlight(){
+
  var total_element = $(".element1").length;
 
  var lastid = $(".element1:last").attr("id");
  var split_id = lastid.split("_");
  var nextindex = Number(split_id[1]) + 1;
- var RowID = nextindex-1;
 
- var AmountCheck = isNaN($('#amount_'+RowID).val()) ? 0 : parseFloat($('#amount_'+RowID).val());
-
- if( AmountCheck > 0){
+ console.log(nextindex);
+ 
+ if( TotalEmptycheck(nextindex-1) > 0){
 
     airline_info_all();
 
@@ -160,7 +160,7 @@ function addNewFlight(){
     if(total_element < max ){
     $(".element1:last").after("<tr class='element1' id='flightAreaDiv_"+ nextindex +"'></tr>");
 
-    $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-xs btn-danger FlightPlusBtn"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class=""> <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class=""><input name="fare[]" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="fareTd" placeholder="0.00"/></td> <td class=""><input name="tax[]" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="taxTd" placeholder="0.00"/></td><td class=""><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="totalFareTd" placeholder="0.00"/></td><td class=""><input name="commission[]" id="commission_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="commissionTd" placeholder="0.00"/><input name="commissionPer[]" id="commissionPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="ait[]" id="ait_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="aitTd" placeholder="0.00"/><input name="aitPer[]" id="aitPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="add[]" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="AddTd" placeholder="0.00"/></td><td class="amountTh"><input name="amount[]" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="amountTd Amount" placeholder="0.00" readonly/></td>');
+    $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-xs btn-danger"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class=""> <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class=""><input name="fare[]" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="fareTd" placeholder="0.00"/></td> <td class=""><input name="tax[]" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="taxTd" placeholder="0.00"/></td><td class=""><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="totalFareTd" placeholder="0.00"/></td><td class=""><input name="commission[]" id="commission_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="commissionTd" placeholder="0.00"/><input name="commissionPer[]" id="commissionPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="ait[]" id="ait_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="aitTd" placeholder="0.00"/><input name="aitPer[]" id="aitPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="add[]" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="AddTd" placeholder="0.00"/></td><td class="amountTh"><input name="amount[]" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="amountTd Amount" placeholder="0.00" readonly/></td>');
 
     }
 
@@ -219,15 +219,9 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
 
  function TotalEmptycheckHotel(row_id){
 
-    // var fare        = parseFloat($('#fare_'+row_id).val());
-    // var tax         = parseFloat($('#tax_'+row_id).val());
-    // var commission  = parseFloat($('#commission_'+row_id).val());
-    // var ait         = parseFloat($('#ait_'+row_id).val());
-    // var add         = parseFloat($('#add_'+row_id).val());
+    var NetTotalEmptyHotel = isNaN($('#amountHotel_'+row_id).val()) ? 0 : parseFloat($('#amountHotel_'+row_id).val());
 
-    var NetTotalEmpty = 1;
-
-    return NetTotalEmpty;
+    return NetTotalEmptyHotel;
    
 }
 function HotelCaculation(row_id){
@@ -244,9 +238,9 @@ function HotelCaculation(row_id){
  // addNewHotel
 
 function addNewHotel(){
-    var total_element = $(".element1").length;
+    var total_element = $(".element2").length;
    
-    var lastid = $(".element1:last").attr("id");
+    var lastid = $(".element2:last").attr("id");
     var split_id = lastid.split("_");
     var nextindex = Number(split_id[1]) + 1;
    
@@ -256,9 +250,9 @@ function addNewHotel(){
        var max = 20;
    
        if(total_element < max ){
-       $(".element1:last").after("<tr class='element1' id='hotelAreaDiv_"+ nextindex +"'></tr>");
+       $(".element2:last").after("<tr class='element2' id='hotelAreaDiv_"+ nextindex +"'></tr>");
    
-       $("#hotelAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewHotel('+nextindex+');" class="btn btn-xs btn-danger "><i class="mdi mdi-minus-box-outline"></i> </button></td>  <td><textarea rows="1" name="details[]" id="details_'+nextindex+'" class="detailsTd" placeholder="Details"></textarea></td><td><input name="amount[]" id="amountHotel_'+nextindex+'" type="text"  onkeyup="HotelCaculation('+nextindex+')" class="AmountHotel" placeholder="0.00"/></td><td><input name="discount[]" id="discountHotel_'+nextindex+'" type="text"  onkeyup="HotelCaculation('+nextindex+')" class="DiscountHotel" placeholder="0.00"/></td><td><input name="net_total[]" id="netTotal_'+nextindex+'" type="text"  o class="NetamountTd Amount" placeholder="0.00" readonly/></td>');
+       $("#hotelAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewHotel('+nextindex+');" class="btn btn-xs btn-danger "><i class="mdi mdi-minus-box-outline"></i> </button></td>  <td><textarea rows="1" name="details[]" id="details_'+nextindex+'" class="detailsTd" placeholder="Details"></textarea></td><td><input name="amount2[]" id="amountHotel_'+nextindex+'" type="text"  onkeyup="HotelCaculation('+nextindex+')" class="AmountHotel" placeholder="0.00"/></td><td><input name="discount2[]" id="discountHotel_'+nextindex+'" type="text"  onkeyup="HotelCaculation('+nextindex+')" value="0.00" class="DiscountHotel" placeholder="0.00"/></td><td><input name="net_total_row[]" id="netTotal_'+nextindex+'" type="text"  o class="NetamountTd Amount" placeholder="0.00" readonly/></td>');
    
        }
    
@@ -321,6 +315,9 @@ function get_sale_info_list() {
                     else if(data.sale_category_id==2){
                         return 'Hotels';
                     }
+                    else if(data.sale_category_id==3){
+                        return 'Transfers';
+                    }
                     else if(data.sale_category_id==4){
                         return 'Activities';
                     }
@@ -336,7 +333,15 @@ function get_sale_info_list() {
                 }
             },
             {
-                title: "Amount",
+                title: "Net Total",
+                data: "sale_amount"
+            },
+            {
+                title: "Discount",
+                data: "discount"
+            },
+            {
+                title: "Invoice Amount",
                 data: "amount"
             },
             {
@@ -344,7 +349,7 @@ function get_sale_info_list() {
                 data: null,
                 render: function(data, type, row, meta){
                  
-                    return '<a href="" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a onclick="return confirm(\'Are you sure you want to delete?\')" href="" class="btn btn-danger btn-sm text-white"><span class="mdi mdi-delete-circle"></span>  Delete </a>';
+                    return '<a href="'+target+'sale-edit/'+data.id+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a onclick="return confirm(\'Are you sure you want to delete?\')" href="" class="btn btn-danger btn-sm text-white"><span class="mdi mdi-delete-circle"></span>  Delete </a>';
                 }
             },
         ],

@@ -16,9 +16,9 @@
       <div class="card-body">
         <h5 class="card-title mb-0 lefttButtonText" >Add Airline Setup</h5>
         <a href="{{ route('airline-setup')}}" class="btn btn-success btn-sm text-white rightButton">
-          Add Airline Setup </a>
+          <i class="mdi mdi-plus-box"></i>  Add Airline Setup </a>
       </div>
-      <table id="zero_config" border="1" class="table table-bordered">
+      <table id="zero_config"  class="table table-responsive table-bordered table-striped">
         <thead>
           <tr>
             <th scope="col">Sl</th>
@@ -31,7 +31,7 @@
             <th scope="col">AIT</th>
             <th scope="col">Add </th>
             <th scope="col">Invoice Total </th>
-            <th scope="col">Action</th>
+            <th scope="col" >Action</th>
           </tr>
         </thead>
         <tbody>

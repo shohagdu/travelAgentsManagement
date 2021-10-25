@@ -18,7 +18,7 @@ class Sale extends Model
                 $join->on('AGRD.id', '=', 'SALE.agent_id');
            
              })
-    		->select(DB::raw('SQL_CALC_FOUND_ROWS SALE.id'), 'SALE.amount','SALE.sale_category_id', 'AGRD.name as agent_name')
+    		->select(DB::raw('SQL_CALC_FOUND_ROWS SALE.id'),'SALE.sale_amount','SALE.discount', 'SALE.amount', 'SALE.sale_category_id', 'AGRD.name as agent_name')
 
             ->offset($receive['start'])
             ->limit($receive['limit'])

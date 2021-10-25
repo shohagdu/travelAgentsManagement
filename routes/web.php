@@ -81,6 +81,8 @@ Route::get('/sale-category-delete/{id}', [SaleCategoryController::class, "destro
 // Sale 
 Route::get('/sale-list', [SaleController::class, "index"])->name('sale-list');
 Route::get('/sale', [SaleController::class, "create"])->name('sale');
+Route::get('/sale-edit/{id}', [SaleController::class, "edit"])->name('sale-edit');
+Route::post('/sale-update/{id}', [SaleController::class, "update"])->name('sale-update');
 Route::post('/get_sale_list_data', [SaleController::class, "get_sale_list_data"])->name('get_sale_list_data');
 Route::post('/sale-save', [SaleController::class, "store"])->name('sale-save');
 Route::post('/get_flight_setup_info', [SaleController::class, "get_flight_setup_info"])->name('get_flight_setup_info');

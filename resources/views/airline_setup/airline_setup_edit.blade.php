@@ -9,7 +9,7 @@
                 @csrf
           <div class="card-body">
             <a href="{{ route('airline-setup-list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
-              Airline Setup List </a>
+              <i class="mdi mdi-format-list-bulleted"> Airline Setup List </a>
             <h4 class="card-title "> Update Airline Setup </h4>
             <div class="form-group row">
                 <label for="airline_name" class="col-sm-2 text-end control-label col-form-label"> Airline Name</label>

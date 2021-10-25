@@ -14,9 +14,9 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title mb-0 lefttButtonText" >Sale Category List</h5>
+        <h5 class="card-title mb-0 lefttButtonText" > Sale Category List</h5>
         <a href="{{ route('sale-category')}}" class="btn btn-success btn-sm text-white rightButton">
-          Add Sale Category </a>
+          <i class="mdi mdi-plus-box"></i> Add Sale Category </a>
       </div>
       <table id="zero_config" class="table table-bordered">
         <thead>

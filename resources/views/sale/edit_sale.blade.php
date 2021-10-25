@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Sale')
+@section('title', 'Update Sale')
 @section('main_content')
 <div class="row">
     <div class="col-md-12">
@@ -10,22 +10,22 @@
         </div>
         @endif
       <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('sale-save')}}">
+        <form class="form-horizontal" method="POST" action="{{ route('sale-update', $sale_data->id )}}">
                 @csrf
           <div class="card-body">
-            <h4 class="card-tisale_category_idtle"> Sale  </h4>
+            <h4 class="card-tisale_category_idtle"> Update Sale  </h4>
             <div class="form-group row">
                 <label for="sale_category_id" class="col-sm-2 text-end control-label col-form-label"> Sale Category</label>
                 <div class="col-sm-4">
-                    <select name="sale_category_id" id="sale_category_id" onchange="saleCategory(this.value)" class="form-control @error('sale_category_id') is-invalid @enderror">
+                    <select name="sale_category_id" id="sale_category_id" onchange="saleCategory(this.value)" class="form-control @error('sale_category_id') is-invalid @enderror" readonly>
                         <option value=""> Select</option>
-                        <option value="1"> Flights </option>
-                        <option value="2"> Hotels </option>
-                        <option value="3"> Transfers </option>
-                        <option value="4"> Activities </option>
-                        <option value="5"> Holidays </option>
-                        <option value="6"> Visa </option>
-                        <option value="7"> Others </option>
+                        <option value="1" @if($sale_data->sale_category_id == 1) selected @endif> Flights </option>
+                        <option value="2" @if($sale_data->sale_category_id == 2) selected @endif> Hotels </option>
+                        <option value="3" @if($sale_data->sale_category_id == 3) selected @endif> Transfers </option>
+                        <option value="4" @if($sale_data->sale_category_id == 4) selected @endif> Activities </option>
+                        <option value="5" @if($sale_data->sale_category_id == 5) selected @endif> Holidays </option>
+                        <option value="6" @if($sale_data->sale_category_id == 6) selected @endif> Visa </option>
+                        <option value="7" @if($sale_data->sale_category_id == 7) selected @endif> Others </option>
                     </select>
                     @error('sale_category_id')
                     <span class="invalid-feedback" role="alert">
@@ -35,10 +35,10 @@
                 </div>
                 <label for="agent_id" class="col-sm-2 text-end control-label col-form-label"> Agent</label>
                 <div class="col-sm-4">
-                    <select id="agent_id" name="agent_id" class="form-control @error('agent_id') is-invalid @enderror">
+                    <select id="agent_id" name="agent_id" class="form-control @error('agent_id') is-invalid @enderror" readonly>
                         <option value=""> Select Agent</option>
                         @foreach ($agent_info as $item)
-                          <option value="{{ $item->id}}"> {{ $item->name}} </option> 
+                          <option value="{{ $item->id}}" @if($sale_data->agent_id == $item->id) selected @endif> {{ $item->name}} </option> 
                         @endforeach
                     </select>
                     @error('agent_id')
@@ -50,8 +50,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12 ">
-                    <h5 id="headingText"> Information </h5>
-                    <table  class="FlightSaleTable SaleTable">
+                    <h5 id=""> Flight Information </h5>
+                    @if($sale_data->sale_category_id== 1)
+                    <table  class="FlightSaleTable2 SaleTable">
                         <tr>
                             <th class="actionTh"> Action</th>
                             <th class="airlineTh"> Airline</th>
@@ -63,44 +64,48 @@
                             <th class="addTh"> Add </th>
                             <th class="amountTh"> Amount</th>
                         </tr>
-                        <tr  class="element1"  id="flightAreaDiv_1">
+                        @foreach($sale_details as  $key=> $data)
+                        <tr  class="element1"  id="flightAreaDiv_{{ $key+1}}">
+                            <input type="hidden" name="data_primary_id[]" id="data_primary_id" value="{{  $data->id}}">
                             <td class="actionTh">
                             </td>
                             <td>
-                                <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_1">
+                                <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_{{ $key+1}}">
                                     <option value=""> Select Flight</option>
                                     @foreach ($airline_info as $item)
-                                        <option value="{{ $item->id}}"> {{ $item->airline_name}} (@if($item->category==1) INTL @elseif($item->category==2) DOM @endif) </option>
+                                        <option value="{{ $item->id}}" @if($data->airline_id == $item->id) selected @endif> {{ $item->airline_name}} (@if($item->category==1) INTL @elseif($item->category==2) DOM @endif) </option>
                                     @endforeach
                                    
                                 </select>
                             </td>
                             <td>
-                                <input name="fare[]" id="fare_1" type="text" onkeyup="filghtCaculation(1)"  class="fareTd" placeholder="0.00"/>
+                                <input name="fare[]" id="fare_{{ $key+1}}" type="text" onkeyup="filghtCaculation({{ $key+1}})"  class="fareTd" value="{{$data->fare}}"/>
                             </td>
                             <td>
-                                <input name="tax[]" id="tax_1" type="text"  onkeyup="filghtCaculation(1)" class="taxTd" placeholder="0.00"/>
+                                <input name="tax[]" id="tax_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})" class="taxTd"  value="{{$data->tax_per}}"/>
                             </td>
                             <td>
-                                <input name="total_fare[]" id="totalFare_1" type="text"  onkeyup="filghtCaculation(1)" class="totalFareTd" placeholder="0.00"/>
+                                <input name="total_fare[]" id="totalFare_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})"  value="{{$data->total_amount}}" class="totalFareTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCaculation(1)" class="commissionTd" placeholder="0.00"/>
-                                <input name="commissionPer[]" id="commissionPer_1" type="hidden"/>
+                                <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCaculation({{ $key+1}})"  value="{{$data->commission_amount}}" class="commissionTd" placeholder="0.00"/>
+                                <input name="commissionPer[]" id="commissionPer_{{ $key+1}}" type="hidden"  value="{{$data->commission_per}}"/>
                             </td>
                             <td>
-                                <input name="ait[]" id="ait_1" type="text"  onkeyup="filghtCaculation(1)" class="aitTd" placeholder="0.00"/>
-                                <input name="aitPer[]" id="aitPer_1" type="hidden"/>
+                                <input name="ait[]" id="ait_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})" class="aitTd"  value="{{$data->ait_amount}}"/>
+                                <input name="aitPer[]" id="aitPer_{{ $key+1}}" type="hidden"  value="{{$data->ait_per}}"/>
                             </td>
                             <td>
-                                <input name="add[]" id="add_1" type="text"  onkeyup="filghtCaculation(1)" class="AddTd" placeholder="0.00"/>
+                                <input name="add[]" id="add_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})" class="AddTd"  value="{{$data->add_amount}}"/>
                             </td>
                             <td>
-                                <input name="amount[]" id="amount_1" type="text"  onkeyup="filghtCaculation(1)" class="amountTd Amount" placeholder="0.00" readonly/>
+                                <input name="amount[]" id="amount_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})" class="amountTd Amount"  value="{{$data->net_amount}}" readonly/>
                             </td>
                         </tr>
+                        @endforeach
                     </table>
-                    <table  class="HotelSaleTable SaleTable">
+                    @else
+                    <table  class="HotelSaleTable2 SaleTable">
                         <tr>
                             <th class="actionTh"> Action</th>
                             <th class="DetailsTh"> Details</th>
@@ -125,16 +130,19 @@
                             </td>
                         </tr>
                     </table>
-
+                    @endif
                 </div>
             </div><br>
-            <button type="button" id="FlightPlusBtn" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
-            <button type="button" id="HotelPlusBtn" onclick="addNewHotel();" class="btn btn-sm btn-success HotelPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
+            @if($sale_data->sale_category_id== 1)
+            <button type="button" id="FlightPlusBtn" onclick="addNewFlight();" class="btn btn-sm btn-success "><i class="mdi mdi-plus-box-outline"></i> New </button>
+            @else
+            <button type="button" id="HotelPlusBtn" onclick="addNewHotel();" class="btn btn-sm btn-success "><i class="mdi mdi-plus-box-outline"></i> New </button>
+            @endif
             <div class="row">
                 <div class="col-md-8"></div>
                 <div class="col-md-4" >
                    <p> <span style="width: 100px"> Net Total</span> 
-                        <input id="NetTotal" name="net_total" type="text" class="saleFooterText @error('net_total') is-invalid @enderror" placeholder="0.00">
+                        <input id="NetTotal" name="net_total" type="text" class="saleFooterText @error('net_total') is-invalid @enderror" value="{{ $sale_data->sale_amount}}">
                         @error('net_total')
                             <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -142,10 +150,10 @@
                         @enderror
                     </p>
                    <p> <span style="width: 100px"> Discount</span> 
-                    <input id="Discount" onkeyup="DiscountSale()" name="discount" type="text" class="saleFooterText" value="0.00">
+                    <input id="Discount" onkeyup="DiscountSale()" name="discount" type="text" class="saleFooterText"  value="{{ $sale_data->discount}}">
                    </p>
                    <p> <span style="width: 100px"> Invoice Amount</span> 
-                    <input id="invoice_amount" name="invoice_amount" type="text" class="saleFooterText @error('invoice_amount') is-invalid @enderror" placeholder="0.00">
+                    <input id="invoice_amount" name="invoice_amount" type="text" class="saleFooterText @error('invoice_amount') is-invalid @enderror"  value="{{ $sale_data->amount}}">
                     @error('invoice_amount')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -153,8 +161,8 @@
                     @enderror
                    </p>
                    <p>
-                    <button type="submit" class="btn btn-primary FlightSaveBtn">
-                        Save
+                    <button type="submit" class="btn btn-info FlightSaveBtn">
+                        Update
                       </button>
                    </p>
         

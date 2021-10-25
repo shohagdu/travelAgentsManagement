@@ -71,7 +71,7 @@
               </li>
             </ul>
           </li>
-          <li class="sidebar-item">
+          <!-- <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark"
               href="javascript:void(0)"
               aria-expanded="false"
@@ -89,7 +89,7 @@
                   ><span class="hide-menu">  Country Setup  List </span></a>
               </li>
             </ul>
-          </li>
+          </li>-->
           <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark"
               href="javascript:void(0)"
