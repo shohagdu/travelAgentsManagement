@@ -9,6 +9,8 @@ use App\Http\Controllers\AirlineSetupController;
 use App\Http\Controllers\CountrySetupController;
 use App\Http\Controllers\SaleCategoryController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\BillCollectionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,6 +72,14 @@ Route::get('/country-setup-edit/{id}', [CountrySetupController::class, "edit"])-
 Route::post('/country-setup-update/{id}', [CountrySetupController::class, "update"])->name('country-setup-update');
 Route::get('/country-setup-delete/{id}', [CountrySetupController::class, "destroy"])->name('country-setup-delete');
 
+// Bank setup 
+Route::get('/bank-list', [BankController::class, "index"])->name('bank-list');
+Route::get('/bank-create', [BankController::class, "create"])->name('bank-create');
+Route::post('/bank-save', [BankController::class, "store"])->name('bank-save');
+Route::get('/bank-edit/{id}', [BankController::class, "edit"])->name('bank-edit');
+Route::post('/bank-update/{id}', [BankController::class, "update"])->name('bank-update');
+Route::get('/bank-delete/{id}', [BankController::class, "destroy"])->name('bank-delete');
+
 // Sale category 
 Route::get('/sale-category-list', [SaleCategoryController::class, "index"])->name('sale-category-list');
 Route::get('/sale-category', [SaleCategoryController::class, "create"])->name('sale-category');
@@ -83,6 +93,10 @@ Route::get('/sale-list', [SaleController::class, "index"])->name('sale-list');
 Route::get('/sale', [SaleController::class, "create"])->name('sale');
 Route::get('/sale-edit/{id}', [SaleController::class, "edit"])->name('sale-edit');
 Route::post('/sale-update/{id}', [SaleController::class, "update"])->name('sale-update');
+Route::get('/sale-delete/{id}', [SaleController::class, "destroy"])->name('sale-delete');
 Route::post('/get_sale_list_data', [SaleController::class, "get_sale_list_data"])->name('get_sale_list_data');
 Route::post('/sale-save', [SaleController::class, "store"])->name('sale-save');
 Route::post('/get_flight_setup_info', [SaleController::class, "get_flight_setup_info"])->name('get_flight_setup_info');
+
+// Bill Colleaction 
+Route::get('/bill-collection', [BillCollectionController::class, "index"])->name('bill-collection');

@@ -33,6 +33,20 @@
             </ul>
           </li>
           <li class="sidebar-item">
+            <a class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
+              aria-expanded="false"
+              ><i class="mdi mdi-book-open"></i
+              ><span class="hide-menu"> Bill Collection </span></a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{{ route('bill-collection')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Bill Collection </span></a>
+              </li>
+            </ul>
+          </li>
+          <li class="sidebar-item">
             <a
               class="sidebar-link has-arrow waves-effect waves-dark"
               href="javascript:void(0)"
@@ -116,6 +130,11 @@
               ><i class="mdi mdi-image-filter-vintage"></i
               ><span class="hide-menu">Setting </span></a>
             <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{{ route('bank-create')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Bank Setup </span></a>
+              </li>
               <li class="sidebar-item">
                 <a href="{{ route('organization-setup')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i

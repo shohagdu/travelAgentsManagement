@@ -75,7 +75,6 @@
                                     @foreach ($airline_info as $item)
                                         <option value="{{ $item->id}}" @if($data->airline_id == $item->id) selected @endif> {{ $item->airline_name}} (@if($item->category==1) INTL @elseif($item->category==2) DOM @endif) </option>
                                     @endforeach
-                                   
                                 </select>
                             </td>
                             <td>
@@ -113,22 +112,25 @@
                             <th class="DiscountTh"> Discount</th>
                             <th class="netTotalTh"> Net Total</th>
                         </tr>
-                        <tr  class="element2"  id="hotelAreaDiv_1">
+                        @foreach($sale_details as $k=> $value)
+                        <tr  class="element2"  id="hotelAreaDiv_{{ $k+1}}">
+                            <input type="hidden" name="data_primary_id2[]" id="data_primary_id2" value="{{  $value->id}}">
                             <td class="actionTh">
                             </td>
                             <td>
-                                <textarea name="details[]" id="details_1" rows="1" class="detailsTd" placeholder="Details"></textarea>
+                                <textarea name="details[]" id="details_{{ $k+1}}" rows="1" class="detailsTd" placeholder="Details">{{ $value->details}}</textarea>
                             </td>
                             <td>
-                                <input name="amount2[]" id="amountHotel_1" type="text"  onkeyup="HotelCaculation(1)" class="AmountHotel" placeholder="0.00"/>
+                                <input name="amount2[]" id="amountHotel_{{ $k+1}}" type="text"  onkeyup="HotelCaculation(1)" class="AmountHotel" value="{{ $value->net_amount}}"/>
                             </td>
                             <td>
-                                <input name="discount2[]" id="discountHotel_1" type="text"  onkeyup="HotelCaculation(1)" value="0.00" class="DiscountHotel" placeholder="0.00"/>
+                                <input name="discount2[]" id="discountHotel_{{ $k+1}}" type="text"  onkeyup="HotelCaculation(1)" value="{{ $value->discount}}" class="DiscountHotel" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="net_total_row[]" id="netTotal_1" type="text"  class="NetamountTd Amount" placeholder="0.00" readonly/>
+                                <input name="net_total_row[]" id="netTotal_{{ $k+1}}" type="text"  class="NetamountTd Amount" value="{{ $value->invoice_amount}}"readonly/>
                             </td>
                         </tr>
+                        @endforeach
                     </table>
                     @endif
                 </div>

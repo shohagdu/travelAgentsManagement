@@ -346,32 +346,52 @@ class SaleController extends Controller
                 'created_at'       => date('Y-m-d H:i:s'),
             ];
 
-            $sale_save = DB::table('sales')->insert($sale_data);
+            $sale_save = DB::table('sales')->where('id', $id)->update($sale_data);
 
             $details       = $request->details;
             $discount      = $request->discount2;
             $amount        = $request->amount2;
             $net_total_row = $request->net_total_row;
 
-            $sale_id   = DB::getPdo()->lastInsertId();
+            $sale_detail_data_new = [];
 
-            $sale_detail_data = [];
+            for($i=0;$i<count($details);$i++){
+                 
+                if(isset($request->data_primary_id2[$i]) > 0){
+                    $sale_detail_data = [
+                        'id'                => $request->data_primary_id2[$i],
+                        'sale_id'           => $id,
+                        'details'           => $details[$i],
+                        'discount'          => $discount[$i],
+                        'net_amount'        => $amount[$i],
+                        'invoice_amount'    => $net_total_row[$i],
+                        "is_active"         => 1,
+                        'created_by'        => Auth::user()->id,
+                        'created_ip'        => request()->ip(),
+                        'created_at'        => date('Y-m-d H:i:s'),
+                    ];
 
-            foreach($details as $key => $item){
-                $sale_detail_data[] = [
-                    'sale_id'           => $sale_id,
-                    'details'           => $item,
-                    'discount'          => $discount[$key],
-                    'net_amount'        => $amount[$key],
-                    'invoice_amount'    => $net_total_row[$key],
-                    "is_active"         => 1,
-                    'created_by'        => Auth::user()->id,
-                    'created_ip'        => request()->ip(),
-                    'created_at'        => date('Y-m-d H:i:s'),
-                ];
-            }
+                    $sale_save = DB::table('sale_details')->where('id', $request->data_primary_id2[$i])->update($sale_detail_data);
 
-            $sale_save = DB::table('sale_details')->insert($sale_detail_data);
+                }else{
+                    $sale_detail_data_new[] = [
+                        'sale_id'           => $id,
+                        'details'           => $details[$i],
+                        'discount'          => $discount[$i],
+                        'net_amount'        => $amount[$i],
+                        'invoice_amount'    => $net_total_row[$i],
+                        "is_active"         => 1,
+                        'created_by'        => Auth::user()->id,
+                        'created_ip'        => request()->ip(),
+                        'created_at'        => date('Y-m-d H:i:s'),
+                    ];
+                }  
+            } 
+            
+            if($sale_detail_data_new !='' ){
+                $sale_save = DB::table('sale_details')->insert($sale_detail_data_new);
+              }
+            
         }    
 
         if($sale_save){
@@ -389,7 +409,16 @@ class SaleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sale_delete = Sale::where('id', $id)->delete();
+        $sale_details_delete = SaleDetail::where('sale_id', $id)->delete();
+
+        if($sale_delete){
+            return redirect()->route('sale-list')->with('flash.message', 'Sale Sucessfully Deleted!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('sale-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
+
+
     }
     public function get_flight_setup_info(Request $request){
 
