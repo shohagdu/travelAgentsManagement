@@ -86,19 +86,3 @@ function AirlineTotalFare(){
     $("#invoice_total").val(isNaN(invoiceAmount) ? 0.00 : invoiceAmount);
 
 }
-
-function PaymentMethod(id){
-    
-    if(id==1){
-        $('#BankNameId').hide();
-        $('#chequeNoId').hide();
-    }else if(id==2){
-        $('#BankNameId').show();
-        $('#chequeNoId').show();
-    }else{
-        $('#BankNameId').hide();
-        $('#chequeNoId').hide();
-    }
-
-   
-}

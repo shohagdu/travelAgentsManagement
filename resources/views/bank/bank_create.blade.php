@@ -32,6 +32,12 @@
                     @enderror 
                   </div>
             </div>
+            <div class="form-group row">
+              <label for="opening_balance" class="col-sm-2 text-end control-label col-form-label"> Opening Balance</label>
+              <div class="col-sm-4">
+                  <input type="text" name="opening_balance" id="opening_balance" class="form-control"  placeholder=" Opening Balance">
+              </div>
+          </div>
           </div>
           <div class="border-top">
             <div class="card-body">

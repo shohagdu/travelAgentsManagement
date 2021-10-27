@@ -9,6 +9,7 @@ use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Sale;
 use App\Models\SaleDetail;
+use App\Models\AccTransactionInfo;
 use Session;
 use DB;
 
@@ -84,7 +85,6 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-       
         $validated = $request->validate([
             'sale_category_id' => ['required'],
             'agent_id'         => ['required'],
@@ -150,7 +150,25 @@ class SaleController extends Controller
 
             $sale_save = DB::table('sale_details')->insert($sale_detail_data);
 
+            // transaction data
+            $transaction_data = new  AccTransactionInfo();
+            
+            $transaction_data->sales_id      = $sale_id;
+            $transaction_data->debit_acc     = $request->agent_id;
+            $transaction_data->credit_acc    = 0;
+            $transaction_data->debit_amount  = $request->invoice_amount;
+            $transaction_data->credit_amount = 0.00;
+            $transaction_data->trans_type    = 1;
+            $transaction_data->is_active     = 1;
+            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->created_by    = Auth::user()->id;
+            $transaction_data->created_ip    = request()->ip();
+            $transaction_data->created_at    = date('Y-m-d H:i:s');
+
+            $transaction_save = $transaction_data->save();
+           
         }else{
+
             $sale_data = [
                 'sale_category_id' => $request->sale_category_id,
                 'agent_id'         => $request->agent_id,
@@ -189,6 +207,23 @@ class SaleController extends Controller
             }
 
             $sale_save = DB::table('sale_details')->insert($sale_detail_data);
+
+            // transaction data
+            $transaction_data = new  AccTransactionInfo();
+            
+            $transaction_data->sales_id      = $sale_id;
+            $transaction_data->debit_acc     = $request->agent_id;
+            $transaction_data->credit_acc    = 0;
+            $transaction_data->debit_amount  = $request->invoice_amount;
+            $transaction_data->credit_amount = 0.00;
+            $transaction_data->trans_type    = 1;
+            $transaction_data->is_active     = 1;
+            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->created_by    = Auth::user()->id;
+            $transaction_data->created_ip    = request()->ip();
+            $transaction_data->created_at    = date('Y-m-d H:i:s');
+
+            $transaction_save = $transaction_data->save();
         }    
 
         if($sale_save){

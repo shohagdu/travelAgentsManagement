@@ -100,3 +100,4 @@ Route::post('/get_flight_setup_info', [SaleController::class, "get_flight_setup_
 
 // Bill Colleaction 
 Route::get('/bill-collection', [BillCollectionController::class, "index"])->name('bill-collection');
+Route::post('/bill-collection-save', [BillCollectionController::class, "store"])->name('bill-collection-save');

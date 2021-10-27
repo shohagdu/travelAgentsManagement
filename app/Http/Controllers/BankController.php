@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Bank;
+use App\Models\AccTransactionInfo;
 use Illuminate\Support\Facades\Auth;
+use DB;
 use Session;
 
 class BankController extends Controller
@@ -47,14 +49,33 @@ class BankController extends Controller
 
         $bank_data = new Bank();
 
-        $bank_data->name       = $request->name;
-        $bank_data->account_no = $request->account_no;
-        $bank_data->is_active  = 1;
-        $bank_data->created_by = Auth::user()->id;
-        $bank_data->created_ip = request()->ip();
-        $bank_data->created_at = date('Y-m-d H:i:s');
+        $bank_data->name            = $request->name;
+        $bank_data->account_no      = $request->account_no;
+        $bank_data->opening_balance = $request->opening_balance;
+        $bank_data->is_active       = 1;
+        $bank_data->created_by      = Auth::user()->id;
+        $bank_data->created_ip      = request()->ip();
+        $bank_data->created_at      = date('Y-m-d H:i:s');
 
         $save = $bank_data->save();
+
+        // Bnak primary id
+        $bank_id = DB::getPdo()->lastInsertId();
+
+        $transaction_data = new  AccTransactionInfo();
+
+        $transaction_data->debit_acc     = NULL;
+        $transaction_data->credit_acc    = $bank_id;
+        $transaction_data->debit_amount  = 0.00;
+        $transaction_data->credit_amount = $request->opening_balance;
+        $transaction_data->trans_type    = 4;
+        $transaction_data->is_active     = 1;
+        $transaction_data->trans_date    = date('Y-m-d');
+        $transaction_data->created_by    = Auth::user()->id;
+        $transaction_data->created_ip    = request()->ip();
+        $transaction_data->created_at    = date('Y-m-d H:i:s');
+
+        $save = $transaction_data->save();
 
         if($save){
             return redirect()->route('bank-list')->with('flash.message', 'Bank  Sucessfully Added!')->with('flash.class', 'success');
