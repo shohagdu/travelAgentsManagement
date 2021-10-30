@@ -83,6 +83,6 @@ function AirlineTotalFare(){
 
     var invoiceAmount = parseFloat((total_fare+aitAmount+add)-commissionAmount);
 
-    $("#invoice_total").val(isNaN(invoiceAmount) ? 0.00 : invoiceAmount);
+    $("#invoice_total").val(isNaN(invoiceAmount) ? 0.00 : invoiceAmount.toFixed(2));
 
 }

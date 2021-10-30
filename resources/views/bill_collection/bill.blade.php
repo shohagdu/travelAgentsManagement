@@ -1,7 +1,10 @@
 @extends('layouts.master')
 @section('title', 'Bill Collection')
 @section('css')
-<link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/> 
+<link rel="stylesheet" href="{{ asset('assets/datatable/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/datatable/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/datatable/css/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css"href="{{ asset('assets/libs/select2/dist/css/select2.min.css')}}"/>
 <link href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet"/>       
 @endsection
 @section('main_content')
@@ -15,26 +18,41 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title mb-0 lefttButtonText"> Bill Collection </h5>
-        <button class="btn btn-success btn-sm text-white rightButton" onclick="ModalBillCollection()">
-          <i class="mdi mdi-plus-box"></i> Add Bill Collection </button>
+        <input type="hidden" name="asset" id="asset" value="{{ asset('')}}">
+        <div class="form-group row">
+            <div class="col-sm-2">
+               <h4>Bill Collection</h4>
+            </div>
+
+          <label for="agent_id" class="col-sm-1 text-end control-label col-form-label"> Agent</label>
+          <div class="col-sm-2">
+              <select name="agent_id" id="agent_id" class="form-control">
+                  <option value=""> Select </option>
+                  @foreach ($agent_info as $item )
+                  <option value="{{$item->id}}"> {{$item->name}} </option>
+                  @endforeach
+              </select>
+          </div>
+        <label for="currency" class="col-sm-1 text-end control-label col-form-label"> Date </label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" name="trans_date" id="trans_date" placeholder="dd-mm-yyyy" autocomplete="off">
+        </div>
+          <div class="col-sm-1">
+            <button onclick="search_bill_collection_reports()" id="" class="btn btn-primary">Search</button>
+        </div>
+
+        <h5 class="card-title mb-0 lefttButtonText">    <button class="btn btn-success btn-sm text-white rightButton" onclick="ModalBillCollection()">
+          <i class="mdi mdi-plus-box"></i> Add Bill Collection </button></h5>
+      
       </div>
-      <table id="zero_config" class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">Sl</th>
-            <th scope="col">Name</th>
-            <th scope="col">Amount </th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-       
+      <table id="billListTable" class="table table-bordered">
+  
       </table>
     </div>
   </div>
   <!-- Bill  modal -->
 <div class="modal fade" id="BillCollectionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-  <form method="post" action="{{ route('bill-collection-save')}}" >
+  <form method="post" id="BillCollectionForm"  action="javascript:void(0)" >
     @csrf
   <div class="modal-dialog">
     <div class="modal-content">
@@ -48,56 +66,46 @@
         <div class="form-group row">
           <label for="agent_id" class="col-sm-4 text-end control-label col-form-label"> Agent Name</label>
           <div class="col-sm-8">
-              <select id="agent_id" name="agent_id" class="form-control @error('agent_id') is-invalid @enderror">
+              <select id="AgentId" name="agent_id" onchange="AgentBillPaymentData()" class="form-control">
                 <option value=""> Select Agent </option>
                 @foreach ($agent_info as $item)
                   <option value="{{ $item->id}}"> {{ $item->name}} </option> 
                 @endforeach
              </select>
-              @error('agent_id')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-              @enderror 
           </div>
         </div>
         <div class="form-group row">
           <label for="due_amount" class="col-sm-4 text-end control-label col-form-label"> Due Amount </label>
           <div class="col-sm-8">
-            <input type="text" name="due_amount" id="due_amount" class="form-control"  placeholder="0.00" required>
+            <input type="text" name="due_amount" id="due_amount" class="form-control"  placeholder="0.00">
           </div>
         </div>
         <div class="form-group row">
           <label for="payment_amount" class="col-sm-4 text-end control-label col-form-label"> Payment Amount </label>
           <div class="col-sm-8">
-            <input type="text" name="payment_amount" id="payment_amount" class="form-control"  placeholder="0.00" required>
+            <input type="text" name="payment_amount" id="payment_amount"  onchange="BillCurrentDue()" class="form-control"  placeholder="0.00">
           </div>
         </div>
         <div class="form-group row">
           <label for="current_due_amount" class="col-sm-4 text-end control-label col-form-label"> Current Due Amount </label>
           <div class="col-sm-8">
-            <input type="text" name="current_due_amount" id="current_due_amount" class="form-control"  placeholder="0.00" required>
+            <input type="text" name="current_due_amount" id="current_due_amount" class="form-control"  placeholder="0.00">
           </div>
         </div>
         <div class="form-group row">
           <label for="payment_method" class="col-sm-4 text-end control-label col-form-label"> Payment Method</label>
           <div class="col-sm-8">
-              <select id="payment_method" name="payment_method" onchange="PaymentMethod(this.value)" class="form-control @error('payment_method') is-invalid @enderror">
+              <select id="payment_method" name="payment_method" onchange="PaymentMethod(this.value)" class="form-control">
                 <option value=""> Select Payment Method </option>
                 <option value="1"> Cash </option> 
                 <option value="2"> Bank </option> 
-            </select>
-              @error('payment_method')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-              @enderror 
+              </select>
           </div>
         </div>
         <div class="form-group row" id="BankNameId" style="display: none">
           <label for="bank_name" class="col-sm-4 text-end control-label col-form-label"> Bank Name</label>
           <div class="col-sm-8">
-              <select id="bank_name" name="bank_name" class="form-control">
+              <select id="bank_name" name="bank_name" class="form-control" >
                 <option value=""> Select Bank  </option>
                 @foreach ($bank as $item )
                 <option value="{{ $item->id}}"> {{ $item->name}} </option> 
@@ -108,27 +116,20 @@
         <div class="form-group row" id="chequeNoId" style="display: none">
           <label for="receipt_cheque_no" class="col-sm-4 text-end control-label col-form-label"> Receipt/Cheque No</label>
           <div class="col-sm-8">
-            <input type="text" name="receipt_cheque_no" id="receipt_cheque_no" class="form-control"  placeholder="Cheque No" required>
+            <input type="text" name="receipt_cheque_no" id="receipt_cheque_no" class="form-control"  placeholder="Cheque No">
           </div>
         </div>
-       
         <div class="form-group row">
-          <label for="trans_date" class="col-sm-4 text-end control-label col-form-label"> Payment Date </label>
+          <label for="payment_date" class="col-sm-4 text-end control-label col-form-label"> Payment Date </label>
           <div class="col-sm-8">
             <div class="input-group">
-              <input name="trans_date" type="text" class="form-control" id="trans_date" placeholder="mm/dd/yyyy">
+              <input name="payment_date" type="text" class="form-control" id="payment_date" placeholder="dd-mm-yyyy"  autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text h-100"><i class="mdi mdi-calendar"></i></span>
               </div>
             </div>
-            @error('trans_date')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-              @enderror 
           </div>
         </div>
-
         <div class="form-group row">
           <label for="remarks" class="col-sm-4 text-end control-label col-form-label"> Remark </label>
           <div class="col-sm-8">
@@ -138,7 +139,9 @@
       </div>
       <div class="modal-footer">
         <button onclick="ModalBillCollectionClose()" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Payment  </button>
+        <input type="hidden" name="target" id="target" value="{{ asset('')}}">
+        <input type="hidden" name="id" id="id">
+        <button type="submit" id="BillCollectionSaveBtn" class="btn btn-primary">Payment  </button>
       </div>
     </div>
   </div>
@@ -150,7 +153,15 @@
 
 @endsection
 @section('js')
-<script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<!-- DataTables  -->
+<script src="{{ asset('assets/datatable/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('assets/datatable/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{ asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
 <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{ asset('js/sweetalert.min.js')}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{ asset('js/bill.js')}}"></script>
 @endsection

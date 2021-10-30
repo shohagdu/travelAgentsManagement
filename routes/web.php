@@ -101,3 +101,8 @@ Route::post('/get_flight_setup_info', [SaleController::class, "get_flight_setup_
 // Bill Colleaction 
 Route::get('/bill-collection', [BillCollectionController::class, "index"])->name('bill-collection');
 Route::post('/bill-collection-save', [BillCollectionController::class, "store"])->name('bill-collection-save');
+Route::post('/bill_collection_row_data', [BillCollectionController::class, "edit"])->name('bill_collection_row_data');
+Route::post('/bill_collection_delete', [BillCollectionController::class, "bill_collection_delete"])->name('bill_collection_delete');
+Route::post('/get_bill_collection_list_data', [BillCollectionController::class, "get_bill_collection_list_data"])->name('get_bill_collection_list_data');
+
+Route::post('/agent_bill_payment_data', [BillCollectionController::class, "agent_bill_payment_data"])->name('agent_bill_payment_data');
