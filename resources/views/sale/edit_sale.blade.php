@@ -10,7 +10,7 @@
         </div>
         @endif
       <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('sale-update', $sale_data->id )}}">
+        <form class="form-horizontal" method="POST" id="SaleFormUpdate" action="javascript:void(0)">
                 @csrf
           <div class="card-body">
             <h4 class="card-tisale_category_idtle"> Update Sale  </h4>
@@ -84,14 +84,14 @@
                                 <input name="tax[]" id="tax_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})" class="taxTd"  value="{{$data->tax_per}}"/>
                             </td>
                             <td>
-                                <input name="total_fare[]" id="totalFare_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})"  value="{{$data->total_amount}}" class="totalFareTd" placeholder="0.00"/>
+                                <input name="total_fare[]" id="totalFare_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})"  value="{{$data->total_amount}}" class="totalFareTd" placeholder="0.00" readonly/>
                             </td>
                             <td>
-                                <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCaculation({{ $key+1}})"  value="{{$data->commission_amount}}" class="commissionTd" placeholder="0.00"/>
+                                <input name="commission[]" id="commission_{{ $key+1}}" type="text"  onkeyup="filghtCommissionAITCaculation({{ $key+1}})"  value="{{$data->commission_amount}}" class="commissionTd" placeholder="0.00"/>
                                 <input name="commissionPer[]" id="commissionPer_{{ $key+1}}" type="hidden"  value="{{$data->commission_per}}"/>
                             </td>
                             <td>
-                                <input name="ait[]" id="ait_{{ $key+1}}" type="text"  onkeyup="filghtCaculation({{ $key+1}})" class="aitTd"  value="{{$data->ait_amount}}"/>
+                                <input name="ait[]" id="ait_{{ $key+1}}" type="text"  onkeyup="filghtCommissionAITCaculation({{ $key+1}})" class="aitTd"  value="{{$data->ait_amount}}"/>
                                 <input name="aitPer[]" id="aitPer_{{ $key+1}}" type="hidden"  value="{{$data->ait_per}}"/>
                             </td>
                             <td>
@@ -141,7 +141,9 @@
             <button type="button" id="HotelPlusBtn" onclick="addNewHotel();" class="btn btn-sm btn-success "><i class="mdi mdi-plus-box-outline"></i> New </button>
             @endif
             <div class="row">
-                <div class="col-md-8"></div>
+                <div class="col-md-8">
+                    <textarea class="form-control SaleRemaks" rows="3" name="remarks" id="remarks" placeholder="Remarks"> {{ $transaction_data->remarks}} </textarea>
+                </div>
                 <div class="col-md-4" >
                    <p> <span style="width: 100px"> Net Total</span> 
                         <input id="NetTotal" name="net_total" type="text" class="saleFooterText @error('net_total') is-invalid @enderror" value="{{ $sale_data->sale_amount}}">
@@ -163,7 +165,9 @@
                     @enderror
                    </p>
                    <p>
-                    <button type="submit" class="btn btn-info FlightSaveBtn">
+                    <input type="hidden" name="target" id="target" value="{{ asset('')}}">
+                    <input type="hidden" name="id" id="id" value="{{ $sale_data->id}}">
+                    <button type="submit" id="SaleSaveBtn" class="btn btn-info FlightSaveBtn">
                         Update
                       </button>
                    </p>
@@ -184,5 +188,6 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('js/sweetalert.min.js')}}"></script>
     <script src="{{ asset('js/sale.js')}}"></script>
 @endsection

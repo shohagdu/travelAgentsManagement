@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Bank Update')
+@section('title', 'Account Update')
 @section('main_content')
 <div class="row">
     <div class="col-md-12">
@@ -8,10 +8,10 @@
                 @csrf
           <div class="card-body">
             <a href="{{ route('bank-list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
-              <i class="mdi mdi-format-list-bulleted"></i> Bank List </a>
-            <h4 class="card-title"> Bank Update </h4>
+              <i class="mdi mdi-format-list-bulleted"></i> Account List </a>
+            <h4 class="card-title"> Account Update </h4>
             <div class="form-group row">
-                <label for="name" class="col-sm-2 text-end control-label col-form-label"> Bank Name</label>
+                <label for="name" class="col-sm-2 text-end control-label col-form-label"> Account Name</label>
                 <div class="col-sm-4">
                   <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{$bank_info->name}}" required>
                   @error('name')
@@ -31,6 +31,22 @@
                     </span>
                     @enderror 
                   </div>
+            </div>
+            <div class="form-group row">
+              <label for="opening_balance" class="col-sm-2 text-end control-label col-form-label"> Opening Balance</label>
+              <div class="col-sm-4">
+                  <input type="text" name="opening_balance" id="opening_balance" class="form-control"  placeholder=" Opening Balance"  value="{{  $bank_info->opening_balance}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type" class="col-sm-2 text-end control-label col-form-label"> Type </label>
+              <div class="col-sm-4">
+                  <select name="type" id="type" class="form-control" >
+                    <option  value=""> Select</option>
+                    <option value="1" @if($bank_info->type == 1) selected @endif> Cash </option>
+                    <option value="2" @if($bank_info->type == 2) selected @endif > Bank </option>
+                  </select>
+              </div>
             </div>
           </div>
           <div class="border-top">

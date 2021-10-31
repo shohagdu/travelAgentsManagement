@@ -143,14 +143,12 @@ function ModalBillCollection(){
     $("#due_amount").val('');
     $("#payment_amount").val('');
     $("#current_due_amount").val('');
-    $("#payment_method").val('');
     $("#bank_name").val('');
     $("#receipt_cheque_no").val('');
     $("#payment_date").val('');
     $("#remarks").val('');
     $("#id").val('');
 
-    $('#BankNameId').hide();
     $('#BillCollectionModal').modal('show');
     document.getElementById("BillCollectionSaveBtn").innerHTML = "Payment";
 }
@@ -186,6 +184,7 @@ $(document).on("submit","#BillCollectionForm",function (e){
                 }
             });
     }else{
+        $('#BillCollectionSaveBtn').attr('disabled',false);
         swal("Something went wrong","Field Cannot be Empty", "error");
     }
  });
@@ -208,22 +207,12 @@ $(document).on("submit","#BillCollectionForm",function (e){
                 $("#due_amount").val(response.data.credit_amount);
                 $("#payment_amount").val(response.data.credit_amount);
                 $("#current_due_amount").val(response.data.credit_amount);
-                $("#payment_method").val(response.data.payment_method);
                 $("#receipt_cheque_no").val(response.data.receipt_cheque_no);
                 $("#payment_date").val(response.data.trans_date);
                 $("#remarks").val(response.data.remarks);
                 $('#chequeNoId').show();
-                
-                if(response.data.payment_method==1){
-                    $('#BankNameId').hide();
-                }else if(response.data.payment_method==2){
-                    $("#bank_name").val(response.data.debit_acc);
-                    $('#BankNameId').show();
-                }else{
-                    $('#BankNameId').hide();
-                }
 
-               document.getElementById("BillCollectionSaveBtn").innerHTML = "Update";
+                document.getElementById("BillCollectionSaveBtn").innerHTML = "Update";
 
             $("#BillCollectionModal").modal('show');
         }

@@ -14,9 +14,9 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title mb-0 lefttButtonText">Bank List</h5>
+        <h5 class="card-title mb-0 lefttButtonText">Account List</h5>
         <a href="{{ route('bank-create')}}" class="btn btn-success btn-sm text-white rightButton">
-          <i class="mdi mdi-plus-box"></i> Add Bank  </a>
+          <i class="mdi mdi-plus-box"></i> Add Account  </a>
       </div>
       <table id="zero_config" class="table table-bordered">
         <thead>
@@ -24,6 +24,7 @@
             <th scope="col">Sl</th>
             <th scope="col">Name</th>
             <th scope="col">Account No</th>
+            <th scope="col">Type</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -34,6 +35,7 @@
             <th scope="row">{{ $i++}}</th>
             <td> {{$item->name}}</td>
             <td> {{$item->account_no}}</td>
+            <td> @if($item->type == 1) Cash @else Bank @endif</td>
             <td> <a href="{{ route('bank-edit',$item->id)}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
               Edit
             </a> 

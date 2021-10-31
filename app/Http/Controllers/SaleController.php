@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AgentRecord;
 use App\Models\AirlineSetup;
+use App\Models\SaleCategory;
 use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Sale;
@@ -71,10 +72,11 @@ class SaleController extends Controller
      */
     public function create()
     {
-        $agent_info   = AgentRecord::all();
-        $airline_info = AirlineSetup::all();
-        
-        return view('sale.sale', compact('agent_info', 'airline_info'));
+        $agent_info         = AgentRecord::all();
+        $airline_info       = AirlineSetup::all();
+        $sale_category_info = SaleCategory::take(7)->get();
+      
+        return view('sale.sale', compact('agent_info', 'airline_info', 'sale_category_info'));
     }
 
     /**
@@ -159,6 +161,7 @@ class SaleController extends Controller
             $transaction_data->debit_amount  = $request->invoice_amount;
             $transaction_data->credit_amount = 0.00;
             $transaction_data->trans_type    = 1;
+            $transaction_data->remarks       = $request->remarks;
             $transaction_data->is_active     = 1;
             $transaction_data->trans_date    = date('Y-m-d');
             $transaction_data->created_by    = Auth::user()->id;
@@ -217,6 +220,7 @@ class SaleController extends Controller
             $transaction_data->debit_amount  = $request->invoice_amount;
             $transaction_data->credit_amount = 0.00;
             $transaction_data->trans_type    = 1;
+            $transaction_data->remarks       = $request->remarks;
             $transaction_data->is_active     = 1;
             $transaction_data->trans_date    = date('Y-m-d');
             $transaction_data->created_by    = Auth::user()->id;
@@ -226,11 +230,10 @@ class SaleController extends Controller
             $transaction_save = $transaction_data->save();
         }    
 
-        if($sale_save){
-            return redirect()->route('sale-list')->with('flash.message', 'Sale Sucessfully Saved!')->with('flash.class', 'success');
-        }else{
-            return redirect()->route('sale-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
-        }
+        return response()->json([
+            'status' => $sale_save ? 'success' : 'error',
+            'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
+        ]);     
     }
 
     /**
@@ -252,13 +255,14 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
-        $agent_info   = AgentRecord::all();
-        $airline_info = AirlineSetup::all();
+        $agent_info       = AgentRecord::all();
+        $airline_info     = AirlineSetup::all();
         $sale_data = Sale::find($id);
         $sale_id = $sale_data->id;
         $sale_details = SaleDetail::where('sale_id', $sale_id)->get();
+        $transaction_data = AccTransactionInfo::where('sales_id', $sale_id)->first();
        
-        return view('sale.edit_sale', compact('agent_info', 'airline_info','sale_data','sale_details'));
+        return view('sale.edit_sale', compact('agent_info', 'airline_info','sale_data','sale_details','transaction_data'));
     }
 
     /**
@@ -268,15 +272,10 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $validated = $request->validate([
-            'sale_category_id' => ['required'],
-            'agent_id'         => ['required'],
-            'net_total'        => ['required'],
-        ]);
-
         $sale_category = $request->sale_category_id;
+        $id = $request->id;
 
         // sale category 1= flight else others all
         if($sale_category == 1){
@@ -288,9 +287,9 @@ class SaleController extends Controller
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
                 "is_active"        => 1,
-                'created_by'       => Auth::user()->id,
-                'created_ip'       => request()->ip(),
-                'created_at'       => date('Y-m-d H:i:s'),
+                'updated_by'       => Auth::user()->id,
+                'updated_ip'       => request()->ip(),
+                'updated_at'       => date('Y-m-d H:i:s'),
             ];
 
          $sale_save = DB::table('sales')->where('id', $id)->update($sale_data);
@@ -366,6 +365,24 @@ class SaleController extends Controller
               $sale_save = DB::table('sale_details')->insert($sale_detail_data_new);
             }
 
+            // transaction data
+            $transaction_data = AccTransactionInfo::where('sales_id', $id)->first();
+            
+            $transaction_data->sales_id      = $id;
+            $transaction_data->debit_acc     = $request->agent_id;
+            $transaction_data->credit_acc    = 0;
+            $transaction_data->debit_amount  = $request->invoice_amount;
+            $transaction_data->credit_amount = 0.00;
+            $transaction_data->trans_type    = 1;
+            $transaction_data->remarks       = $request->remarks;
+            $transaction_data->is_active     = 1;
+            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->updated_by    = Auth::user()->id;
+            $transaction_data->updated_ip    = request()->ip();
+            $transaction_data->created_at    = date('Y-m-d H:i:s');
+
+            $transaction_save = $transaction_data->save();
+
           
         }else{
 
@@ -376,9 +393,9 @@ class SaleController extends Controller
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
                 "is_active"        => 1,
-                'created_by'       => Auth::user()->id,
-                'created_ip'       => request()->ip(),
-                'created_at'       => date('Y-m-d H:i:s'),
+                'updated_by'       => Auth::user()->id,
+                'updated_ip'       => request()->ip(),
+                'updated_at'       => date('Y-m-d H:i:s'),
             ];
 
             $sale_save = DB::table('sales')->where('id', $id)->update($sale_data);
@@ -426,14 +443,31 @@ class SaleController extends Controller
             if($sale_detail_data_new !='' ){
                 $sale_save = DB::table('sale_details')->insert($sale_detail_data_new);
               }
+
+               // transaction data
+            $transaction_data = AccTransactionInfo::where('sales_id', $id)->first();
+            
+            $transaction_data->sales_id      = $id;
+            $transaction_data->debit_acc     = $request->agent_id;
+            $transaction_data->credit_acc    = 0;
+            $transaction_data->debit_amount  = $request->invoice_amount;
+            $transaction_data->credit_amount = 0.00;
+            $transaction_data->trans_type    = 1;
+            $transaction_data->remarks       = $request->remarks;
+            $transaction_data->is_active     = 1;
+            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->updated_by    = Auth::user()->id;
+            $transaction_data->updated_ip    = request()->ip();
+            $transaction_data->updated_at    = date('Y-m-d H:i:s');
+
+            $transaction_save = $transaction_data->save();
             
         }    
+        return response()->json([
+            'status' => $sale_save ? 'success' : 'error',
+            'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
+        ]);     
 
-        if($sale_save){
-            return redirect()->route('sale-list')->with('flash.message', 'Sale Sucessfully Updated!')->with('flash.class', 'success');
-        }else{
-            return redirect()->route('sale-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
-        }
     }
 
     /**
@@ -442,16 +476,17 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+        $id = $request->id;
         $sale_delete = Sale::where('id', $id)->delete();
         $sale_details_delete = SaleDetail::where('sale_id', $id)->delete();
+        $transaction_delete  = AccTransactionInfo::where('sales_id', $id)->delete();
 
-        if($sale_delete){
-            return redirect()->route('sale-list')->with('flash.message', 'Sale Sucessfully Deleted!')->with('flash.class', 'success');
-        }else{
-            return redirect()->route('sale-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
-        }
+        return response()->json([
+            'status' => $sale_delete ? 'success' : 'error',
+            'msg'    => $sale_delete ? 'Successfully Sale Delated' : 'Someting went wrong',
+        ]);     
 
 
     }
@@ -469,9 +504,6 @@ class SaleController extends Controller
                 'organization_data' => $organization_info,
             ]
         ]);    
-
-        // echo "<pre>";
-        // print_r($organization_data);exit;
         
     }
 }

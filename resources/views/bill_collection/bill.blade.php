@@ -77,46 +77,36 @@
         <div class="form-group row">
           <label for="due_amount" class="col-sm-4 text-end control-label col-form-label"> Due Amount </label>
           <div class="col-sm-8">
-            <input type="text" name="due_amount" id="due_amount" class="form-control"  placeholder="0.00">
+            <input type="text" name="due_amount" id="due_amount" class="form-control"  placeholder="0.00" readonly>
           </div>
         </div>
         <div class="form-group row">
           <label for="payment_amount" class="col-sm-4 text-end control-label col-form-label"> Payment Amount </label>
           <div class="col-sm-8">
-            <input type="text" name="payment_amount" id="payment_amount"  onchange="BillCurrentDue()" class="form-control"  placeholder="0.00">
+            <input type="text" name="payment_amount" id="payment_amount"  onkeyup="BillCurrentDue()" class="form-control" autocomplete="off" placeholder="0.00">
           </div>
         </div>
         <div class="form-group row">
           <label for="current_due_amount" class="col-sm-4 text-end control-label col-form-label"> Current Due Amount </label>
           <div class="col-sm-8">
-            <input type="text" name="current_due_amount" id="current_due_amount" class="form-control"  placeholder="0.00">
+            <input type="text" name="current_due_amount" id="current_due_amount" class="form-control"  placeholder="0.00" readonly>
           </div>
         </div>
-        <div class="form-group row">
-          <label for="payment_method" class="col-sm-4 text-end control-label col-form-label"> Payment Method</label>
-          <div class="col-sm-8">
-              <select id="payment_method" name="payment_method" onchange="PaymentMethod(this.value)" class="form-control">
-                <option value=""> Select Payment Method </option>
-                <option value="1"> Cash </option> 
-                <option value="2"> Bank </option> 
-              </select>
-          </div>
-        </div>
-        <div class="form-group row" id="BankNameId" style="display: none">
-          <label for="bank_name" class="col-sm-4 text-end control-label col-form-label"> Bank Name</label>
+        <div class="form-group row" id="BankNameId">
+          <label for="bank_name" class="col-sm-4 text-end control-label col-form-label"> Account Name</label>
           <div class="col-sm-8">
               <select id="bank_name" name="bank_name" class="form-control" >
-                <option value=""> Select Bank  </option>
+                <option value=""> Select Account  </option>
                 @foreach ($bank as $item )
                 <option value="{{ $item->id}}"> {{ $item->name}} </option> 
                 @endforeach
             </select>
           </div>
         </div>
-        <div class="form-group row" id="chequeNoId" style="display: none">
+        <div class="form-group row">
           <label for="receipt_cheque_no" class="col-sm-4 text-end control-label col-form-label"> Receipt/Cheque No</label>
           <div class="col-sm-8">
-            <input type="text" name="receipt_cheque_no" id="receipt_cheque_no" class="form-control"  placeholder="Cheque No">
+            <input type="text" name="receipt_cheque_no" id="receipt_cheque_no" class="form-control"  placeholder="Receipt/Cheque No">
           </div>
         </div>
         <div class="form-group row">
@@ -138,10 +128,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button onclick="ModalBillCollectionClose()" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         <input type="hidden" name="target" id="target" value="{{ asset('')}}">
         <input type="hidden" name="id" id="id">
-        <button type="submit" id="BillCollectionSaveBtn" class="btn btn-primary">Payment  </button>
+        <button type="submit" id="BillCollectionSaveBtn" class="btn btn-primary">  Payment  </button>
+        <button onclick="ModalBillCollectionClose()" type="button" class="btn btn-danger" data-dismiss="modal">  <i class="far fa-window-close"></i></button>
       </div>
     </div>
   </div>
@@ -162,6 +152,5 @@
 <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
 <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/sweetalert.min.js')}}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{ asset('js/bill.js')}}"></script>
 @endsection

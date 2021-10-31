@@ -80,19 +80,33 @@ function filghtCaculation(row_id){
     var add         = isNaN($('#add_'+row_id).val()) ? 0 : parseFloat($('#add_'+row_id).val());
 
     var commissionAmount = (fare*commission)/100;
-    var AITAmount = (ait*commission)/100;
+    var AITAmount = (fare*ait)/100;
 
-    $('#commission_'+row_id).val(commissionAmount);
-    $('#ait_'+row_id).val(AITAmount);
+    $('#commission_'+row_id).val(commissionAmount.toFixed(2));
+    $('#ait_'+row_id).val(AITAmount.toFixed(2));
 
-    parseFloat($('#totalFare_'+row_id).val(fare+tax));
+    parseFloat($('#totalFare_'+row_id).val((fare+tax).toFixed(2)));
 
     var NetTotal = parseFloat((fare+tax+AITAmount+add)- commissionAmount);
 
-     parseFloat($('#amount_'+row_id).val(isNaN(NetTotal) ? 0:  NetTotal));
+    $('#amount_'+row_id).val(isNaN(NetTotal) ? 0:  NetTotal.toFixed(2));
+   // console.log(NetTotal);
 
     totalSummation();
    
+}
+function filghtCommissionAITCaculation(row_id){
+    var fare        = isNaN($('#fare_'+row_id).val()) ? 0 : parseFloat($('#fare_'+row_id).val());
+    var tax         = isNaN($('#tax_'+row_id).val()) ? 0 : parseFloat($('#tax_'+row_id).val());
+    var commission  = isNaN($('#commission_'+row_id).val()) ? 0 : parseFloat($('#commission_'+row_id).val());
+    var ait         = isNaN($('#ait_'+row_id).val()) ? 0 : parseFloat($('#ait_'+row_id).val());
+    var add         = isNaN($('#add_'+row_id).val()) ? 0 : parseFloat($('#add_'+row_id).val());
+
+    var NetTotalAmount = parseFloat((fare+tax+ait+add)- commission);
+
+    parseFloat($('#amount_'+row_id).val(isNaN(NetTotalAmount) ? 0:  NetTotalAmount.toFixed(2)));
+
+    totalSummation();
 }
 function TotalEmptycheck(row_id){
 
@@ -160,7 +174,7 @@ function addNewFlight(){
     if(total_element < max ){
     $(".element1:last").after("<tr class='element1' id='flightAreaDiv_"+ nextindex +"'></tr>");
 
-    $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-xs btn-danger"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class=""> <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class=""><input name="fare[]" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="fareTd" placeholder="0.00"/></td> <td class=""><input name="tax[]" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="taxTd" placeholder="0.00"/></td><td class=""><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="totalFareTd" placeholder="0.00"/></td><td class=""><input name="commission[]" id="commission_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="commissionTd" placeholder="0.00"/><input name="commissionPer[]" id="commissionPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="ait[]" id="ait_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="aitTd" placeholder="0.00"/><input name="aitPer[]" id="aitPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="add[]" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="AddTd" placeholder="0.00"/></td><td class="amountTh"><input name="amount[]" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="amountTd Amount" placeholder="0.00" readonly/></td>');
+    $("#flightAreaDiv_" + nextindex).append('<td class="actionTh"> <button type="button" onclick="removeNewFlight('+nextindex+');" class="btn btn-xs btn-danger"><i class="mdi mdi-minus-box-outline"></i> </button></td> <td class=""> <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_'+nextindex+'"><option value=""> Select Flight</option></select></td><td class=""><input name="fare[]" id="fare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="fareTd" placeholder="0.00"/></td> <td class=""><input name="tax[]" id="tax_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="taxTd" placeholder="0.00"/></td><td class=""><input name="total_fare[]" id="totalFare_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="totalFareTd" placeholder="0.00" readonly /></td><td class=""><input name="commission[]" id="commission_'+nextindex+'" type="text" onkeyup="filghtCommissionAITCaculation('+nextindex+')" class="commissionTd" placeholder="0.00"/><input name="commissionPer[]" id="commissionPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="ait[]" id="ait_'+nextindex+'" type="text" onkeyup="filghtCommissionAITCaculation('+nextindex+')" class="aitTd" placeholder="0.00"/><input name="aitPer[]" id="aitPer_'+nextindex+'" type="hidden"/></td><td class=""><input name="add[]" id="add_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="AddTd" placeholder="0.00"/></td><td class="amountTh"><input name="amount[]" id="amount_'+nextindex+'" type="text" onkeyup="filghtCaculation('+nextindex+')" class="amountTd Amount" placeholder="0.00" readonly/></td>');
 
     }
 
@@ -196,20 +210,22 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
                     var ait        = parseFloat(response.data.organization_data.ait);
                     var add        = parseFloat(response.data.flight_data.add);
                     var CommssionAmount = (fare*commission)/100;
-                    var AITAmount = (fare*ait)/100;
+                    var AITAmount  = (fare*ait)/100;
                     var total_fare = parseFloat(fare+tax);
+
+                    console.log(CommssionAmount);
                    
 
-                   $('#fare_'+lastChar).val(fare);
-                   $('#tax_'+lastChar).val(tax);
-                   $('#totalFare_'+lastChar).val(total_fare);
-                   $('#commission_'+lastChar).val(CommssionAmount);
-                   $('#commissionPer_'+lastChar).val(commission);
-                   $('#ait_'+lastChar).val(AITAmount);
-                   $('#aitPer_'+lastChar).val(ait);
+                   $('#fare_'+lastChar).val(fare.toFixed(2));
+                   $('#tax_'+lastChar).val(tax.toFixed(2));
+                   $('#totalFare_'+lastChar).val(total_fare.toFixed(2));
+                   $('#commission_'+lastChar).val(CommssionAmount.toFixed(2));
+                   $('#commissionPer_'+lastChar).val(commission.toFixed(2));
+                   $('#ait_'+lastChar).val(AITAmount.toFixed(2));
+                   $('#aitPer_'+lastChar).val(ait.toFixed(2));
                    $('#add_'+lastChar).val(add);
-                   var total_amount = parseFloat((fare+tax+AITAmount+add)-CommssionAmount).toFixed(2);
-                   $('#amount_'+lastChar).val(total_amount);
+                   var total_amount = parseFloat((fare+tax+AITAmount+add)-CommssionAmount);
+                   $('#amount_'+lastChar).val(total_amount.toFixed(2));
 
                    totalSummation()
 
@@ -264,106 +280,104 @@ function removeNewHotel(id){
 	var deleteindex = id;
 	$("#hotelAreaDiv_" + deleteindex).remove();
 }
- 
-$(document).ready(function(){
-    get_sale_info_list();
-}); 
 
-// sale list
-var token_table;
+//  Sale Save
+ $(document).on("submit","#SaleForm",function (e){
+    var target           = $("#target").val();
+    var sale_category_id = $("#sale_category_id").val();
+    var agent_id         = $("#agent_id").val();
+    var invoice_amount   = $("#invoice_amount").val();
+    $('#SaleSaveBtn').attr('disabled',true);
 
-function get_sale_info_list() {
-    let target = $("#asset").val();
+    swal({
+        title: "Are you sure?",
+        text: "You want to Sale!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+             if (willDelete) {
+                   
+                    if(agent_id !='' && sale_category_id != '' && invoice_amount > 0){
+                        e.preventDefault();
+                            $.ajax({
+                                url:target +"sale-save",
+                                type:"POST",
+                                data: new FormData(this),
+                                processData: false,
+                                contentType: false,
+                                success:function(response){
+                                    if (response.status == 'success') {
+                                        swal("Success", response.msg, "success");
+                                        $('#SaleSaveBtn').attr('disabled',false);
+                                        //$("#billListTable").DataTable().draw(true);
 
-    token_table = $('#sale_list_table').DataTable({
-        scrollCollapse: true,
-        autoWidth: false,
-        responsive: true,
-        serverSide: true,
-        processing: true,
-        "paging": true,
-        "searching": { "regex": true },
-        "pageLength": 10,
-        
-        ajax:{
-            dataType: "JSON",
-            type: "post",
-            url: target + "get_sale_list_data",
-            data: {
-               // _token : user_csrf
-            },
-        },
-        columns:[
-             {
-             	title: "SL",
-                data: null,
-                render: function(){
-                    return token_table.page.info().start + token_table.column(0).nodes().length;
-                }           
-            },
-            {
-            	title: "Agent Name",
-                data: "agent_name"
-            },
-            {
-                title: "Sale Category",
-                data: null,
-                render: function (data) {
-                    if(data.sale_category_id==1){
-                        return 'Flights';
+                                        location.reload();
+                                    }else{
+                                        swal("Something went wrong", response.msg, "error");
+                                    }
+                                }
+                            });
+                    }else{
+                        $('#SaleSaveBtn').attr('disabled',false);
+                        swal("Something went wrong","Field Cannot be Empty", "error");
                     }
-                    else if(data.sale_category_id==2){
-                        return 'Hotels';
-                    }
-                    else if(data.sale_category_id==3){
-                        return 'Transfers';
-                    }
-                    else if(data.sale_category_id==4){
-                        return 'Activities';
-                    }
-                    else if(data.sale_category_id==5){
-                        return 'Holidays';
-                    }
-                    else if(data.sale_category_id==6){
-                        return 'Visa';
-                    }
-                    else if(data.sale_category_id==7){
-                        return 'Others';
-                    }
+                } else {
+                        $('#SaleSaveBtn').attr('disabled',false);
+                        swal("Sale information is safe!");
                 }
-            },
-            {
-                title: "Net Total",
-                data: "sale_amount"
-            },
-            {
-                title: "Discount",
-                data: "discount"
-            },
-            {
-                title: "Invoice Amount",
-                data: "amount"
-            },
-            {
-            	title: "Action",
-                data: null,
-                render: function(data, type, row, meta){
-                 
-                    return '<a href="'+target+'sale-edit/'+data.id+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a onclick="return confirm(\'Are you sure you want to delete?\')" href="'+target+'sale-delete/'+data.id+'" class="btn btn-danger btn-sm text-white"><span class="mdi mdi-delete-circle"></span>  Delete </a>';
+        });
+});
+
+// update Sale
+$(document).on("submit","#SaleFormUpdate",function (e){
+    var target           = $("#target").val();
+    var id               = $("#id").val();
+    var sale_category_id = $("#sale_category_id").val();
+    var agent_id         = $("#agent_id").val();
+    var invoice_amount   = $("#invoice_amount").val();
+    $('#SaleSaveBtn').attr('disabled',true);
+
+    swal({
+        title: "Are you sure?",
+        text: "You want to Sale Update!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+             if (willDelete) {
+                   
+                    if(agent_id !='' && sale_category_id != '' && invoice_amount > 0){
+                        e.preventDefault();
+                            $.ajax({
+                                url:target +"sale-update",
+                                type:"POST",
+                                data: new FormData(this),
+                                processData: false,
+                                contentType: false,
+                                success:function(response){
+                                    if (response.status == 'success') {
+                                        swal("Success", response.msg, "success");
+                                        $('#SaleSaveBtn').attr('disabled',false);
+                                        //$("#billListTable").DataTable().draw(true);
+
+                                        location.reload();
+                                    }else{
+                                        swal("Something went wrong", response.msg, "error");
+                                    }
+                                }
+                            });
+                    }else{
+                        $('#SaleSaveBtn').attr('disabled',false);
+                        swal("Something went wrong","Field Cannot be Empty", "error");
+                    }
+                } else {
+                        $('#SaleSaveBtn').attr('disabled',false);
+                        swal("Sale information is safe!");
                 }
-            },
-        ],
-    });
-}
+        });
+});
 
-// search sale report
-function search_sale_reports ()
-{
-    sale_category_id  = $("#sale_category_id").val();
-    agent_id          = $("#agent_id").val();
 
-    $("#sale_list_table").dataTable().fnSettings().ajax.data.sale_category_id = sale_category_id;
-    $("#sale_list_table").dataTable().fnSettings().ajax.data.agent_id    = agent_id;
-
-    token_table.ajax.reload();
-}

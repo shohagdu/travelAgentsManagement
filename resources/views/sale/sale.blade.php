@@ -10,7 +10,7 @@
         </div>
         @endif
       <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('sale-save')}}">
+        <form class="form-horizontal" method="POST" id="SaleForm" action="javascript:void(0)">
                 @csrf
           <div class="card-body">
             <h4 class="card-tisale_category_idtle"> Sale  </h4>
@@ -19,13 +19,9 @@
                 <div class="col-sm-4">
                     <select name="sale_category_id" id="sale_category_id" onchange="saleCategory(this.value)" class="form-control @error('sale_category_id') is-invalid @enderror">
                         <option value=""> Select</option>
-                        <option value="1"> Flights </option>
-                        <option value="2"> Hotels </option>
-                        <option value="3"> Transfers </option>
-                        <option value="4"> Activities </option>
-                        <option value="5"> Holidays </option>
-                        <option value="6"> Visa </option>
-                        <option value="7"> Others </option>
+                        @foreach($sale_category_info as $item)
+                        <option value="{{$item->id}}"> {{$item->title}} </option>
+                        @endforeach
                     </select>
                     @error('sale_category_id')
                     <span class="invalid-feedback" role="alert">
@@ -82,14 +78,14 @@
                                 <input name="tax[]" id="tax_1" type="text"  onkeyup="filghtCaculation(1)" class="taxTd" placeholder="0.00"/>
                             </td>
                             <td>
-                                <input name="total_fare[]" id="totalFare_1" type="text"  onkeyup="filghtCaculation(1)" class="totalFareTd" placeholder="0.00"/>
+                                <input name="total_fare[]" id="totalFare_1" type="text"  onkeyup="filghtCaculation(1)" class="totalFareTd" placeholder="0.00" readonly/>
                             </td>
                             <td>
-                                <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCaculation(1)" class="commissionTd" placeholder="0.00"/>
+                                <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCommissionAITCaculation(1)" class="commissionTd" placeholder="0.00"/>
                                 <input name="commissionPer[]" id="commissionPer_1" type="hidden"/>
                             </td>
                             <td>
-                                <input name="ait[]" id="ait_1" type="text"  onkeyup="filghtCaculation(1)" class="aitTd" placeholder="0.00"/>
+                                <input name="ait[]" id="ait_1" type="text"  onkeyup="filghtCommissionAITCaculation(1)" class="aitTd" placeholder="0.00"/>
                                 <input name="aitPer[]" id="aitPer_1" type="hidden"/>
                             </td>
                             <td>
@@ -131,7 +127,9 @@
             <button type="button" id="FlightPlusBtn" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
             <button type="button" id="HotelPlusBtn" onclick="addNewHotel();" class="btn btn-sm btn-success HotelPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
             <div class="row">
-                <div class="col-md-8"></div>
+                <div class="col-md-8"> 
+                    <textarea class="form-control SaleRemaks" rows="3" name="remarks" id="remarks" placeholder="Remarks"></textarea>
+                </div>
                 <div class="col-md-4" >
                    <p> <span style="width: 100px"> Net Total</span> 
                         <input id="NetTotal" name="net_total" type="text" class="saleFooterText @error('net_total') is-invalid @enderror" placeholder="0.00">
@@ -153,7 +151,8 @@
                     @enderror
                    </p>
                    <p>
-                    <button type="submit" class="btn btn-primary FlightSaveBtn">
+                    <input type="hidden" name="target" id="target" value="{{ asset('')}}">
+                    <button type="submit" id="SaleSaveBtn" class="btn btn-primary FlightSaveBtn">
                         Save
                       </button>
                    </p>
@@ -174,5 +173,6 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/sale.js')}}"></script>
+<script src="{{ asset('js/sweetalert.min.js')}}"></script>
+<script src="{{ asset('js/sale.js')}}"></script>
 @endsection

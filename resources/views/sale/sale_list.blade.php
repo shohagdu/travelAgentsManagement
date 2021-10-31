@@ -19,6 +19,7 @@
     <div class="card">
       <div class="card-body">
         <input type="hidden" name="asset" id="asset" value="{{ asset('')}}">
+        <input type="hidden" name="target" id="target" value="{{ asset('')}}">
         <div class="form-group row">
             <div class="col-sm-2">
                <h3>Sales List</h3>
@@ -68,5 +69,6 @@
 <script src="{{ asset('assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
-<script src="{{ asset('js/sale.js')}}"></script>
+<script src="{{ asset('js/sweetalert.min.js')}}"></script>
+<script src="{{ asset('js/saledatatale.js')}}"></script>
 @endsection

@@ -26,7 +26,7 @@ class BillCollectionController extends Controller
      */
     public function index()
     {
-        $bank         = Bank::all();
+        $bank         = Bank::orderBy('type', 'ASC')->get();
         $agent_info   = AgentRecord::all();
 
         return view('bill_collection.bill', compact('bank','agent_info'));
@@ -42,14 +42,12 @@ class BillCollectionController extends Controller
         $limit = $request->length;
         $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
 
-
         $request_data = [
             'start'      => $start,
             'limit'      => $limit,
             'agent_id'   => $agent_id,
             'trans_date' => $trans_date,
         ];
-
 
         $response = $this->transaction_model->bill_collection_list_data($request_data, $search_content);
         $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
@@ -93,13 +91,10 @@ class BillCollectionController extends Controller
         }
 
         // transaction data
-      //  $transaction_data = new  AccTransactionInfo();
-            
         $transaction_data->debit_acc         = isset($request->bank_name) ? $request->bank_name : NULL;
         $transaction_data->credit_acc        = $request->agent_id;
         $transaction_data->debit_amount      = 0.00;
         $transaction_data->credit_amount     = $request->payment_amount;
-        $transaction_data->payment_method    = $request->payment_method;
         $transaction_data->receipt_cheque_no = $request->receipt_cheque_no;
         $transaction_data->remarks           = $request->remarks;
         $transaction_data->trans_type        = 2;
@@ -113,7 +108,7 @@ class BillCollectionController extends Controller
 
         return response()->json([
             'status' => $transaction_save ? 'success' : 'error',
-            'msg'    => $transaction_save ? 'Successfully Added' : 'Someting went wrong',
+            'msg'    => $transaction_save ? 'Successfully Bill Collection' : 'Someting went wrong',
         ]);     
 
     }

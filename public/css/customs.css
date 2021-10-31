@@ -161,9 +161,6 @@ input::-webkit-input-placeholder {
 .NetamountTd{
     width: 190px;;
 }
-#BankNameDiv{
-    display: none;
-}
-#ReceiptchequeDiv{
-    display: none;
+.SaleRemaks{
+    margin-top: 10px;
 }

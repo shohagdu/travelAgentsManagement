@@ -38,48 +38,48 @@
                 @enderror 
                 <label for="fare" class="col-sm-2 text-end control-label col-form-label"> Fare</label>
                 <div class="col-sm-4">
-                    <input type="text" name="fare" id="fare" onchange="AirlineTotalFare()"  class="form-control" required placeholder="0.00">
+                    <input type="text" name="fare" id="fare" onkeyup="AirlineTotalFare()"  class="form-control" required placeholder="0.00">
                 </div>
             </div>
             <div class="form-group row">
               <label for="tax_amount" class="col-sm-2 text-end control-label col-form-label">Tax Amount </label>
               <div class="col-sm-4">
-                  <input type="text" name="tax_amount"  id="tax_amount" onchange="AirlineTotalFare()" class="form-control"  required  placeholder="Tax Amount">
+                  <input type="text" name="tax_amount"  id="tax_amount" onkeyup="AirlineTotalFare()" class="form-control"  required  placeholder="Tax Amount">
               </div>
               <label for="total_fare" class="col-sm-2 text-end control-label col-form-label">Total Fare</label>
               <div class="col-sm-4">
-                  <input type="text" name="total_fare"  id="total_fare" class="form-control"  required  placeholder="0.00">
+                  <input type="text" name="total_fare"  id="total_fare" class="form-control"  required  placeholder="0.00" readonly>
               </div>
             </div>
             <div class="form-group row">
                 <label for="commission" class="col-sm-2 text-end control-label col-form-label">Commission(%)</label>
                 <div class="col-sm-4">
-                    <input type="text" name="commission"  id="commission" onchange="AirlineTotalFare()" class="form-control"  required  placeholder="0.00">
+                    <input type="text" name="commission"  id="commission" onkeyup="AirlineTotalFare()" class="form-control"  required  placeholder="0.00">
                 </div>
                 <label for="commission_amount" class="col-sm-2 text-end control-label col-form-label">Commission Amount</label>
                 <div class="col-sm-4">
-                    <input type="text" name="commission_amount"  id="commission_amount" class="form-control"  required  placeholder="0.00">
+                    <input type="text" name="commission_amount"  id="commission_amount" class="form-control"  required  placeholder="0.00" readonly>
                 </div>
             </div>
             <div class="form-group row">
               <label for="ait" class="col-sm-2 text-end control-label col-form-label"> AIT(%)</label>
               <div class="col-sm-4">
-                  <input type="text" name="ait" id="ait"  onchange="AirlineTotalFare()" class="form-control" required placeholder="0.00">
+                  <input type="text" name="ait" id="ait"  onkeyup="AirlineTotalFare()" class="form-control" required placeholder="0.00">
               </div>
               <label for="ait_amount" class="col-sm-2 text-end control-label col-form-label"> AIT Amount</label>
               <div class="col-sm-4">
-                  <input type="text" name="ait_amount" id="ait_amount"  class="form-control" required placeholder="0.00">
+                  <input type="text" name="ait_amount" id="ait_amount"  class="form-control" required placeholder="0.00" readonly>
               </div>
             </div>
           </div>
           <div class="form-group row">
             <label for="add" class="col-sm-2 text-end control-label col-form-label"> Add </label>
             <div class="col-sm-4">
-                <input type="text" name="add" id="add"  onchange="AirlineTotalFare()" class="form-control" required placeholder="0.00">
+                <input type="text" name="add" id="add"  onkeyup="AirlineTotalFare()" class="form-control" required placeholder="0.00">
             </div>
             <label for="invoice_total" class="col-sm-2 text-end control-label col-form-label"> Invoice Total</label>
             <div class="col-sm-4">
-                <input type="text" name="invoice_total" id="invoice_total"  class="form-control" required placeholder="0.00">
+                <input type="text" name="invoice_total" id="invoice_total"  class="form-control invoice_total" required placeholder="0.00">
             </div>
           </div>
         </div>
