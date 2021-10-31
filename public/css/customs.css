@@ -58,7 +58,7 @@
     margin-top: 20px;
     float: right;
 }
-.element1 
+.element1
 input::-webkit-input-placeholder {
     font-size: 10px;
     line-height: 3;
@@ -87,13 +87,13 @@ input::-webkit-input-placeholder {
     border-collapse: collapse;
     width: 50%;
   }
-  
+
  .FlightSaleTable, td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 3px;
   }
-  
+
   .FlightSaleTable, tr:nth-child(even) {
     background-color: #fff;
     font-size: 12px;
@@ -130,13 +130,13 @@ input::-webkit-input-placeholder {
     width: 50%;
     display: none;
   }
-  
+
 .FlightSaleTable, td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 3px;
   }
-  
+
 .FlightSaleTable, tr:nth-child(even) {
     background-color: #fff;
     font-size: 12px;
@@ -163,4 +163,8 @@ input::-webkit-input-placeholder {
 }
 .SaleRemaks{
     margin-top: 10px;
+}
+
+.addNewDiv{
+    padding-top: 8px;
 }

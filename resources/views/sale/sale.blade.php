@@ -27,48 +27,47 @@
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
-                    @enderror 
+                    @enderror
                 </div>
                 <label for="agent_id" class="col-sm-2 text-end control-label col-form-label"> Agent</label>
                 <div class="col-sm-4">
                     <select id="agent_id" name="agent_id" class="form-control @error('agent_id') is-invalid @enderror">
                         <option value=""> Select Agent</option>
                         @foreach ($agent_info as $item)
-                          <option value="{{ $item->id}}"> {{ $item->name}} </option> 
+                          <option value="{{ $item->id}}"> {{ $item->name}} </option>
                         @endforeach
                     </select>
                     @error('agent_id')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
-                    @enderror 
+                    @enderror
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 ">
-                    <h5 id="headingText"> Information </h5>
+                    <h5 id="headingText" class="text-center"> Please Select Sale Category </h5>
                     <table  class="FlightSaleTable SaleTable">
                         <tr>
-                            <th class="actionTh"> Action</th>
                             <th class="airlineTh"> Airline</th>
                             <th class="fareTh"> Fare</th>
                             <th class="TaxTh"> Tax</th>
-                            <th class="totalFareTh"> Total fare</th>
+                            <th class="totalFareTh"> Total Fare</th>
                             <th class="commissionTh"> Commission</th>
                             <th class="aitTh"> AIT</th>
-                            <th class="addTh"> Add </th>
+                            <th class="addTh"> ADD </th>
                             <th class="amountTh"> Amount</th>
+                            <th class="actionTh"> Action</th>
                         </tr>
                         <tr  class="element1"  id="flightAreaDiv_1">
-                            <td class="actionTh">
-                            </td>
+
                             <td>
                                 <select class="FlightTd FlightInfo" name="flight_id[]" id="flight_id_1">
                                     <option value=""> Select Flight</option>
                                     @foreach ($airline_info as $item)
                                         <option value="{{ $item->id}}"> {{ $item->airline_name}} (@if($item->category==1) INTL @elseif($item->category==2) DOM @endif) </option>
                                     @endforeach
-                                   
+
                                 </select>
                             </td>
                             <td>
@@ -89,24 +88,27 @@
                                 <input name="aitPer[]" id="aitPer_1" type="hidden"/>
                             </td>
                             <td>
-                                <input name="add[]" id="add_1" type="text"  onkeyup="filghtCaculation(1)" class="AddTd" placeholder="0.00"/>
+                                <input name="add[]" id="add_1" type="text"  onkeyup="filghtADDCaculation(1)" class="AddTd" placeholder="0.00"/>
                             </td>
                             <td>
                                 <input name="amount[]" id="amount_1" type="text"  onkeyup="filghtCaculation(1)" class="amountTd Amount" placeholder="0.00" readonly/>
+                            </td>
+                            <td class="actionTh">
+                                #
                             </td>
                         </tr>
                     </table>
                     <table  class="HotelSaleTable SaleTable">
                         <tr>
-                            <th class="actionTh"> Action</th>
+
                             <th class="DetailsTh"> Details</th>
                             <th class="amountTh"> Amount</th>
                             <th class="DiscountTh"> Discount</th>
                             <th class="netTotalTh"> Net Total</th>
+                            <th class="actionTh"> Action</th>
                         </tr>
                         <tr  class="element2"  id="hotelAreaDiv_1">
-                            <td class="actionTh">
-                            </td>
+
                             <td>
                                 <textarea name="details[]" id="details_1" rows="1" class="detailsTd" placeholder="Details"></textarea>
                             </td>
@@ -119,31 +121,37 @@
                             <td>
                                 <input name="net_total_row[]" id="netTotal_1" type="text"  class="NetamountTd Amount" placeholder="0.00" readonly/>
                             </td>
+                            <td class="actionTh">
+                                #
+                            </td>
                         </tr>
                     </table>
 
                 </div>
-            </div><br>
-            <button type="button" id="FlightPlusBtn" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
-            <button type="button" id="HotelPlusBtn" onclick="addNewHotel();" class="btn btn-sm btn-success HotelPlusBtn"><i class="mdi mdi-plus-box-outline"></i> New </button>
-            <div class="row">
-                <div class="col-md-8"> 
-                    <textarea class="form-control SaleRemaks" rows="3" name="remarks" id="remarks" placeholder="Remarks"></textarea>
+            </div>
+            <div class="addNewDiv">
+                <button type="button" id="FlightPlusBtn" onclick="addNewFlight();" class="btn btn-sm btn-success FlightPlusBtn"><i class="mdi mdi-plus-box-outline"></i> Add New </button>
+                <button type="button" id="HotelPlusBtn" onclick="addNewHotel();" class="btn btn-sm btn-success HotelPlusBtn"><i class="mdi mdi-plus-box-outline"></i>Add New </button>
+            </div>
+
+            <div class="row showSalesFooterInfo" style="display: none;" >
+                <div class="col-md-8">
+                    <textarea class="form-control SaleRemaks" rows="3" name="remarks" id="remarks" placeholder="Enter Remarks"></textarea>
                 </div>
                 <div class="col-md-4" >
-                   <p> <span style="width: 100px"> Net Total</span> 
-                        <input id="NetTotal" name="net_total" type="text" class="saleFooterText @error('net_total') is-invalid @enderror" placeholder="0.00">
+                   <p> <span style="width: 100px"> Net Total</span>
+                        <input id="NetTotal" name="net_total" readonly type="text" class="saleFooterText @error('net_total') is-invalid @enderror" placeholder="0.00">
                         @error('net_total')
                             <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                     </p>
-                   <p> <span style="width: 100px"> Discount</span> 
+                   <p> <span style="width: 100px"> Discount</span>
                     <input id="Discount" onkeyup="DiscountSale()" name="discount" type="text" class="saleFooterText" value="0.00">
                    </p>
-                   <p> <span style="width: 100px"> Invoice Amount</span> 
-                    <input id="invoice_amount" name="invoice_amount" type="text" class="saleFooterText @error('invoice_amount') is-invalid @enderror" placeholder="0.00">
+                   <p> <span style="width: 100px"> Invoice Amount</span>
+                    <input id="invoice_amount" name="invoice_amount" readonly type="text" class="saleFooterText @error('invoice_amount') is-invalid @enderror" placeholder="0.00">
                     @error('invoice_amount')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -156,14 +164,14 @@
                         Save
                       </button>
                    </p>
-        
+
                 </div>
             </div>
             </div>
           </div>
           <div class="border-top">
             <div class="card-body">
-              
+
             </div>
           </div>
         </form>
