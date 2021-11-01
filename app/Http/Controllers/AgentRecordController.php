@@ -7,6 +7,7 @@ use App\Models\AgentRecord;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\User;
+use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -215,6 +216,15 @@ class AgentRecordController extends Controller
         }else{
             return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
+    }
+
+    public function agent_statement($id){
+
+        $organization_info = OrganizationSetup::first();
+        $agent_info        = AgentRecord::find($id);
+        $transaction_info  = $this->agent_model->transaction_info_data($id);
+
+        return view('agent.agent_statement', compact('organization_info', 'agent_info', 'transaction_info'));
     }
 
     // Get City

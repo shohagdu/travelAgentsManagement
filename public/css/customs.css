@@ -168,3 +168,31 @@ input::-webkit-input-placeholder {
 .addNewDiv{
     padding-top: 8px;
 }
+.statementCompany{
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.AgentInfoStatement { 
+    margin-top: 30px;
+    border-collapse: collapse;
+    
+}
+.AgentInfoStatement td th {
+    border: none;
+    background-color: #811a1a;
+}
+.AgentTranactionStatementListTbl{
+    margin-top: 50px;
+    width: 100%;
+}
+.AgentTranactionStatementListTbl th {
+    /* border: 1px solid #8d3838; */
+    padding: 3px;
+  }
+
+  @media print
+    {
+        #non-printable { display: none; }
+        /* #printable { display: block; } */
+    }

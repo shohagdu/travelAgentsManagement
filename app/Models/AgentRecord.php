@@ -50,4 +50,20 @@ class AgentRecord extends Model
 
         return $data;
     }
+
+    public function transaction_info_data($id){
+        
+        $trans_query = DB::table("acc_transaction_infos AS TRNS")
+                     ->select('TRNS.*', 'TRNS.debit_amount','TRNS.credit_amount','ACC.name as account_name')
+                     ->leftJoin('banks AS ACC', function($join){
+                        $join->on('ACC.id', '=', 'TRNS.debit_acc');
+                     })
+                     ->where(function ($trans_query) use ($id) {
+                        $trans_query->where('TRNS.debit_acc', '=' , $id)
+                            ->orWhere('TRNS.credit_acc', '=', $id);
+                    });
+
+        return $data = $trans_query->get();
+                        
+    }
 }

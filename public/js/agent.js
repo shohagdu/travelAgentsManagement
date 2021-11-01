@@ -74,7 +74,7 @@ function get_agent_info_list() {
                 data: null,
                 render: function(data, type, row, meta){
                  
-                    return '<a href="'+target+'agent-edit/'+ data.id+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a onclick="return confirm(\'Are you sure you want to delete?\')" href="'+target+'agent-delete/'+ data.id+'" class="btn btn-danger btn-sm text-white"><span class="mdi mdi-delete-circle"></span>  Delete </a>';
+                    return '<a href="'+target+'agent-edit/'+ data.id+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a href="'+target+'agent-statement/'+ data.id+'" class="btn btn-info btn-sm text-white"> <span class="mdi mdi-format-list-bulleted"></span> Statement </a>  <a onclick="return confirm(\'Are you sure you want to delete?\')" href="'+target+'agent-delete/'+ data.id+'" class="btn btn-danger btn-sm text-white"><span class="mdi mdi-delete-circle"></span>  Delete </a>';
                 }
             },
         ],
