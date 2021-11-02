@@ -224,7 +224,12 @@ class AgentRecordController extends Controller
         $agent_info        = AgentRecord::find($id);
         $transaction_info  = $this->agent_model->transaction_info_data($id);
 
-        return view('agent.agent_statement', compact('organization_info', 'agent_info', 'transaction_info'));
+        $totalTran=  count($transaction_info);
+        $frist_date = $transaction_info[0]->trans_date;
+        $last_date  = $transaction_info[$totalTran-1]->trans_date;
+
+
+        return view('agent.agent_statement', compact('organization_info', 'agent_info', 'transaction_info', 'frist_date', 'last_date'));
     }
 
     // Get City

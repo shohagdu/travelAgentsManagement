@@ -1,9 +1,12 @@
 @extends('layouts.master')
 @section('title', 'Agent Statement')
 @section('main_content')
-<div class="row " id="printableArea">
+<div class="row" id="section-to-print">
     <div class="col-md-12">
       <h6 class="text-center"> Agent Statement </h6>
+      <button type="button" onclick="printStatement()" class="btn btn-warning btn-md topPrintbarbutton noSectionToPrint"><i class="mdi  mdi-printer"></i>
+        Print
+    </button>
     </div>
     <div class="row">
         <div class="col-md-6 offset-md-3">
@@ -28,7 +31,7 @@
                 </tr>
                 <tr>
                     <th> Duration </th>
-                    <td> : 01/10/2021 to 20/10/2021 </td>
+                    <td> : {{date('d-m-Y', strtotime($frist_date))}} to {{date('d-m-Y', strtotime($last_date))}}  </td>
                 </tr>
             </table>
         </div>
@@ -55,7 +58,7 @@
                     <td> <?php 
                         if($item->trans_type ==1){ 
                             $dr = $item->debit_amount; echo $dr;
-                            $dr_total = $item->debit_amount ; 
+                            $dr_total += $item->debit_amount ; 
                           }else{
                             $dr = 0;
                         } ?>
@@ -63,15 +66,24 @@
                     <td> <?php 
                         if($item->trans_type ==2){
                              $cr = $item->credit_amount; echo $cr;
-                             $cr_total = $item->credit_amount;
+                             $cr_total += $item->credit_amount;
                              }else{
                              $cr  = 0;
                     } ?> </td>
                     <td>@php echo  $balance = $balance + ($dr - $cr) ;@endphp </td>
                 </tr>
                 @endforeach
+                <tr>
+                    <th colspan="3"> <span class="SalatemtTotal"> Total</span></th>
+                    <th> {{ $dr_total}}</th>
+                    <th> {{ $cr_total}}</th>
+                    <th> {{ $dr_total-$cr_total}}</th>
+                </tr>
             </table>
         </div>
       </div>
   </div>
+@endsection
+@section('js')
+    <script src="{{ asset('js/report.js')}}"></script>
 @endsection

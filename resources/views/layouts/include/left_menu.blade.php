@@ -44,6 +44,11 @@
                   ><i class="mdi mdi-note-outline"></i
                   ><span class="hide-menu"> Bill Collection </span></a>
               </li>
+              <li class="sidebar-item">
+                <a href="{{ route('bill-refund')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Bill Refund </span></a>
+              </li>
             </ul>
           </li>
           <li class="sidebar-item">

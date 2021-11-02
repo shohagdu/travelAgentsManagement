@@ -61,7 +61,8 @@ class AgentRecord extends Model
                      ->where(function ($trans_query) use ($id) {
                         $trans_query->where('TRNS.debit_acc', '=' , $id)
                             ->orWhere('TRNS.credit_acc', '=', $id);
-                    });
+                    })
+                    ->where('TRNS.trans_type', '!=',3);
 
         return $data = $trans_query->get();
                         

@@ -108,3 +108,10 @@ Route::post('/bill_collection_delete', [BillCollectionController::class, "bill_c
 Route::post('/get_bill_collection_list_data', [BillCollectionController::class, "get_bill_collection_list_data"])->name('get_bill_collection_list_data');
 
 Route::post('/agent_bill_payment_data', [BillCollectionController::class, "agent_bill_payment_data"])->name('agent_bill_payment_data');
+
+// Bill Refund 
+Route::get('/bill-refund', [BillCollectionController::class, "bill_refund"])->name('bill-refund');
+Route::post('/bill-refund-save', [BillCollectionController::class, "bill_refund_save"])->name('bill-refund-save');
+Route::post('/bill_refund_row_data', [BillCollectionController::class, "bill_refund_row_data"])->name('bill_refund_row_data');
+Route::post('/bill_refund_delete', [BillCollectionController::class, "bill_refund_delete"])->name('bill_refund_delete');
+Route::post('/get_bill_refund_list_data', [BillCollectionController::class, "get_bill_refund_list_data"])->name('get_bill_refund_list_data');

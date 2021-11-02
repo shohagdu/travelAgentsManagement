@@ -64,33 +64,23 @@ function getCity(country_id, target_id){
         }
      });
 }
-function AirlineSetupSummmation(){
-    var total_fare         = isNaN($("#total_fare").val()) ? 0 : parseFloat($("#total_fare").val());
-    var tax_amount         = isNaN($("#tax_amount").val()) ? 0 : parseFloat($("#tax_amount").val());
-    var commission_amount  = isNaN($("#commission_amount").val()) ? 0 : parseFloat($("#commission_amount").val());
-    var ait_amount         = isNaN($("#ait_amount").val()) ? 0 : parseFloat($("#ait_amount").val());
-    var add                = isNaN($("#add").val()) ? 0 : parseFloat($("#add").val());
-
-    var invoiceAmount = ((total_fare+tax_amount+ait_amount+add)-commission_amount);
-    console.log(tax_amount);
-
-    $(".invoice_total").val(isNaN(invoiceAmount) ? 0.00 : invoiceAmount.toFixed(2));
-}
 
 function AirlineTotalFare(){
-    var fare       = isNaN($("#fare").val()) ? 0 :      parseFloat($("#fare").val());
-    var tax_amount = isNaN($("#tax_amount").val()) ? 0 : parseFloat($("#tax_amount").val());
-    var commission = isNaN($("#commission").val()) ? 0 : parseFloat($("#commission").val());
-    var ait = isNaN($("#ait").val()) ? 0 : parseFloat($("#ait").val());
-    var add = isNaN($("#add").val()) ? 0 : parseFloat($("#add").val());
+    var fare       = isNaN($("#fare").val())  || $("#fare").val() == "" ? 0 :  parseFloat($("#fare").val());
+    var tax_amount = isNaN($("#tax_amount").val())  || $("#tax_amount").val() == "" ? 0 : parseFloat($("#tax_amount").val());
+    var commission = isNaN($("#commission").val())  || $("#commission").val() == "" ? 0 : parseFloat($("#commission").val());
+    var ait = isNaN($("#ait").val())  || $("#ait").val() == "" ? 0 : parseFloat($("#ait").val());
+    var add = isNaN($("#add").val())  || $("#add").val() == "" ? 0 : parseFloat($("#add").val());
+
     var total_fare =  (fare+tax_amount);
     var commissionAmount = (fare*commission/100);
     var aitAmount = (fare*ait/100);
-   
-
+    
     $("#total_fare").val(isNaN(total_fare) ? 0 : total_fare.toFixed(2));
     $("#commission_amount").val(isNaN(commissionAmount) ? 0 : commissionAmount.toFixed(2));
     $("#ait_amount").val(isNaN(aitAmount) ? 0 : aitAmount.toFixed(2));
 
-   AirlineSetupSummmation();
+    var invoiceAmount = ((total_fare+aitAmount+add)-commissionAmount);
+    $(".invoice_total").val(isNaN(invoiceAmount) ? 0.00 : invoiceAmount.toFixed(2));
+
 }
