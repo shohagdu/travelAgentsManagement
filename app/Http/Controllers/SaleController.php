@@ -22,10 +22,12 @@ class SaleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public $sale_model;
+    public $sale_details_model;
 	public function __construct()
 	{
 	    $this->middleware('auth');
         $this->sale_model = new Sale();
+        $this->sale_details_model = new SaleDetail();
 
 	}
     public function index()
@@ -489,6 +491,17 @@ class SaleController extends Controller
         ]);     
 
 
+    }
+    public function sale_invoice($id){
+        $organization_info = OrganizationSetup::first();
+        $sale_details_data = $this->sale_details_model->sale_details_data($id);
+        $invoice_discount = $sale_details_data[0]->invoice_discount;
+        $agent_id = $sale_details_data[0]->agent_id;
+        $agent_info = AgentRecord::find($agent_id);
+        // echo "<pre>";
+        // print_r($agent_info);exit;
+
+        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info'));
     }
     public function get_flight_setup_info(Request $request){
 

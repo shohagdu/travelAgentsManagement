@@ -209,7 +209,9 @@ input::-webkit-input-placeholder {
         display: none;
     }
   }
-
   .SalatemtTotal{
       float: right;
+  }
+  .InvoiceNotext{
+      font-size: 12px;;
   }

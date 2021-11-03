@@ -1,0 +1,48 @@
+.InvicerhtHeader .InvoiceNameText{
+    font-size: 30px;
+
+}
+.InvicerhtHeader .InvoiceText{
+    font-size: 14px;
+    font-weight: bold;
+}
+.InvoiceDateText{
+    margin-top: 5px;
+    border: none;
+    font-size: 12px;
+    background-color: #fff;
+}
+.InvoiceDateText tr td{
+    border: none;
+}
+.InvoiceTotalDue{
+    font-size: 20px;
+}
+.InvoiceLeftTextArea{
+    margin-top: 10px;
+    border: none;
+    font-size: 12px;
+    background-color: #fff;
+}
+.InvoiceLeftTextArea tr td{
+    border: none;
+}
+.InvoiceLeftTextArea .InvoiceName{
+    font-size: 20px;
+}
+.InvoiceIteamTable{
+    width: 100%;
+}
+.InvoiceTotalFotaerTbl{
+    float: right;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #fff;
+}
+.InvoiceFooterTEXT{
+    margin-top: 80px;
+}
+.InviceFooterSign{
+    border-top: 1px solid #222;
+    text-align: center;
+}
