@@ -320,9 +320,7 @@ function removeNewHotel(id){
                                     if (response.status == 'success') {
                                         swal("Success", response.msg, "success");
                                         $('#SaleSaveBtn').attr('disabled',false);
-                                        //$("#billListTable").DataTable().draw(true);
-
-                                        location.reload();
+                                        window.location.href = target+"sale-invoice/"+response.data;
                                     }else{
                                         swal("Something went wrong", response.msg, "error");
                                     }
@@ -370,9 +368,7 @@ $(document).on("submit","#SaleFormUpdate",function (e){
                                     if (response.status == 'success') {
                                         swal("Success", response.msg, "success");
                                         $('#SaleSaveBtn').attr('disabled',false);
-                                        //$("#billListTable").DataTable().draw(true);
-
-                                        location.reload();
+                                        window.location.href = target+"sale-invoice/"+response.data;
                                     }else{
                                         swal("Something went wrong", response.msg, "error");
                                     }
@@ -389,4 +385,6 @@ $(document).on("submit","#SaleFormUpdate",function (e){
         });
 });
 
-
+function PrintInvoice(){
+    window.print();
+}

@@ -46,3 +46,6 @@
     border-top: 1px solid #222;
     text-align: center;
 }
+.printMe{
+    float: right;
+}

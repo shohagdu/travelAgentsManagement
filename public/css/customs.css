@@ -215,3 +215,6 @@ input::-webkit-input-placeholder {
   .InvoiceNotext{
       font-size: 12px;;
   }
+  .todaySaleShow{
+      background-color:#67407f;
+  }

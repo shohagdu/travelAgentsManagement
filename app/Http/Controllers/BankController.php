@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bank;
 use App\Models\AccTransactionInfo;
+use App\Models\AgentRecord;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Session;
@@ -16,6 +17,12 @@ class BankController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $transaction_model;
+	public function __construct()
+	{
+	    $this->middleware('auth');
+        $this->transaction_model = new AccTransactionInfo();
+	}
     public function index()
     {
         $bank_data = Bank::all();
@@ -171,5 +178,42 @@ class BankController extends Controller
         }else{
             return redirect()->route('bank-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
+    }
+    public function account_report()
+    {
+        $bank         = Bank::orderBy('type', 'ASC')->get();
+        $agent_info   = AgentRecord::all();
+
+        return view('account_report.account_report', compact('bank','agent_info'));
+    }
+
+    public function get_account_report_data(Request $request)
+    {
+        header("Content-Type: application/json");
+
+        $account_id= $request->account_id;
+        $from_date = $request->from_date;
+        $to_date   = $request->to_date;
+
+        $start = $request->start;
+        $limit = $request->length;
+        $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
+
+        $request_data = [
+            'start'     => $start,
+            'limit'     => $limit,
+            'account_id'=> $account_id,
+            'from_date' => $from_date,
+            'to_date'   => $to_date,
+        ];
+
+        $response = $this->transaction_model->account_report_list_data($request_data, $search_content);
+
+        $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
+        $response['recordsTotal']    = $count;
+        $response['recordsFiltered'] = $count;
+        $response['draw']            = $request->draw;
+        
+        echo json_encode($response);
     }
 }

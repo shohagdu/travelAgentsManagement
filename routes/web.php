@@ -11,6 +11,8 @@ use App\Http\Controllers\SaleCategoryController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BillCollectionController;
+use App\Http\Controllers\ReportController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -116,3 +118,11 @@ Route::post('/bill-refund-save', [BillCollectionController::class, "bill_refund_
 Route::post('/bill_refund_row_data', [BillCollectionController::class, "bill_refund_row_data"])->name('bill_refund_row_data');
 Route::post('/bill_refund_delete', [BillCollectionController::class, "bill_refund_delete"])->name('bill_refund_delete');
 Route::post('/get_bill_refund_list_data', [BillCollectionController::class, "get_bill_refund_list_data"])->name('get_bill_refund_list_data');
+
+// Statement report
+Route::get('/statement-report', [ReportController::class, "index"])->name('statement-report');
+Route::post('/get_statement_report_data', [ReportController::class, "get_statement_report_data"])->name('get_statement_report_data');
+
+// Account Wise report
+Route::get('/account-report', [BankController::class, "account_report"])->name('account-report');
+Route::post('/get_account_report_data', [BankController::class, "get_account_report_data"])->name('get_account_report_data');

@@ -235,6 +235,7 @@ class SaleController extends Controller
         return response()->json([
             'status' => $sale_save ? 'success' : 'error',
             'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
+            'data'   => $sale_id,
         ]);     
     }
 
@@ -468,6 +469,7 @@ class SaleController extends Controller
         return response()->json([
             'status' => $sale_save ? 'success' : 'error',
             'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
+            'data'   => $id,
         ]);     
 
     }
@@ -498,10 +500,13 @@ class SaleController extends Controller
         $invoice_discount = $sale_details_data[0]->invoice_discount;
         $agent_id = $sale_details_data[0]->agent_id;
         $agent_info = AgentRecord::find($agent_id);
+
+        $agent_debit  = DB::table('acc_transaction_infos')->select('debit_amount')->where('debit_acc', $agent_id)->sum('debit_amount');
+        $agent_credit = DB::table('acc_transaction_infos')->select('credit_amount')->where('credit_acc', $agent_id)->sum('credit_amount');
+        $due_balance =  $agent_debit-$agent_credit;
         // echo "<pre>";
         // print_r($agent_info);exit;
-
-        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info'));
+        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info','due_balance'));
     }
     public function get_flight_setup_info(Request $request){
 

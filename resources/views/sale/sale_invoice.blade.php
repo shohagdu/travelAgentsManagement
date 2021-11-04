@@ -7,13 +7,13 @@
 <div class="row">
     <div class="col-md-12">
       <div class="card card-body printableArea">  
-        <div class="row">
+        <div class="row ">
           <div class="col-md-7 InviceLftHeader">
             <img style="height: 90px;" src="{{ asset('assets/images')}}/{{$organization_info->logo}}"/><br>
             
             <table class="InvoiceLeftTextArea">
                 <tr>
-                    <td> <span class="InvoiceName"> {{$agent_info->name}}</span></td>
+                    <td> <span class="InvoiceName"> {{$agent_info->name}} </span></td>
                 </tr>
                 <tr>
                     <td> <span class="Invoiceaddress"> {{$agent_info->address}} </span> </td>
@@ -30,6 +30,7 @@
           <div class="col-md-5 InvicerhtHeader">
                 <span class="InvoiceNameText"> Invoice </span><br>
                 <span class="InvoiceText">Invoice No : #2021001</span> 
+                <button class="printMe no-print" onclick="PrintInvoice()" type="button"> Print  <i class="fa fa-print"></i> </button>
             <table class="InvoiceDateText">
                 <tr>
                     <td> Incoice Date </td>
@@ -45,7 +46,7 @@
                 </tr>
             </table><br>
             <p> Total Due : <br>
-                <span class="InvoiceTotalDue">10800.00</span>
+                <span class="InvoiceTotalDue">{{ number_format((float)$due_balance, 2, '.', '')}}</span>
             </p>
            </div>
         </div>
@@ -118,14 +119,6 @@
     </div>
   </div>
 @endsection
-
-function reviewADD(){
-    var comt = lelfesdf;
-    rattint -5;
-
-    $("#parent").append($('<td>Whatever</td>').click(
-  function() {
-    alert(bar);
-  }));
-
-}
+@section('js')
+<script src="{{ asset('js/sale.js')}}"></script>
+@endsection
