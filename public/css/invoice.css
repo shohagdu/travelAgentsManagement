@@ -7,7 +7,7 @@
     font-weight: bold;
 }
 .InvoiceDateText{
-    margin-top: 5px;
+  
     border: none;
     font-size: 12px;
     background-color: #fff;
@@ -19,7 +19,6 @@
     font-size: 20px;
 }
 .InvoiceLeftTextArea{
-    margin-top: 10px;
     border: none;
     font-size: 12px;
     background-color: #fff;
@@ -32,6 +31,7 @@
 }
 .InvoiceIteamTable{
     width: 100%;
+    margin-top: 10px;
 }
 .InvoiceTotalFotaerTbl{
     float: right;
@@ -46,6 +46,6 @@
     border-top: 1px solid #222;
     text-align: center;
 }
-.printMe{
-    float: right;
+.InviceLftHeader img{
+    height: 80px;
 }

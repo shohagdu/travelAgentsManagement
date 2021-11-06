@@ -119,9 +119,7 @@ class SaleController extends Controller
             $fare         = $request->fare;
             $tax          = $request->tax;
             $commission   = $request->commission;
-            $commissionPer= $request->commissionPer;
             $ait          = $request->ait;
-            $aitPer       = $request->aitPer;
             $add          = $request->add;
             $amount       = $request->amount;
 
@@ -137,9 +135,9 @@ class SaleController extends Controller
                     'tax_per'           => $tax[$key],
                     'tax_amount'        => $tax[$key],
                     'total_amount'      => $fare[$key]+$tax[$key],
-                    'commission_per'    => $commissionPer[$key],
+                    'commission_per'    => $commission[$key],
                     'commission_amount' => $commission[$key],
-                    'ait_per'           => $aitPer[$key],
+                    'ait_per'           => $ait[$key],
                     'ait_amount'        => $ait[$key],
                     'add_per'           => $add[$key],
                     'add_amount'        => $add[$key],
@@ -302,9 +300,7 @@ class SaleController extends Controller
             $fare         = $request->fare;
             $tax          = $request->tax;
             $commission   = $request->commission;
-            $commissionPer= $request->commissionPer;
             $ait          = $request->ait;
-            $aitPer       = $request->aitPer;
             $add          = $request->add;
             $amount       = $request->amount;
 
@@ -323,9 +319,9 @@ class SaleController extends Controller
                             'tax_per'           => $tax[$i],
                             'tax_amount'        => $tax[$i],
                             'total_amount'      => $fare[$i]+$tax[$i],
-                            'commission_per'    => $commissionPer[$i],
+                            'commission_per'    => $commission[$i],
                             'commission_amount' => $commission[$i],
-                            'ait_per'           => $aitPer[$i],
+                            'ait_per'           => $ait[$i],
                             'ait_amount'        => $ait[$i],
                             'add_per'           => $add[$i],
                             'add_amount'        => $add[$i],
@@ -347,9 +343,9 @@ class SaleController extends Controller
                         'tax_per'           => $tax[$i],
                         'tax_amount'        => $tax[$i],
                         'total_amount'      => $fare[$i]+$tax[$i],
-                        'commission_per'    => $commissionPer[$i],
+                        'commission_per'    => $commission[$i],
                         'commission_amount' => $commission[$i],
-                        'ait_per'           => $aitPer[$i],
+                        'ait_per'           => $ait[$i],
                         'ait_amount'        => $ait[$i],
                         'add_per'           => $add[$i],
                         'add_amount'        => $add[$i],
@@ -447,7 +443,7 @@ class SaleController extends Controller
                 $sale_save = DB::table('sale_details')->insert($sale_detail_data_new);
               }
 
-               // transaction data
+            // transaction data
             $transaction_data = AccTransactionInfo::where('sales_id', $id)->first();
             
             $transaction_data->sales_id      = $id;
@@ -499,6 +495,7 @@ class SaleController extends Controller
         $sale_details_data = $this->sale_details_model->sale_details_data($id);
         $invoice_discount = $sale_details_data[0]->invoice_discount;
         $agent_id = $sale_details_data[0]->agent_id;
+        $airline_id = $sale_details_data[0]->airline_id;
         $agent_info = AgentRecord::find($agent_id);
 
         $agent_debit  = DB::table('acc_transaction_infos')->select('debit_amount')->where('debit_acc', $agent_id)->sum('debit_amount');
@@ -506,20 +503,20 @@ class SaleController extends Controller
         $due_balance =  $agent_debit-$agent_credit;
         // echo "<pre>";
         // print_r($agent_info);exit;
-        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info','due_balance'));
+        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info','due_balance','airline_id'));
     }
     public function get_flight_setup_info(Request $request){
 
-        $filght_id = $request->filght_value_id;
+        $filght_id   = $request->filght_value_id;
         $filght_info = AirlineSetup::where('id', $filght_id)->first();
-        $organization_info = OrganizationSetup::first();
+       // $organization_info = OrganizationSetup::first();
 
         return response()->json([
             'status' => true,
             'message' => 'Data get successfully',
             'data' => [
                 'flight_data'       => $filght_info,
-                'organization_data' => $organization_info,
+                //'organization_data' => $organization_info,
             ]
         ]);    
         

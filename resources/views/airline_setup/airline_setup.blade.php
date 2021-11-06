@@ -71,7 +71,6 @@
                   <input type="text" name="ait_amount" id="ait_amount"  class="form-control" required placeholder="0.00" readonly>
               </div>
             </div>
-          </div>
           <div class="form-group row">
             <label for="add" class="col-sm-2 text-end control-label col-form-label"> Add </label>
             <div class="col-sm-4">

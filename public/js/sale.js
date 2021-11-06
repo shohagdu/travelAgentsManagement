@@ -76,19 +76,13 @@ function filghtCaculation(row_id){
 
     var fare        = isNaN($('#fare_'+row_id).val()) ? 0 : parseFloat($('#fare_'+row_id).val());
     var tax         = isNaN($('#tax_'+row_id).val()) ? 0 : parseFloat($('#tax_'+row_id).val());
-    var commission  = isNaN($('#commissionPer_'+row_id).val()) ? 0 : parseFloat($('#commissionPer_'+row_id).val());
-    var ait         = isNaN($('#aitPer_'+row_id).val()) ? 0 : parseFloat($('#aitPer_'+row_id).val());
+    var commission  = isNaN($('#commission_'+row_id).val()) ? 0 : parseFloat($('#commission_'+row_id).val());
+    var ait         = isNaN($('#ait_'+row_id).val()) ? 0 : parseFloat($('#ait_'+row_id).val());
     var add         = isNaN($('#add_'+row_id).val()) ? 0 : parseFloat($('#add_'+row_id).val());
-
-    var commissionAmount = (fare*commission)/100;
-    var AITAmount = (fare*ait)/100;
-
-    $('#commission_'+row_id).val(commissionAmount.toFixed(2));
-    $('#ait_'+row_id).val(AITAmount.toFixed(2));
 
     parseFloat($('#totalFare_'+row_id).val((fare+tax).toFixed(2)));
 
-    var NetTotal = parseFloat((fare+tax+AITAmount+add)- commissionAmount);
+    var NetTotal = parseFloat((fare+tax+ait+add)- commission);
 
     $('#amount_'+row_id).val(isNaN(NetTotal) ? 0:  NetTotal.toFixed(2));
    // console.log(NetTotal);
@@ -214,26 +208,20 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
                  success: function (response) {
 
                     var fare       = parseFloat(response.data.flight_data.fare);
-                    var tax        = parseFloat(response.data.organization_data.tax_amount);
-                    var commission = parseFloat(response.data.flight_data.commission);
-                    var ait        = parseFloat(response.data.organization_data.ait);
+                    var tax        = parseFloat(response.data.flight_data.tax_amount);
+                    var total_fare = parseFloat(response.data.flight_data.total_fare);
+                    var commission = parseFloat(response.data.flight_data.commission_amount);
+                    var ait        = parseFloat(response.data.flight_data.ait_amount);
                     var add        = parseFloat(response.data.flight_data.add);
-                    var CommssionAmount = (fare*commission)/100;
-                    var AITAmount  = (fare*ait)/100;
-                    var total_fare = parseFloat(fare+tax);
-
-                    console.log(CommssionAmount);
-
 
                    $('#fare_'+lastChar).val(fare.toFixed(2));
                    $('#tax_'+lastChar).val(tax.toFixed(2));
                    $('#totalFare_'+lastChar).val(total_fare.toFixed(2));
-                   $('#commission_'+lastChar).val(CommssionAmount.toFixed(2));
-                   $('#commissionPer_'+lastChar).val(commission.toFixed(2));
-                   $('#ait_'+lastChar).val(AITAmount.toFixed(2));
-                   $('#aitPer_'+lastChar).val(ait.toFixed(2));
+                   $('#commission_'+lastChar).val(commission.toFixed(2));
+                   $('#ait_'+lastChar).val(ait.toFixed(2));
+                   
                    $('#add_'+lastChar).val(add);
-                   var total_amount = parseFloat((fare+tax+AITAmount+add)-CommssionAmount);
+                   var total_amount = parseFloat((fare+tax+ait+add)-commission);
                    $('#amount_'+lastChar).val(total_amount.toFixed(2));
 
                    totalSummation()
@@ -301,8 +289,11 @@ function removeNewHotel(id){
     swal({
         title: "Are you sure?",
         text: "You want to Sale!",
-        icon: "warning",
-        buttons: true,
+        icon: "info",
+        buttons: {
+            confirm: 'OK',
+            cancel: 'Cancel'
+        },
         dangerMode: true,
         })
         .then((willDelete) => {
@@ -328,7 +319,7 @@ function removeNewHotel(id){
                             });
                     }else{
                         $('#SaleSaveBtn').attr('disabled',false);
-                        swal("Something went wrong","Field Cannot be Empty", "error");
+                        swal("Something went wrong","Agent Cannot be Empty", "error");
                     }
                 } else {
                         $('#SaleSaveBtn').attr('disabled',false);
@@ -349,7 +340,7 @@ $(document).on("submit","#SaleFormUpdate",function (e){
     swal({
         title: "Are you sure?",
         text: "You want to Sale Update!",
-        icon: "warning",
+        icon: "info",
         buttons: true,
         dangerMode: true,
         })
@@ -376,6 +367,7 @@ $(document).on("submit","#SaleFormUpdate",function (e){
                             });
                     }else{
                         $('#SaleSaveBtn').attr('disabled',false);
+                
                         swal("Something went wrong","Field Cannot be Empty", "error");
                     }
                 } else {
@@ -385,6 +377,6 @@ $(document).on("submit","#SaleFormUpdate",function (e){
         });
 });
 
-function PrintInvoice(){
+function printInvoiceBtn(){
     window.print();
 }

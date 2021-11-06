@@ -73,7 +73,7 @@ function AirlineTotalFare(){
     var add = isNaN($("#add").val())  || $("#add").val() == "" ? 0 : parseFloat($("#add").val());
 
     var total_fare =  (fare+tax_amount);
-    var commissionAmount = (fare*commission/100);
+    var commissionAmount = (total_fare*commission/100);
     var aitAmount = (fare*ait/100);
     
     $("#total_fare").val(isNaN(total_fare) ? 0 : total_fare.toFixed(2));

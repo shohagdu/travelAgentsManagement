@@ -5,11 +5,11 @@
 @endsection
 @section('main_content')
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" id="section-to-print">
       <div class="card card-body printableArea">  
-        <div class="row ">
+        <div class="row">
           <div class="col-md-7 InviceLftHeader">
-            <img style="height: 90px;" src="{{ asset('assets/images')}}/{{$organization_info->logo}}"/><br>
+            <img src="{{ asset('assets/images')}}/{{$organization_info->logo}}"/><br>
             
             <table class="InvoiceLeftTextArea">
                 <tr>
@@ -29,20 +29,15 @@
           </div>
           <div class="col-md-5 InvicerhtHeader">
                 <span class="InvoiceNameText"> Invoice </span><br>
-                <span class="InvoiceText">Invoice No : #2021001</span> 
-                <button class="printMe no-print" onclick="PrintInvoice()" type="button"> Print  <i class="fa fa-print"></i> </button>
+                <span class="InvoiceText">Invoice No : # {{ $sale_details_data[0]->sale_id}}</span> 
+                
+                <button type="button" onclick="printInvoiceBtn()" class="btn btn-warning btn-md topPrintbarbutton noSectionToPrint"><i class="mdi  mdi-printer"></i>
+                    Print
+                </button>
             <table class="InvoiceDateText">
                 <tr>
-                    <td> Incoice Date </td>
+                    <td> Invoice Date </td>
                     <td> : {{ date('d-m-Y', strtotime($sale_details_data[0]->created_at))}}  </td>
-                </tr>
-                <tr>
-                    <td> Issue  Date </td>
-                    <td> : 08/10/2021  </td>
-                </tr>
-                <tr>
-                    <td> Account No </td>
-                    <td> : 1231234242  </td>
                 </tr>
             </table><br>
             <p> Total Due : <br>
@@ -52,34 +47,82 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="InvoiceIteamTable">
-                    <tr>
-                        <th> Item Description </th>
-                        <th> Total </th>
-                        <th> Discount </th>
-                        <th>Net Amount </th>
-                    </tr>
-                    @php $id; $sub_total = 0; $discout_total = 0; @endphp
-                    @foreach($sale_details_data as $item)
-                    <tr>
-            
-                        <td> @if($item->airline_id !='') {{$item->airline_name}} @else {{$item->details}}  @endif</td>
-                        <td> {{  $item->net_amount}} </td>
-                        <td> @php if($item->discount > 0 ){
-                            $discount = $item->discount;
-                            $discout_total += $discount;
-                           echo  number_format((float)$discount, 2, '.', ''); 
-                           }else{
-                             $discount = 0;
+                @if($airline_id !='') 
+                    <table class="InvoiceIteamTable">
+                        <tr>
+                            <th> Item Description </th>
+                            <th> Fare </th>
+                            <th> Tax </th>
+                            <th> Total Fare </th>
+                            <th> Commission</th>
+                            <th> AIT</th>
+                            <th> ADD</th>
+                            <th> Total </th>
+                            <th> Discount </th>
+                            <th>Net Amount </th>
+                        </tr>
+                        @php $id; $sub_total = 0; $discout_total = 0; @endphp
+                        @foreach($sale_details_data as $item)
+                        <tr>
+                
+                            <td> @if($item->airline_id !='') {{$item->airline_name}} @else {{$item->details}}  @endif</td>
+                            <td>{{number_format((float)$item->fare, 2, '.', '')}}</td>
+                            <td>{{number_format((float)$item->tax_amount, 2, '.', '')}}</td>
+                            <td>{{number_format((float)$item->total_amount, 2, '.', '')}}</td>
+                            <td>{{number_format((float)$item->commission_amount, 2, '.', '')}}</td>
+                            <td>{{number_format((float)$item->ait_amount, 2, '.', '')}}</td>
+                            <td>{{number_format((float)$item->add_amount, 2, '.', '')}}</td>
+                            <td> {{  $item->net_amount}} </td>
+                            <td> @php if($item->discount > 0 ){
+                                $discount = $item->discount;
+                                $discout_total += $discount;
                             echo  number_format((float)$discount, 2, '.', ''); 
-                            }
-                            @endphp
-                       </td>
-                    
-                       <td> @php $net_amount = $item->net_amount-$discount; echo $net_amount; $sub_total +=$net_amount; @endphp</td>
-                    </tr>
-                    @endforeach
-                </table>
+                            }else{
+                                $discount = 0;
+                                echo  number_format((float)$discount, 2, '.', ''); 
+                                }
+                                @endphp
+                        </td>
+                        
+                        <td> @php $net_amount = $item->net_amount-$discount; echo $net_amount; $sub_total +=$net_amount; @endphp</td>
+                        </tr>
+                        @endforeach
+                    </table>
+
+                @else
+
+                    <table class="InvoiceIteamTable">
+                        <tr>
+                            <th> Item Description </th>
+                            <th> Total </th>
+                            <th> Discount </th>
+                            <th>Net Amount </th>
+                        </tr>
+                        @php $id; $sub_total = 0; $discout_total = 0; @endphp
+                        @foreach($sale_details_data as $item)
+                        <tr>
+                
+                            <td> @if($item->airline_id !='') {{$item->airline_name}} @else {{$item->details}}  @endif</td>
+                            <td> {{  $item->net_amount}} </td>
+                            <td> @php if($item->discount > 0 ){
+                                $discount = $item->discount;
+                                $discout_total += $discount;
+                            echo  number_format((float)$discount, 2, '.', ''); 
+                            }else{
+                                $discount = 0;
+                                echo  number_format((float)$discount, 2, '.', ''); 
+                                }
+                                @endphp
+                        </td>
+                        
+                        <td> @php $net_amount = $item->net_amount-$discount; echo $net_amount; $sub_total +=$net_amount; @endphp</td>
+                        </tr>
+                        @endforeach
+                    </table>
+
+                @endif
+
+                
             </div>
             <div class="col-md-8"></div>
             <div class="col-md-4">
