@@ -24,21 +24,21 @@
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="{{ asset('')}}assets/images/{{$setup_data->favicon}}"
+      href="{{ asset('')}}public/assets/images/{{$setup_data->favicon}}"
     />
     @else
     <link
     rel="icon"
     type="image/png"
     sizes="16x16"
-    href="{{ asset('')}}assets/images/favicon.png"
+    href="{{ asset('')}}public/assets/images/favicon.png"
   />
     @endif
     <!-- Custom CSS -->
-    <link href="{{ asset('assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
+    <link href="{{ asset('public/assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
     <!-- Custom CSS -->
-    <link href="{{ asset('dist/css/style.min.css')}}" rel="stylesheet" />
-    <link href="{{ asset('css/customs.css')}}" rel="stylesheet" />
+    <link href="{{ asset('public/dist/css/style.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('public/css/customs.css')}}" rel="stylesheet" />
     @yield('css')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -124,27 +124,27 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/extra-libs/sparkline/sparkline.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+    <script src="{{ asset('public/assets/extra-libs/sparkline/sparkline.js')}}"></script>
     <!--Wave Effects -->
-    <script src="{{ asset('dist/js/waves.js')}}"></script>
+    <script src="{{ asset('public/dist/js/waves.js')}}"></script>
     <!--Menu sidebar -->
-    <script src="{{ asset('dist/js/sidebarmenu.js')}}"></script>
+    <script src="{{ asset('public/dist/js/sidebarmenu.js')}}"></script>
     <!--Custom JavaScript -->
-    <script src="{{ asset('dist/js/custom.min.js')}}"></script>
+    <script src="{{ asset('public/dist/js/custom.min.js')}}"></script>
     <!--This page JavaScript -->
     <!-- <script src="../dist/js/pages/dashboards/dashboard1.js"></script> -->
     <!-- Charts js Files -->
-    <script src="{{ asset('assets/libs/flot/excanvas.js')}}"></script>
-    <script src="{{ asset('assets/libs/flot/jquery.flot.js')}}"></script>
-    <script src="{{ asset('assets/libs/flot/jquery.flot.pie.js')}}"></script>
-    <script src="{{ asset('assets/libs/flot/jquery.flot.time.js')}}"></script>
-    <script src="{{ asset('assets/libs/flot/jquery.flot.stack.js')}}"></script>
-    <script src="{{ asset('assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
-    <script src="{{ asset('assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/flot/excanvas.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/flot/jquery.flot.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/flot/jquery.flot.pie.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/flot/jquery.flot.time.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/flot/jquery.flot.stack.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
     {{-- <script src="{{ asset('dist/js/pages/chart/chart-page-init.js')}}"></script> --}}
     @yield('js')
   </body>

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Sale Category List')
 @section('css')
-<link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
+<link href="{{ asset('public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
 @endsection
 @section('main_content')
 <div class="row">
@@ -70,6 +70,6 @@
 </div>
 @endsection
 @section('js')
-<script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js')}}"></script>
-<script src="{{ asset('js/global.js')}}"></script>
+<script src="{{ asset('public/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<script src="{{ asset('public/js/global.js')}}"></script>
 @endsection

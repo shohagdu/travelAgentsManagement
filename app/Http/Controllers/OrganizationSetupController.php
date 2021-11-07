@@ -27,7 +27,7 @@ class OrganizationSetupController extends Controller
     public function organization_save(Request $request)
     {  
 
-      $validated = $request->validate([
+      $validated  = $request->validate([
         'name'    => ['required'],
         'mobile'  => ['required'],
         'address' => ['required'],
@@ -79,9 +79,9 @@ class OrganizationSetupController extends Controller
                 "tax_amount"      => $request->tax_amount	,
                 "ait"             => $request->ait,
                 "is_active"       => 1,
-                'created_by' => Auth::user()->id,
-                'created_ip' => request()->ip(),
-                'created_at' => date('Y-m-d H:i:s'),
+                'created_by'      => Auth::user()->id,
+                'created_ip'      => request()->ip(),
+                'created_at'      => date('Y-m-d H:i:s'),
               ];
 
               $save = DB::table('organization_setups')->insert($organization_data);
@@ -107,9 +107,9 @@ class OrganizationSetupController extends Controller
               "tax_amount"      => $request->tax_amount	,
               "ait"             => $request->ait,
               "is_active"       => 1,
-              'updated_by' => Auth::user()->id,
-              'updated_ip' => request()->ip(),
-              'updated_at' => date('Y-m-d H:i:s'),
+              'updated_by'      => Auth::user()->id,
+              'updated_ip'      => request()->ip(),
+              'updated_at'      => date('Y-m-d H:i:s'),
             ];
 
             $save = DB::table('organization_setups')->where('id', $id)->update($organization_data);

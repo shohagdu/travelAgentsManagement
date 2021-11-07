@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Alinene Setup List')
 @section('css')
-<link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
+<link href="{{ asset('public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
 @endsection
 @section('main_content')
 <div class="row">
@@ -43,7 +43,7 @@
             <td>
               @if($item->category == 1)
               International
-              @elseif($item->category ==1)
+              @elseif($item->category ==2)
               Domestic
               @endif
             </td>
@@ -70,6 +70,6 @@
 </div>
 @endsection
 @section('js')
-<script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js')}}"></script>
-<script src="{{ asset('js/global.js')}}"></script>
+<script src="{{ asset('public/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<script src="{{ asset('public/js/global.js')}}"></script>
 @endsection

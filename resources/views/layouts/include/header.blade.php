@@ -17,9 +17,9 @@
           <span class="logo-text ms-2">
             <!-- dark Logo text -->
             @if(isset($setup_data))
-            <img src="{{ asset('')}}assets/images/{{$setup_data->templete_logo}}" alt="Logo" class="light-logo AdminLogo"/>
+            <img src="{{ asset('')}}public/assets/images/{{$setup_data->templete_logo}}" alt="Logo" class="light-logo AdminLogo"/>
             @else
-            <img src="{{ asset('')}}assets/images/logo-text.png" alt="Logo" class="light-logo"/>
+            <img src="{{ asset('')}}public/assets/images/logo-text.png" alt="Logo" class="light-logo"/>
             @endif
             
           </span>
@@ -115,7 +115,7 @@
               aria-expanded="false"
             >
               <img
-                src="assets/images/users/1.jpg"
+                src="public/assets/images/users/1.jpg"
                 alt="user"
                 class="rounded-circle"
                 width="31"

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Organization Setup')
 @section('css')
-<link rel="stylesheet" type="text/css"href="{{ asset('assets/libs/select2/dist/css/select2.min.css')}}"/>    
+<link rel="stylesheet" type="text/css"href="{{ asset('public/assets/libs/select2/dist/css/select2.min.css')}}"/>    
 @endsection
 @section('main_content')
 <div class="row">
@@ -124,7 +124,7 @@
                 <div class="col-sm-4">
                     <input type="file" name="logo" id="logo" class="form-control">
                     <div class="organization_preview_img">
-                        <img id="organization_logo_preview" src="{{ asset('assets/images')}}/{{ !empty($organization_info->logo) ? $organization_info->logo : 'logo.png'}}" class="organization_logo"/>
+                        <img id="organization_logo_preview" src="{{ asset('public/assets/images')}}/{{ !empty($organization_info->logo) ? $organization_info->logo : 'logo.png'}}" class="organization_logo"/>
                         <input type="hidden" name="pre_logo" id="pre_logo" value="{{ !empty($organization_info->logo) ? $organization_info->logo : 'logo.png'}}" > 
                     </div>
                 </div> 
@@ -132,7 +132,7 @@
                 <div class="col-sm-4">
                     <input type="file" name="templete_logo" id="templete_logo" class="form-control">
                     <div class="organization_preview_img">
-                        <img id="organization_templete_logo_preview" src="{{ asset('assets/images')}}/{{ !empty($organization_info->templete_logo) ? $organization_info->templete_logo : 'logo-text.png'}}"class="organization_templete_logo_preview"/>
+                        <img id="organization_templete_logo_preview" src="{{ asset('public/assets/images')}}/{{ !empty($organization_info->templete_logo) ? $organization_info->templete_logo : 'logo-text.png'}}"class="organization_templete_logo_preview"/>
                         <input type="hidden" name="pre_templete_logo" id="pre_templete_logo" value="{{ !empty($organization_info->templete_logo) ? $organization_info->templete_logo : 'logo-text.png'}}" > 
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                 <div class="col-sm-4">
                     <input type="file" name="favicon" id="favicon" class="form-control">
                     <div class="organization_preview_img">
-                        <img id="organization_favicon_preview" src="{{ asset('assets/images')}}/{{ !empty($organization_info->favicon) ? $organization_info->favicon : 'favicon.png'}}"class="organization_favicon_preview"/>
+                        <img id="organization_favicon_preview" src="{{ asset('public/assets/images')}}/{{ !empty($organization_info->favicon) ? $organization_info->favicon : 'favicon.png'}}"class="organization_favicon_preview"/>
                         <input type="hidden" name="pre_favicon" id="pre_favicon" value="{{ !empty($organization_info->favicon) ? $organization_info->favicon : 'favicon.png'}}" > 
                     </div>
                 </div>
@@ -161,7 +161,7 @@
   </div>
 @endsection
 @section('js')
-<script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
-    <script src="{{ asset('js/global.js')}}"></script>
+<script src="{{ asset('public/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/select2/dist/js/select2.min.js')}}"></script>
+    <script src="{{ asset('public/js/global.js')}}"></script>
 @endsection

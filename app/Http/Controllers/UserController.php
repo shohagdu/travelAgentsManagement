@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Session;
+
 use DB;
 class UserController extends Controller
 {
@@ -47,9 +50,12 @@ class UserController extends Controller
         ]);
 
         $data=  User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'name'      => $request['name'],
+            'email'     => $request['email'],
+            'password'  => Hash::make($request['password']),
+            'created_by'=> Auth::user()->id,
+            'created_ip'=> request()->ip(),
+            'created_at'=> date('Y-m-d H:i:s'),
         ]);
 
         if($data){
@@ -100,9 +106,12 @@ class UserController extends Controller
         ]);
 
         $user_data =  [
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'name'      => $request['name'],
+            'email'     => $request['email'],
+            'password'  => Hash::make($request['password']),
+            'updated_by'=> Auth::user()->id,
+            'updated_ip'=> request()->ip(),
+            'updated_at'=> date('Y-m-d H:i:s'),
         ];
         $save_user = DB::table('users')->where('id', $id)->update($user_data);
 

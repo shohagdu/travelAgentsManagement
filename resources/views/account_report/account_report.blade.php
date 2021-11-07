@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('title', 'Account Report')
 @section('css')
-<link rel="stylesheet" href="{{ asset('assets/datatable/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{ asset('assets/datatable/css/responsive.bootstrap4.min.css')}}">
-<link href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet"/>       
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/responsive.bootstrap4.min.css')}}">
+<link href="{{ asset('public/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet"/>       
 @endsection
 @section('main_content')
 <div class="row">
@@ -54,10 +54,10 @@
 @endsection
 @section('js')
 <!-- DataTables  -->
-<script src="{{ asset('assets/datatable/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{ asset('assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{ asset('assets/datatable/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-<script src="{{ asset('js/report.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('public/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{ asset('public/js/report.js')}}"></script>
 @endsection

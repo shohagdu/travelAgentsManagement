@@ -188,6 +188,6 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/sweetalert.min.js')}}"></script>
-    <script src="{{ asset('js/sale.js')}}"></script>
+<script src="{{ asset('public/js/sweetalert.min.js')}}"></script>
+    <script src="{{ asset('public/js/sale.js')}}"></script>
 @endsection

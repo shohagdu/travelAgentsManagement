@@ -1,10 +1,10 @@
 @extends('layouts.master')
 @section('title', 'Sale List')
 @section('css')
-<link rel="stylesheet" href="{{ asset('assets/datatable/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{ asset('assets/datatable/css/responsive.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{ asset('assets/datatable/css/buttons.bootstrap4.min.css')}}">
-<link rel="stylesheet" type="text/css"href="{{ asset('assets/libs/select2/dist/css/select2.min.css')}}"/>
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet" type="text/css"href="{{ asset('public/assets/libs/select2/dist/css/select2.min.css')}}"/>
 
 @endsection
 @section('main_content')
@@ -63,12 +63,12 @@
 @endsection
 @section('js')
 <!-- DataTables  -->
-<script src="{{ asset('assets/datatable/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{ asset('assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{ asset('assets/datatable/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
-<script src="{{ asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
-<script src="{{ asset('js/sweetalert.min.js')}}"></script>
-<script src="{{ asset('js/saledatatale.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('public/assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('public/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{ asset('public/assets/libs/select2/dist/js/select2.min.js')}}"></script>
+<script src="{{ asset('public/js/sweetalert.min.js')}}"></script>
+<script src="{{ asset('public/js/saledatatale.js')}}"></script>
 @endsection

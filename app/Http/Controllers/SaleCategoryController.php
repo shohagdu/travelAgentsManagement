@@ -135,5 +135,5 @@ class SaleCategoryController extends Controller
         }else{
             return redirect()->route('sale-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
-    }
+    }    
 }

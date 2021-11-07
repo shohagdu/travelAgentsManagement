@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Sale Invoice')
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/invoice.css')}}">
+<link rel="stylesheet" href="{{ asset('public/css/invoice.css')}}">
 @endsection
 @section('main_content')
 <div class="row">
@@ -9,7 +9,7 @@
       <div class="card card-body printableArea">  
         <div class="row">
           <div class="col-md-7 InviceLftHeader">
-            <img src="{{ asset('assets/images')}}/{{$organization_info->logo}}"/><br>
+            <img src="{{ asset('public/assets/images')}}/{{$organization_info->logo}}"/><br>
             
             <table class="InvoiceLeftTextArea">
                 <tr>
@@ -163,5 +163,5 @@
   </div>
 @endsection
 @section('js')
-<script src="{{ asset('js/sale.js')}}"></script>
+<script src="{{ asset('public/js/sale.js')}}"></script>
 @endsection

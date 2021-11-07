@@ -9,14 +9,17 @@ $.ajaxSetup({
 
 // datatable
 $( document ).ready(function() {
-    $("#zero_config").DataTable();
-
+    var TableEle = document.getElementById("zero_config");
+    if(TableEle){
+        $("#zero_config").DataTable();
+    }
  });
 
 //  select2
 $( document ).ready(function() {
-   $(".select2").select2();
-
+    if ($(".select2").length > 0){
+        $(".select2").select2();
+    }
 });
 
 function airline_info_all(){

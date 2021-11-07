@@ -24,18 +24,18 @@
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="{{ asset('assets/images')}}/{{$setup_data->favicon}}"
+      href="{{ asset('public/assets/images')}}/{{$setup_data->favicon}}"
     />
     @else
     <link
     rel="icon"
     type="image/png"
     sizes="16x16"
-    href="{{ asset('assets/images/favicon.png')}}"
+    href="{{ asset('public/assets/images/favicon.png')}}"
   />
     @endif
     <!-- Custom CSS -->
-    <link href="{{ asset('dist/css/style.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('public/dist/css/style.min.css')}}" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   </head>
@@ -73,9 +73,9 @@
               <span class="db"
                 >
                 @if(isset($setup_data))
-                  <img src="{{ asset('assets/images')}}/{{$setup_data->logo}}" alt="logo"/>
+                  <img src="{{ asset('public/assets/images')}}/{{$setup_data->logo}}" alt="logo"/>
                 @else
-                <img src="{{ asset('assets/images/logo.png')}}" alt="logo"/>
+                <img src="{{ asset('public/assets/images/logo.png')}}" alt="logo"/>
                 @endif
 
               </span>
@@ -141,9 +141,9 @@
     <!-- ============================================================== -->
     <!-- All Required js -->
     <!-- ============================================================== -->
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->

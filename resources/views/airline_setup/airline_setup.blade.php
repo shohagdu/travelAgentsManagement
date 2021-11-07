@@ -4,7 +4,6 @@
 <div class="row">
     <div class="col-md-12">
       <div class="card">
-        
         <form class="form-horizontal" method="POST" action="{{ route('airline-setup-save')}}">
                 @csrf
           <div class="card-body">
@@ -95,6 +94,6 @@
   </div>
 @endsection
 @section('js')
-    <script src="{{ asset('js/global.js')}}"></script>
+    <script src="{{ asset('public/js/global.js')}}"></script>
 @endsection
 

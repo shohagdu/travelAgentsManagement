@@ -4,7 +4,6 @@
 <div class="row">
     <div class="col-md-12">
       <div class="card">
-        
         <form class="form-horizontal" method="POST" action="{{ route('airline-setup-update',$airline_info->id)}}">
                 @csrf
           <div class="card-body">
@@ -71,7 +70,7 @@
                   <input type="text" name="ait_amount" id="ait_amount"  class="form-control" required value="{{$airline_info->ait_amount}}"  placeholder="0.00">
               </div>
             </div>
-          </div>
+  
           <div class="form-group row">
             <label for="add" class="col-sm-2 text-end control-label col-form-label"> Add </label>
             <div class="col-sm-4">
@@ -96,6 +95,6 @@
   </div>
 @endsection
 @section('js')
-    <script src="{{ asset('js/global.js')}}"></script>
+    <script src="{{ asset('public/js/global.js')}}"></script>
 @endsection
 

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Add Agent')
 @section('css')
-<link rel="stylesheet" type="text/css"href="{{ asset('assets/libs/select2/dist/css/select2.min.css')}}"/>    
+<link rel="stylesheet" type="text/css"href="{{ asset('public/assets/libs/select2/dist/css/select2.min.css')}}"/>    
 @endsection
 @section('main_content')
 <div class="row">
@@ -108,7 +108,7 @@
   </div>
 @endsection
 @section('js')
-<script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
-    <script src="{{ asset('js/global.js')}}"></script>
+<script src="{{ asset('public/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/select2/dist/js/select2.min.js')}}"></script>
+    <script src="{{ asset('public/js/global.js')}}"></script>
 @endsection
