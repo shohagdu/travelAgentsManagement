@@ -27,80 +27,55 @@
             <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
               <div class="card card-hover">
-                <div class="box todaySaleShow text-center">
+                <div class="box bg-success text-center">
                   <h1 class="font-light text-white">
-                    {{$today_total_sale}}
+                    {{$today_sale_balance}}
                   </h1>
-                  <h6 class="text-white">Today Sale</h6>
+                  <h6 class="text-white"> Today Sale Balance</h6>
                 </div>
               </div>
             </div>
              <!-- Column -->
              <div class="col-md-6 col-lg-3 col-xlg-3">
               <div class="card card-hover">
-                <div class="box bg-secondary text-center">
-                  <h1 class="font-light text-white">
-                    {{$today_total_collection}}
-                  </h1>
-                  <h6 class="text-white">Today Collection </h6>
-                </div>
-              </div>
-            </div>
-            <!-- Column -->
-            <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-warning text-center">
-                  <h1 class="font-light text-white">
-                    {{$today_total_refund}}
-                  </h1>
-                  <h6 class="text-white">Today Refund </h6>
-                </div>
-              </div>
-            </div>
-           
-            <!-- Column -->
-            <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
                 <div class="box bg-info text-center">
+                  <h1 class="font-light text-white">
+                    {{$today_collection_balance}}
+                  </h1>
+                  <h6 class="text-white">Today Collection Balance </h6>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-3 col-xlg-3">
+              <div class="card card-hover">
+                <div class="box bg-primary text-center">
+                  <h1 class="font-light text-white">
+                    {{$today_sale_balance}}
+                  </h1>
+                  <h6 class="text-white">Today Debit Balance </h6>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-3 col-xlg-3">
+              <div class="card card-hover">
+                <div class="box todaySaleShow text-center">
+                  <h1 class="font-light text-white">
+                    {{$today_collection_balance}}
+                  </h1>
+                  <h6 class="text-white">Today Credit Balance </h6>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-3 col-xlg-3">
+              <div class="card card-hover">
+                <div class="box bg-secondary text-center">
                   <h1 class="font-light text-white">
                     {{$total_agent}}
                   </h1>
                   <h6 class="text-white">Total Agent</h6>
-                </div>
-              </div>
-            </div>
-            
-             <!-- Column -->
-             <div class="col-md-6 col-lg-4 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-success text-center">
-                  <h1 class="font-light text-white">
-                    {{ $total_sale}} 
-                  </h1>
-                  <h6 class="text-white">Total Sale </h6>
-                </div>
-              </div>
-            </div>
-            <!-- Column -->
-            <!-- Column -->
-            <div class="col-md-6 col-lg-4 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-primary text-center">
-                  <h1 class="font-light text-white">
-                    {{ $total_collection}} 
-                  </h1>
-                  <h6 class="text-white"> Total Collection</h6>
-                </div>
-              </div>
-            </div>
-             <!-- Column -->
-             <div class="col-md-6 col-lg-4 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-danger text-center">
-                  <h1 class="font-light text-white">
-                    {{ $total_refund}} 
-                  </h1>
-                  <h6 class="text-white"> Total Refund </h6>
                 </div>
               </div>
             </div>

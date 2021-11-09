@@ -126,6 +126,3 @@ Route::post('/get_statement_report_data', [ReportController::class, "get_stateme
 // Account Wise report
 Route::get('/account-report', [BankController::class, "account_report"])->name('account-report');
 Route::post('/get_account_report_data', [BankController::class, "get_account_report_data"])->name('get_account_report_data');
-
-
-Route::get('/our_backup_database', [SaleCategoryController::class, "our_backup_database"])->name('our_backup_database');

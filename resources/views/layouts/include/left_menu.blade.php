@@ -18,17 +18,22 @@
               href="javascript:void(0)"
               aria-expanded="false"
               ><i class="mdi mdi-cart"></i
-              ><span class="hide-menu"> Sale </span></a>
+              ><span class="hide-menu"> Sales </span></a>
             <ul aria-expanded="false" class="collapse first-level">
               <li class="sidebar-item">
                 <a href="{{ route('sale')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Sale </span></a>
+                  ><span class="hide-menu"> New Sale </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('sale-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu">  Sale List </span></a>
+                  ><span class="hide-menu"> Today All Sales Info </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('sale-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> View All Sales </span></a>
               </li>
             </ul>
           </li>
@@ -37,17 +42,22 @@
               href="javascript:void(0)"
               aria-expanded="false"
               ><i class="mdi mdi-book-open"></i
-              ><span class="hide-menu"> Bill Collection </span></a>
+              ><span class="hide-menu"> Account </span></a>
             <ul aria-expanded="false" class="collapse first-level">
               <li class="sidebar-item">
                 <a href="{{ route('bill-collection')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Bill Collection </span></a>
+                  ><span class="hide-menu"> Bill Collection  </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('bill-collection')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Debit Balance  </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('bill-refund')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Bill Refund </span></a>
+                  ><span class="hide-menu"> Credit Balance </span></a>
               </li>
             </ul>
           </li>
@@ -62,16 +72,16 @@
               <li class="sidebar-item">
                 <a href="{{ route('add-agent')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Add Agent </span></a>
+                  ><span class="hide-menu"> Add New Agent </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('agent-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu">  Agent List </span></a>
+                  ><span class="hide-menu"> View All Agent List </span></a>
               </li>
             </ul>
           </li>
-          <li class="sidebar-item">
+          <!--<li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark"
               href="javascript:void(0)"
               aria-expanded="false"
@@ -89,7 +99,7 @@
                   ><span class="hide-menu">  Airline Setup  List </span></a>
               </li>
             </ul>
-          </li>
+          </li>-->
           <!-- <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark"
               href="javascript:void(0)"
@@ -109,7 +119,7 @@
               </li>
             </ul>
           </li>-->
-          <li class="sidebar-item">
+          <!-- <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark"
               href="javascript:void(0)"
               aria-expanded="false"
@@ -127,7 +137,7 @@
                   ><span class="hide-menu"> Sale Category  List </span></a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <li class="sidebar-item">
             <a
               class="sidebar-link has-arrow waves-effect waves-dark"
@@ -156,14 +166,39 @@
               ><span class="hide-menu">Setting </span></a>
             <ul aria-expanded="false" class="collapse first-level">
               <li class="sidebar-item">
+                <a href="{{ route('airline-setup')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Add New Airlines Setup </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('airline-setup-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> View All Airlines Setup </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('sale-category')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Sale Category </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('sale-category-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> View All Sale Category </span></a>
+              </li>
+              <li class="sidebar-item">
                 <a href="{{ route('bank-create')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
                   ><span class="hide-menu"> Bank Setup </span></a>
               </li>
               <li class="sidebar-item">
+                <a href="{{ route('bank-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Bank Details </span></a>
+              </li>
+              <li class="sidebar-item">
                 <a href="{{ route('organization-setup')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Organization Setup </span></a>
+                  ><span class="hide-menu"> Company  Configuration </span></a>
               </li>
             </ul>
           </li>
@@ -173,19 +208,17 @@
               href="javascript:void(0)"
               aria-expanded="false"
               ><i class="mdi mdi-account-box"></i
-              ><span class="hide-menu">User </span></a
-            >
+              ><span class="hide-menu">User Management</span></a>
             <ul aria-expanded="false" class="collapse first-level">
               <li class="sidebar-item">
                 <a href="{{ route('add-user') }}" class="sidebar-link"
                   ><i class="mdi mdi-account-plus"></i
-                  ><span class="hide-menu"> Add User </span></a
-                >
+                  ><span class="hide-menu"> Add New User </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{  asset('user-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-account-card-details"></i
-                  ><span class="hide-menu"> User List </span></a
+                  ><span class="hide-menu">View All User </span></a
                 >
               </li>
             </ul>

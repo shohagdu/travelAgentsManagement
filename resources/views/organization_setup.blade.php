@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Organization Setup')
+@section('title', 'Company Configuration')
 @section('css')
 <link rel="stylesheet" type="text/css"href="{{ asset('public/assets/libs/select2/dist/css/select2.min.css')}}"/>    
 @endsection
@@ -17,9 +17,9 @@
                 @csrf
 
           <div class="card-body">
-            <h4 class="card-title">Organization Setup</h4>
+            <h4 class="card-title">Company  Configuration</h4>
             <div class="form-group row">
-                <label for="name" class="col-sm-2 text-end control-label col-form-label"> Organization Name</label>
+                <label for="name" class="col-sm-2 text-end control-label col-form-label"> Company Name</label>
                 <div class="col-sm-10">
                     <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"  value="{{ !empty($organization_info->name) ? $organization_info->name : ''}}" placeholder="Organization Name">
                     @error('name')
@@ -33,7 +33,7 @@
             <div class="form-group row">
                 <label for="address" class="col-sm-2 text-end control-label col-form-label">Address</label>
                 <div class="col-sm-10">
-                    <textarea name="address" id="address" class="form-control @error('mobile') is-invalid @enderror"  placeholder="Address">{{ !empty($organization_info->address) ? $organization_info->address : ''}}</textarea>
+                    <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror"  placeholder="Address">{{ !empty($organization_info->address) ? $organization_info->address : ''}}</textarea>
                     @error('address')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

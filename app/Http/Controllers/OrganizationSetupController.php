@@ -111,12 +111,14 @@ class OrganizationSetupController extends Controller
               'updated_ip'      => request()->ip(),
               'updated_at'      => date('Y-m-d H:i:s'),
             ];
+            // echo "<pre>";
+            // print_r($organization_data);exit;
 
             $save = DB::table('organization_setups')->where('id', $id)->update($organization_data);
         }
           
         if($save){
-            return redirect()->route('organization-setup')->with('flash.message', 'Organization Sucessfully Saved!')->with('flash.class', 'success');
+            return redirect()->route('organization-setup')->with('flash.message', 'Company Configuration Sucessfully Saved!')->with('flash.class', 'success');
         }else{
             return redirect()->route('organization-setup')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
