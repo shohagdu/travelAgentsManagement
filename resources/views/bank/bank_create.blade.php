@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Account Create')
+@section('title', 'Bank Account Create')
 @section('main_content')
 <div class="row">
     <div class="col-md-12">
@@ -9,7 +9,7 @@
           <div class="card-body">
             <a href="{{ route('bank-list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
               <i class="mdi mdi-format-list-bulleted"></i> Account List </a>
-            <h4 class="card-title"> Account Create </h4>
+            <h4 class="card-title"> Bank Account Create </h4>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 text-end control-label col-form-label"> Account Name</label>
                 <div class="col-sm-4">
@@ -22,6 +22,12 @@
                 </div>
             </div>
             <div class="form-group row">
+              <label for="branch_name" class="col-sm-2 text-end control-label col-form-label"> Branch Name</label>
+              <div class="col-sm-4">
+                 <input type="text" name="branch_name" id="branch_name" class="form-control"  placeholder="Branch Name">
+              </div>
+            </div>
+            <div class="form-group row">
                 <label for="account_no" class="col-sm-2 text-end control-label col-form-label"> Account No</label>
                 <div class="col-sm-4">
                    <input type="text" name="account_no" id="account_no" class="form-control @error('account_no') is-invalid @enderror"  placeholder="Account No">
@@ -31,6 +37,12 @@
                     </span>
                     @enderror 
                 </div>
+            </div>
+            <div class="form-group row">
+              <label for="routing_number" class="col-sm-2 text-end control-label col-form-label"> Routing Number</label>
+              <div class="col-sm-4">
+                 <input type="text" name="routing_number" id="routing_number" class="form-control"  placeholder="Routing Number">
+              </div>
             </div>
             <div class="form-group row">
               <label for="opening_balance" class="col-sm-2 text-end control-label col-form-label"> Opening Balance</label>

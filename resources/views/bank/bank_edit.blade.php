@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Account Update')
+@section('title', 'Bank Account Update')
 @section('main_content')
 <div class="row">
     <div class="col-md-12">
@@ -22,6 +22,11 @@
                 </div>
             </div>
             <div class="form-group row">
+              <label for="branch_name" class="col-sm-2 text-end control-label col-form-label"> Branch Name</label>
+              <div class="col-sm-4">
+                 <input type="text" name="branch_name" id="branch_name" class="form-control"  value="{{$bank_info->branch_name}}"placeholder="Branch Name">
+              </div> 
+            <div class="form-group row">
                 <label for="account_no" class="col-sm-2 text-end control-label col-form-label"> Account No</label>
                 <div class="col-sm-4">
                     <input type="text" name="account_no" id="account_no" class="form-control @error('account_no') is-invalid @enderror"  value="{{$bank_info->account_no}}">
@@ -31,6 +36,12 @@
                     </span>
                     @enderror 
                   </div>
+            </div>
+            <div class="form-group row">
+              <label for="routing_number" class="col-sm-2 text-end control-label col-form-label"> Routing Number</label>
+              <div class="col-sm-4">
+                 <input type="text" name="routing_number" id="routing_number" class="form-control" value="{{$bank_info->routing_number}}"  placeholder="Routing Number">
+              </div>
             </div>
             <div class="form-group row">
               <label for="opening_balance" class="col-sm-2 text-end control-label col-form-label"> Opening Balance</label>

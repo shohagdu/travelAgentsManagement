@@ -71,32 +71,11 @@
                 <div class="col-sm-4">
                     <input type="text" name="tradelicense_no" id="tradelicense_no" class="form-control" value="{{ !empty($organization_info->tradelicense_no) ? $organization_info->tradelicense_no : ''}}" placeholder="Tradelicense No">
                 </div>
-                <label for="website_address" class="col-sm-2 text-end control-label col-form-label">Vat No</label>
-                <div class="col-sm-4">
-                    <input type="text" name="vat_no" id="vat_no" class="form-control" value="{{ !empty($organization_info->vat_no) ? $organization_info->vat_no : ''}}" placeholder="Vat No">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="website_address" class="col-sm-2 text-end control-label col-form-label">Tax Amount(%)</label>
-                <div class="col-sm-4">
-                    <input type="text" name="tax_amount" id="tax_amount" class="form-control" value="{{ !empty($organization_info->tax_amount) ? $organization_info->tax_amount : ''}}" placeholder="Tax Amount">
-                </div>
-                <label for="per_invoice_deduction_amount" class="col-sm-2 text-end control-label col-form-label"> Deduction Amount	</label>
-                <div class="col-sm-4">
-                    <input type="text" name="per_invoice_deduction_amount" id="per_invoice_deduction_amount" class="form-control"  value="{{ !empty($organization_info->per_invoice_deduction_amount) ? $organization_info->per_invoice_deduction_amount : ''}}" placeholder="Per Invoice Deduction Amount">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="ait" class="col-sm-2 text-end control-label col-form-label">AIT(%)</label>
-                <div class="col-sm-4">
-                    <input type="text" name="ait" id="ait" class="form-control" value="{{ !empty($organization_info->ait) ? $organization_info->ait : ''}}" placeholder="AIT">
-                </div>
                 <label for="footer_text" class="col-sm-2 text-end control-label col-form-label"> Footer Text</label>
                 <div class="col-sm-4">
                     <input type="text" name="footer_text" id="footer_text" class="form-control" value="{{ !empty($organization_info->footer_text) ? $organization_info->footer_text : ''}}" placeholder="Footer Text">
                 </div>
             </div>
-          
             <div class="form-group row">
                 <label for="currency" class="col-sm-2 text-end control-label col-form-label"> Currency</label>
                 <div class="col-sm-4">
@@ -150,9 +129,14 @@
           </div>
           <div class="border-top">
             <div class="card-body">
-              <button type="submit" class="btn btn-primary SubmitBtnLeft">
-                Save
-              </button>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-primary ">
+                            Save
+                          </button>
+                    </div>
+                </div>
             </div>
           </div>
         </form>

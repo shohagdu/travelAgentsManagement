@@ -58,6 +58,8 @@ class BankController extends Controller
 
         $bank_data->name            = $request->name;
         $bank_data->account_no      = $request->account_no;
+        $bank_data->branch_name     = $request->branch_name;
+        $bank_data->routing_number  = $request->routing_number;
         $bank_data->opening_balance = $request->opening_balance;
         $bank_data->type            = $request->type;
         $bank_data->is_active       = 1;
@@ -131,13 +133,15 @@ class BankController extends Controller
 
         $bank_data =  Bank::find($id);
 
-        $bank_data->name       = $request->name;
-        $bank_data->account_no = $request->account_no;
-        $bank_data->type       = $request->type;
-        $bank_data->is_active  = 1;
-        $bank_data->updated_by = Auth::user()->id;
-        $bank_data->updated_ip = request()->ip();
-        $bank_data->created_at = date('Y-m-d H:i:s');
+        $bank_data->name           = $request->name;
+        $bank_data->account_no     = $request->account_no;
+        $bank_data->branch_name    = $request->branch_name;
+        $bank_data->routing_number = $request->routing_number;
+        $bank_data->type           = $request->type;
+        $bank_data->is_active      = 1;
+        $bank_data->updated_by     = Auth::user()->id;
+        $bank_data->updated_ip     = request()->ip();
+        $bank_data->created_at     = date('Y-m-d H:i:s');
 
         $save = $bank_data->save();
 
