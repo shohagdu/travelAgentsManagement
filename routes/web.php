@@ -94,12 +94,14 @@ Route::get('/sale-category-delete/{id}', [SaleCategoryController::class, "destro
 
 // Sale 
 Route::get('/sale-list', [SaleController::class, "index"])->name('sale-list');
+Route::post('/get_sale_list_data', [SaleController::class, "get_sale_list_data"])->name('get_sale_list_data');
+Route::get('/today-sale-list', [SaleController::class, "today_sale_list"])->name('today-sale-list');
+Route::post('/get_today_sale_list_data', [SaleController::class, "get_today_sale_list_data"])->name('get_today_sale_list_data');
 Route::get('/sale', [SaleController::class, "create"])->name('sale');
 Route::get('/sale-edit/{id}', [SaleController::class, "edit"])->name('sale-edit');
 Route::post('/sale-update', [SaleController::class, "update"])->name('sale-update');
 Route::post('/sale-delete', [SaleController::class, "destroy"])->name('sale-delete');
 Route::get('/sale-invoice/{id}', [SaleController::class, "sale_invoice"])->name('sale-invoice');
-Route::post('/get_sale_list_data', [SaleController::class, "get_sale_list_data"])->name('get_sale_list_data');
 Route::post('/sale-save', [SaleController::class, "store"])->name('sale-save');
 Route::post('/get_flight_setup_info', [SaleController::class, "get_flight_setup_info"])->name('get_flight_setup_info');
 

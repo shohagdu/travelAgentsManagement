@@ -491,9 +491,42 @@ class SaleController extends Controller
             'status' => $sale_delete ? 'success' : 'error',
             'msg'    => $sale_delete ? 'Successfully Sale Delated' : 'Someting went wrong',
         ]);     
-
-
     }
+    // today sale list
+    public function today_sale_list()
+    {
+        $agent_info   = AgentRecord::all();
+
+        return view('sale.today_sale_list', compact('agent_info'));
+    }
+    public function get_today_sale_list_data(Request $request)
+    {
+        header("Content-Type: application/json");
+        $sale_category_id   = $request->sale_category_id;
+        $agent_id           = $request->agent_id;
+ 
+
+        $start = $request->start;
+        $limit = $request->length;
+        $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
+
+
+        $request_data = [
+            'start'   => $start,
+            'limit'   => $limit,
+            'sale_category_id' => $sale_category_id,
+            'agent_id'    => $agent_id,
+        ];
+
+        $response = $this->sale_model->sale_today_list_data($request_data, $search_content);
+        $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
+        $response['recordsTotal']    = $count;
+        $response['recordsFiltered'] = $count;
+        $response['draw']            = $request->draw;
+        
+        echo json_encode($response);
+    }
+
     public function sale_invoice($id){
         $organization_info = OrganizationSetup::first();
         $sale_details_data = $this->sale_details_model->sale_details_data($id);

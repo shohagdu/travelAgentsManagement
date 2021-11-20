@@ -110,6 +110,110 @@ function search_sale_reports ()
     token_table.ajax.reload();
 }
 
+// today sale list
+$(document).ready(function(){
+    get_today_sale_info_list();
+}); 
+
+// today sale list
+var token_table2;
+
+function get_today_sale_info_list() {
+    let target = $("#asset").val();
+
+    token_table2 = $('#sale_today_list_table').DataTable({
+        scrollCollapse: true,
+        autoWidth: false,
+        responsive: true,
+        serverSide: true,
+        processing: true,
+        "paging": true,
+        "searching": { "regex": true },
+        "pageLength": 10,
+        
+        ajax:{
+            dataType: "JSON",
+            type: "post",
+            url: target + "get_today_sale_list_data",
+            data: {
+               // _token : user_csrf
+            },
+        },
+        columns:[
+             {
+             	title: "SL",
+                data: null,
+                render: function(){
+                    return token_table2.page.info().start + token_table2.column(0).nodes().length;
+                }           
+            },
+            {
+            	title: "Agent Name",
+                data: "agent_name"
+            },
+            {
+                title: "Sale Category",
+                data: null,
+                render: function (data) {
+                    if(data.sale_category_id==1){
+                        return 'Flights';
+                    }
+                    else if(data.sale_category_id==2){
+                        return 'Hotels';
+                    }
+                    else if(data.sale_category_id==3){
+                        return 'Transfers';
+                    }
+                    else if(data.sale_category_id==4){
+                        return 'Activities';
+                    }
+                    else if(data.sale_category_id==5){
+                        return 'Holidays';
+                    }
+                    else if(data.sale_category_id==6){
+                        return 'Visa';
+                    }
+                    else if(data.sale_category_id==7){
+                        return 'Others';
+                    }
+                }
+            },
+            {
+                title: "Net Total",
+                data: "sale_amount"
+            },
+            {
+                title: "Discount",
+                data: "discount"
+            },
+            {
+                title: "Invoice Amount",
+                data: "amount"
+            },
+            {
+            	title: "Action",
+                data: null,
+                render: function(data, type, row, meta){
+                 
+                    return '<a href="'+target+'sale-edit/'+data.id+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a href="'+target+'sale-invoice/'+data.id+'" class="btn btn-info btn-sm text-white"> <span class="mdi mdi-file-document-box"></span>Invoice </a> <button class="btn btn-danger btn-sm text-white SaleDelete " data-id="'+data.id+'"><span class="mdi mdi-delete-circle"></span>  Delete </button>';
+                }
+            },
+        ],
+    });
+}
+
+// search today sale report
+function search_today_sale_reports ()
+{
+    sale_category_id  = $("#sale_category_id").val();
+    agent_id          = $("#agent_id").val();
+
+    $("#sale_today_list_table").dataTable().fnSettings().ajax.data.sale_category_id = sale_category_id;
+    $("#sale_today_list_table").dataTable().fnSettings().ajax.data.agent_id    = agent_id;
+
+    token_table2.ajax.reload();
+}
+
 // sale delete
 $(document).on("click",".SaleDelete",function(){
     let id = $(this).data('id');

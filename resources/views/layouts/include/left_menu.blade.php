@@ -26,7 +26,7 @@
                   ><span class="hide-menu"> New Sale </span></a>
               </li>
               <li class="sidebar-item">
-                <a href="{{ route('sale-list')}}" class="sidebar-link"
+                <a href="{{ route('today-sale-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
                   ><span class="hide-menu"> Today All Sales Info </span></a>
               </li>
