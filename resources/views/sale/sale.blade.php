@@ -81,9 +81,11 @@
                             </td>
                             <td>
                                 <input name="commission[]" id="commission_1" type="text"  onkeyup="filghtCommissionAITCaculation(1)" class="commissionTd" placeholder="0.00"/>
+                                <input type="hidden" name="commissionPer[]" id="commissionPer_1">
                             </td>
                             <td>
                                 <input name="ait[]" id="ait_1" type="text"  onkeyup="filghtCommissionAITCaculation(1)" class="aitTd" placeholder="0.00"/>
+                                <input type="hidden" name="aitPer[]" id="aitPer_1">
                             </td>
                             <td>
                                 <input name="add[]" id="add_1" type="text"  onkeyup="filghtADDCaculation(1)" class="AddTd" placeholder="0.00"/>

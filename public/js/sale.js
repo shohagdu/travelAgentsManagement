@@ -74,18 +74,24 @@ function saleCategory(categoryId){
 }
 function filghtCaculation(row_id){
 
-    var fare        = isNaN($('#fare_'+row_id).val()) ? 0 : parseFloat($('#fare_'+row_id).val());
-    var tax         = isNaN($('#tax_'+row_id).val()) ? 0 : parseFloat($('#tax_'+row_id).val());
-    var commission  = isNaN($('#commission_'+row_id).val()) ? 0 : parseFloat($('#commission_'+row_id).val());
-    var ait         = isNaN($('#ait_'+row_id).val()) ? 0 : parseFloat($('#ait_'+row_id).val());
-    var add         = isNaN($('#add_'+row_id).val()) ? 0 : parseFloat($('#add_'+row_id).val());
+    var fare           = isNaN($('#fare_'+row_id).val()) ? 0 : parseFloat($('#fare_'+row_id).val());
+    var tax            = isNaN($('#tax_'+row_id).val()) ? 0 : parseFloat($('#tax_'+row_id).val());
+    var commission_per = isNaN($('#commissionPer_'+row_id).val()) ? 0 : parseFloat($('#commissionPer_'+row_id).val());
+    var ait_per        = isNaN($('#aitPer_'+row_id).val()) ? 0 : parseFloat($('#aitPer_'+row_id).val());
+    var add            = isNaN($('#add_'+row_id).val()) ? 0 : parseFloat($('#add_'+row_id).val());
 
+    var total_fare       = (fare+tax);
+    var commissionAmount = (fare*commission_per/100);
+    var aitAmount        = (total_fare*ait_per/100);
+
+    parseFloat($('#commission_'+row_id).val((commissionAmount).toFixed(2)));
+    parseFloat($('#ait_'+row_id).val((aitAmount).toFixed(2)));
     parseFloat($('#totalFare_'+row_id).val((fare+tax).toFixed(2)));
 
-    var NetTotal = parseFloat((fare+tax+ait+add)- commission);
+    var NetTotal = parseFloat((fare+tax+aitAmount+add)- commissionAmount);
 
     $('#amount_'+row_id).val(isNaN(NetTotal) ? 0:  NetTotal.toFixed(2));
-   // console.log(NetTotal);
+ 
 
     totalSummation();
 
@@ -207,18 +213,22 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
                 data: {filght_value_id: filght_value_id},
                  success: function (response) {
 
-                    var fare       = parseFloat(response.data.flight_data.fare);
-                    var tax        = parseFloat(response.data.flight_data.tax_amount);
-                    var total_fare = parseFloat(response.data.flight_data.total_fare);
-                    var commission = parseFloat(response.data.flight_data.commission_amount);
-                    var ait        = parseFloat(response.data.flight_data.ait_amount);
-                    var add        = parseFloat(response.data.flight_data.add);
+                    var fare           = parseFloat(response.data.flight_data.fare);
+                    var tax            = parseFloat(response.data.flight_data.tax_amount);
+                    var total_fare     = parseFloat(response.data.flight_data.total_fare);
+                    var commission     = parseFloat(response.data.flight_data.commission_amount);
+                    var commission_per = parseFloat(response.data.flight_data.commission);
+                    var ait            = parseFloat(response.data.flight_data.ait_amount);
+                    var ait_per        = parseFloat(response.data.flight_data.ait);
+                    var add            = parseFloat(response.data.flight_data.add);
 
                    $('#fare_'+lastChar).val(fare.toFixed(2));
                    $('#tax_'+lastChar).val(tax.toFixed(2));
                    $('#totalFare_'+lastChar).val(total_fare.toFixed(2));
                    $('#commission_'+lastChar).val(commission.toFixed(2));
+                   $('#commissionPer_'+lastChar).val(commission_per.toFixed(2));
                    $('#ait_'+lastChar).val(ait.toFixed(2));
+                   $('#aitPer_'+lastChar).val(ait_per.toFixed(2));
                    
                    $('#add_'+lastChar).val(add);
                    var total_amount = parseFloat((fare+tax+ait+add)-commission);

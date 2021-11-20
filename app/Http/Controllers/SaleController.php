@@ -39,8 +39,8 @@ class SaleController extends Controller
     public function get_sale_list_data(Request $request)
     {
         header("Content-Type: application/json");
-         $sale_category_id   = $request->sale_category_id;
-         $agent_id           = $request->agent_id;
+        $sale_category_id   = $request->sale_category_id;
+        $agent_id           = $request->agent_id;
  
 
         $start = $request->start;
@@ -115,13 +115,15 @@ class SaleController extends Controller
             $sale_save = DB::table('sales')->insert($sale_data);
 
 
-            $flight_id    = $request->flight_id;
-            $fare         = $request->fare;
-            $tax          = $request->tax;
-            $commission   = $request->commission;
-            $ait          = $request->ait;
-            $add          = $request->add;
-            $amount       = $request->amount;
+            $flight_id      = $request->flight_id;
+            $fare           = $request->fare;
+            $tax            = $request->tax;
+            $commission_per = $request->commissionPer;
+            $commission     = $request->commission;
+            $ait_per        = $request->aitPer;
+            $ait            = $request->ait;
+            $add            = $request->add;
+            $amount         = $request->amount;
 
             $sale_id   = DB::getPdo()->lastInsertId();
 
@@ -135,9 +137,9 @@ class SaleController extends Controller
                     'tax_per'           => $tax[$key],
                     'tax_amount'        => $tax[$key],
                     'total_amount'      => $fare[$key]+$tax[$key],
-                    'commission_per'    => $commission[$key],
+                    'commission_per'    => $commission_per[$key],
                     'commission_amount' => $commission[$key],
-                    'ait_per'           => $ait[$key],
+                    'ait_per'           => $ait_per[$key],
                     'ait_amount'        => $ait[$key],
                     'add_per'           => $add[$key],
                     'add_amount'        => $add[$key],
@@ -296,13 +298,15 @@ class SaleController extends Controller
          $sale_save = DB::table('sales')->where('id', $id)->update($sale_data);
 
 
-            $flight_id    = $request->flight_id;
-            $fare         = $request->fare;
-            $tax          = $request->tax;
-            $commission   = $request->commission;
-            $ait          = $request->ait;
-            $add          = $request->add;
-            $amount       = $request->amount;
+            $flight_id      = $request->flight_id;
+            $fare           = $request->fare;
+            $tax            = $request->tax;
+            $commission_per = $request->commissionPer;
+            $commission     = $request->commission;
+            $ait_per        = $request->aitPer;
+            $ait            = $request->ait;
+            $add            = $request->add;
+            $amount         = $request->amount;
 
             //$sale_detail_data = [];
             $sale_detail_data_new = [];
@@ -319,9 +323,9 @@ class SaleController extends Controller
                             'tax_per'           => $tax[$i],
                             'tax_amount'        => $tax[$i],
                             'total_amount'      => $fare[$i]+$tax[$i],
-                            'commission_per'    => $commission[$i],
+                            'commission_per'    => $commission_per[$i],
                             'commission_amount' => $commission[$i],
-                            'ait_per'           => $ait[$i],
+                            'ait_per'           => $ait_per[$i],
                             'ait_amount'        => $ait[$i],
                             'add_per'           => $add[$i],
                             'add_amount'        => $add[$i],
@@ -343,9 +347,9 @@ class SaleController extends Controller
                         'tax_per'           => $tax[$i],
                         'tax_amount'        => $tax[$i],
                         'total_amount'      => $fare[$i]+$tax[$i],
-                        'commission_per'    => $commission[$i],
+                        'commission_per'    => $commission_per[$i],
                         'commission_amount' => $commission[$i],
-                        'ait_per'           => $ait[$i],
+                        'ait_per'           => $ait_per[$i],
                         'ait_amount'        => $ait[$i],
                         'add_per'           => $add[$i],
                         'add_amount'        => $add[$i],
