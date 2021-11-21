@@ -218,3 +218,10 @@ input::-webkit-input-placeholder {
   .todaySaleShow{
       background-color:#67407f;
   }
+  .TotalTextSpan{
+      float: right;
+  }
+  .TodaySaleBalanceTbl{
+    width: 98%;
+    margin-left: 10px;
+  }

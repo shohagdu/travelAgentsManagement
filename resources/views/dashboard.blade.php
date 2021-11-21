@@ -26,6 +26,7 @@
           <div class="row">
             <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
+              <a class="text-white" href="{{ route('today-sale-balance-view') }}">
               <div class="card card-hover">
                 <div class="box bg-success text-center">
                   <h1 class="font-light text-white">
@@ -34,17 +35,20 @@
                   <h6 class="text-white"> Today Sale Balance</h6>
                 </div>
               </div>
+              </a>
             </div>
              <!-- Column -->
              <div class="col-md-6 col-lg-3 col-xlg-3">
+              <a class="text-white" href="{{ route('today-credit-balance-view') }}">
               <div class="card card-hover">
                 <div class="box bg-info text-center">
                   <h1 class="font-light text-white">
                     {{$today_collection_balance}}
                   </h1>
-                  <h6 class="text-white">Today Collection Balance </h6>
+                  <h6 class="text-white">Today Credit Balance </h6>
                 </div>
               </div>
+              </a>
             </div>
             <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
@@ -53,12 +57,12 @@
                   <h1 class="font-light text-white">
                     {{$today_sale_balance}}
                   </h1>
-                  <h6 class="text-white">Today Debit Balance </h6>
+                  <h6 class="text-white"> Today Debit Balance </h6>
                 </div>
               </div>
             </div>
             <!-- Column -->
-            <div class="col-md-6 col-lg-3 col-xlg-3">
+           <!-- <div class="col-md-6 col-lg-3 col-xlg-3">
               <div class="card card-hover">
                 <div class="box todaySaleShow text-center">
                   <h1 class="font-light text-white">
@@ -67,9 +71,10 @@
                   <h6 class="text-white">Today Credit Balance </h6>
                 </div>
               </div>
-            </div>
+            </div>-->
             <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
+              <a class="text-white" href="{{ route('agent-list') }}">
               <div class="card card-hover">
                 <div class="box bg-secondary text-center">
                   <h1 class="font-light text-white">
@@ -78,9 +83,8 @@
                   <h6 class="text-white">Total Agent</h6>
                 </div>
               </div>
+              </a>
             </div>
           </div>
-          <!-- ============================================================== -->
-          <!-- ============================================================== -->
-          <!-- ============================================================== -->
+         
 @endsection

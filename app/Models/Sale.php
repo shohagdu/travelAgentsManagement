@@ -78,4 +78,27 @@ class Sale extends Model
     
         return $data;
     }
+
+    public function today_sale_balance(){
+       return  $query = DB::table("sales AS SALE")
+                    ->select('SALE.sale_amount','SALE.discount', 'SALE.amount', 'SALE.sale_category_id', 'AGRD.name as agent_name')       
+                    ->join('agent_records AS AGRD', function($join){
+                        $join->on('AGRD.id', '=', 'SALE.agent_id');
+                    })
+                    ->where('SALE.created_at', '>=', date('Y-m-d').' 00:00:00')
+                    ->orderBy('SALE.id', 'DESC')
+                    ->get();
+    }
+    public function today_credit_balance(){
+    
+            return   $query = DB::table("acc_transaction_infos AS TRNS")
+                                 ->select('TRNS.credit_amount','TRNS.trans_date', 'TRNS.remarks',  'AGRD.name as agent_name')
+                                ->join('agent_records AS AGRD', function($join){
+                                    $join->on('AGRD.id', '=', 'TRNS.credit_acc');
+                                })
+                                ->where('TRNS.trans_type','=', 2)
+                                ->where('TRNS.created_at', '>=', date('Y-m-d').' 00:00:00')
+                                ->orderBy('TRNS.id', 'DESC')
+                                ->get();
+     }
 }

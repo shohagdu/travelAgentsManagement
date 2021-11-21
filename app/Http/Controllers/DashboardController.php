@@ -18,6 +18,12 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $sale_model;
+	public function __construct()
+	{
+	    $this->middleware('auth');
+        $this->sale_model = new Sale();
+	}
     public function index()
     {
         $today_sale_balance       = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 1)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
@@ -29,70 +35,17 @@ class DashboardController extends Controller
                                 'today_collection_balance',
                                 'total_agent'));
     }
+    
+    // today sale balance
+    public function today_sale_balance_view(){
+        $today_sale_balance = $this->sale_model->today_sale_balance();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('dashboard_view.today_sale_balance_view', compact('today_sale_balance'));
     }
+     // today credit balance
+     public function today_credit_balance_view(){
+        $today_credit_balance = $this->sale_model->today_credit_balance();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('dashboard_view.today_credit_balance_view', compact('today_credit_balance'));
     }
 }
