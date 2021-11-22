@@ -3,7 +3,7 @@
     margin-bottom: 15px;
 }
 .SubmitBtnLeft{
-    margin-left: 162px;
+    margin-left: 183px;
 }
 .organization_preview_img {
     margin-top: 5px;
@@ -224,4 +224,7 @@ input::-webkit-input-placeholder {
   .TodaySaleBalanceTbl{
     width: 98%;
     margin-left: 10px;
+  }
+  .BillCreditHeadTxt{
+      border: none;
   }

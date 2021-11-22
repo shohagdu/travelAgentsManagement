@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Credit Bill')
+@section('title', 'Debit Bill')
 @section('css')
 <link rel="stylesheet" href="{{ asset('public/assets/datatable/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('public/assets/datatable/css/responsive.bootstrap4.min.css')}}">
@@ -21,7 +21,7 @@
         <input type="hidden" name="asset" id="asset" value="{{ asset('')}}">
         <div class="form-group row">
             <div class="col-sm-2">
-               <h4>Credit Bill</h4>
+               <h4>Debit Bill</h4>
             </div>
 
           <label for="agent_id" class="col-sm-1 text-end control-label col-form-label"> Agent</label>
@@ -38,26 +38,26 @@
             <input type="text" class="form-control" name="trans_date" id="trans_date" placeholder="dd-mm-yyyy" autocomplete="off">
         </div>
           <div class="col-sm-1">
-            <button onclick="search_bill_collection_reports()" id="" class="btn btn-primary">Search</button>
+            <button onclick="search_debit_bill_reports()" id="" class="btn btn-primary">Search</button>
         </div>
 
         <h5 class="card-title mb-0 lefttButtonText">    <button class="btn btn-success btn-sm text-white rightButton" onclick="ModalBillCollection()">
-          <i class="mdi mdi-plus-box"></i> Add Credit Bill </button></h5>
+          <i class="mdi mdi-plus-box"></i> Add Debit Bill </button></h5>
       
       </div>
-      <table id="billListTable" class="table table-bordered">
+      <table id="DebitbillListTable" class="table table-bordered">
   
       </table>
     </div>
   </div>
   <!-- Bill  modal -->
 <div class="modal fade" id="BillCollectionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-  <form method="post" id="BillCollectionForm"  action="javascript:void(0)" >
+  <form method="post" id="DebitBillCollectionForm"  action="javascript:void(0)" >
     @csrf
   <div class="modal-dialog modal-lg ">
     <div class="modal-content ">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Credit Bill</h4>
+        <h4 class="modal-title" id="myModalLabel">Debit Bill</h4>
         <button onclick="ModalBillCollectionClose()" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -71,7 +71,7 @@
         <div class="form-group row">
           <label for="agent_id" class="col-sm-3 text-end control-label col-form-label"> Agent Name</label>
           <div class="col-sm-9">
-              <select id="AgentId" name="agent_id" onchange="AgentBillPaymentData()" class="form-control">
+              <select id="AgentId" name="agent_id" onchange="AgentBillDebitPaymentData()" class="form-control">
                 <option value=""> Select Agent </option>
                 @foreach ($agent_info as $item)
                   <option value="{{ $item->id}}"> {{ $item->name}} </option> 
@@ -80,7 +80,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="towards_type" class="col-sm-3 text-end control-label col-form-label"> Credit Towards</label>
+          <label for="towards_type" class="col-sm-3 text-end control-label col-form-label"> Debit Towards</label>
           <div class="col-sm-9">
               <select id="towards_type" name="towards_type"  class="form-control">
                 <option value=""> Select Towards </option>
@@ -97,7 +97,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="payment_amount" class="col-sm-3 text-end control-label col-form-label"> Credit Amount </label>
+          <label for="payment_amount" class="col-sm-3 text-end control-label col-form-label"> Debit Amount </label>
           <div class="col-sm-9">
             <input type="text" name="payment_amount" id="payment_amount"  onkeyup="BillCurrentDue()" class="form-control" autocomplete="off" placeholder="0.00">
           </div>

@@ -47,17 +47,17 @@
               <li class="sidebar-item">
                 <a href="{{ route('bill-collection')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Bill Collection  </span></a>
+                  ><span class="hide-menu"> Credit Bill   </span></a>
               </li>
               <li class="sidebar-item">
-                <a href="{{ route('bill-collection')}}" class="sidebar-link"
+                <a href="{{ route('debit-bill')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Debit Balance  </span></a>
+                  ><span class="hide-menu"> Debit Bill  </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('bill-refund')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Credit Balance </span></a>
+                  ><span class="hide-menu"> Refund Bill </span></a>
               </li>
             </ul>
           </li>
@@ -184,6 +184,16 @@
                 <a href="{{ route('sale-category-list')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
                   ><span class="hide-menu"> View All Sale Category </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('towards-category')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Towards Category </span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('towards-category-list')}}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> View All Towards Category </span></a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('bank-create')}}" class="sidebar-link"

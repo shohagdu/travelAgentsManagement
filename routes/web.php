@@ -94,6 +94,14 @@ Route::get('/sale-category-edit/{id}', [SaleCategoryController::class, "edit"])-
 Route::post('/sale-category-update/{id}', [SaleCategoryController::class, "update"])->name('sale-category-update');
 Route::get('/sale-category-delete/{id}', [SaleCategoryController::class, "destroy"])->name('sale-category-delete');
 
+// towards category
+Route::get('/towards-category-list', [SaleCategoryController::class, "towards_index"])->name('towards-category-list');
+Route::get('/towards-category', [SaleCategoryController::class, "towards_create"])->name('towards-category');
+Route::post('/towards-category-save', [SaleCategoryController::class, "towards_store"])->name('towards-category-save');
+Route::get('/towards-category-edit/{id}', [SaleCategoryController::class, "towards_edit"])->name('towards-category-edit');
+Route::post('/towards-category-update/{id}', [SaleCategoryController::class, "towards_update"])->name('towards-category-update');
+Route::get('/towards-category-delete/{id}', [SaleCategoryController::class, "towards_destroy"])->name('towards-category-delete');
+
 // Sale 
 Route::get('/sale-list', [SaleController::class, "index"])->name('sale-list');
 Route::post('/get_sale_list_data', [SaleController::class, "get_sale_list_data"])->name('get_sale_list_data');
@@ -115,6 +123,15 @@ Route::post('/bill_collection_delete', [BillCollectionController::class, "bill_c
 Route::post('/get_bill_collection_list_data', [BillCollectionController::class, "get_bill_collection_list_data"])->name('get_bill_collection_list_data');
 
 Route::post('/agent_bill_payment_data', [BillCollectionController::class, "agent_bill_payment_data"])->name('agent_bill_payment_data');
+
+// Debit Bill 
+Route::get('/debit-bill', [BillCollectionController::class, "debit_bill_index"])->name('debit-bill');
+Route::post('/debit-bill-save', [BillCollectionController::class, "debit_bill_store"])->name('debit-bill-save');
+Route::post('/debit_bill_row_data', [BillCollectionController::class, "edit"])->name('debit_bill_row_data');
+Route::post('/debit_bill_delete', [BillCollectionController::class, "bill_collection_delete"])->name('debit_bill_delete');
+Route::post('/get_debit_bill_list_data', [BillCollectionController::class, "get_debit_bill_list_data"])->name('get_debit_bill_list_data');
+
+Route::post('/agent_debit_bill_payment_data', [BillCollectionController::class, "agent_debit_bill_payment_data"])->name('debit_bill_payment_data');
 
 // Bill Refund 
 Route::get('/bill-refund', [BillCollectionController::class, "bill_refund"])->name('bill-refund');
