@@ -85,38 +85,36 @@
                 @csrf
               <div class="row pb-4">
                 <div class="col-12">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span
-                        class="input-group-text bg-success text-white h-100"
-                        id="basic-addon1"
-                        ><i class="mdi mdi-account fs-4"></i
-                      ></span>
-                    </div>
-                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required autocomplete="email" autofocus  aria-describedby="basic-addon1">
-
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span
+                            class="input-group-text bg-success text-white h-100"
+                            id="basic-addon1"
+                            ><i class="mdi mdi-account fs-4"></i
+                            ></span>
+                        </div>
+                        <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required autocomplete="email" autofocus  aria-describedby="basic-addon1">
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span
-                        class="input-group-text bg-warning text-white h-100"
-                        id="basic-addon2"
-                        ><i class="mdi mdi-lock fs-4"></i
-                      ></span>
+                            </span>
+                        @enderror
                     </div>
-                    <input id="password" type="password" class="form-control  form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password"  aria-describedby="basic-addon1" required>
-
-                    @error('password')
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span
+                            class="input-group-text bg-warning text-white h-100"
+                            id="basic-addon2"
+                            ><i class="mdi mdi-lock fs-4"></i
+                            ></span>
+                        </div>
+                        <input id="password" type="password" class="form-control  form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password"  aria-describedby="basic-addon1" required>
+                        @error('password')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                        <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
-                  </div>
+                        @enderror
+                    </div>
                 </div>
               </div>
               <div class="row border-top border-secondary">
@@ -124,9 +122,7 @@
                   <div class="form-group">
                     <div class="pt-3">
                       <button
-                        class="btn btn-success float-end text-white"
-                        type="submit"
-                      >
+                        class="btn btn-success  text-white"  type="submit" >
                         Login
                       </button>
                     </div>
