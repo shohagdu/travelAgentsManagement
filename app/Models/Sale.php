@@ -101,4 +101,16 @@ class Sale extends Model
                                 ->orderBy('TRNS.id', 'DESC')
                                 ->get();
      }
+     public function today_debit_balance(){
+    
+        return   $query = DB::table("acc_transaction_infos AS TRNS")
+                             ->select('TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks',  'AGRD.name as agent_name')
+                            ->join('agent_records AS AGRD', function($join){
+                                $join->on('AGRD.id', '=', 'TRNS.debit_acc');
+                            })
+                            ->where('TRNS.trans_type','=', 3)
+                            ->where('TRNS.created_at', '>=', date('Y-m-d').' 00:00:00')
+                            ->orderBy('TRNS.id', 'DESC')
+                            ->get();
+ } 
 }

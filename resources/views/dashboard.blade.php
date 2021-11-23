@@ -43,7 +43,7 @@
               <div class="card card-hover">
                 <div class="box bg-info text-center">
                   <h1 class="font-light text-white">
-                    {{$today_collection_balance}}
+                    {{$today_credit_balance}}
                   </h1>
                   <h6 class="text-white">Today Credit Balance </h6>
                 </div>
@@ -52,21 +52,23 @@
             </div>
             <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
+              <a class="text-white" href="{{ route('today-debit-balance-view') }}">
               <div class="card card-hover">
                 <div class="box bg-primary text-center">
                   <h1 class="font-light text-white">
-                    {{$today_sale_balance}}
+                    {{$today_debit_balance}}
                   </h1>
                   <h6 class="text-white"> Today Debit Balance </h6>
                 </div>
               </div>
+              </a>
             </div>
             <!-- Column -->
            <!-- <div class="col-md-6 col-lg-3 col-xlg-3">
               <div class="card card-hover">
                 <div class="box todaySaleShow text-center">
                   <h1 class="font-light text-white">
-                    {{$today_collection_balance}}
+                    
                   </h1>
                   <h6 class="text-white">Today Credit Balance </h6>
                 </div>

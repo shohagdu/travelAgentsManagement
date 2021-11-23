@@ -26,13 +26,15 @@ class DashboardController extends Controller
 	}
     public function index()
     {
-        $today_sale_balance       = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 1)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
-        $today_collection_balance = DB::table('acc_transaction_infos')->select('credit_amount')->where('trans_type', 2)->where('trans_date', date('Y-m-d'))->sum('credit_amount');
-        $total_agent      = AgentRecord::where('is_active','=', 1)->count();   
+        $today_sale_balance   = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 1)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
+        $today_credit_balance = DB::table('acc_transaction_infos')->select('credit_amount')->where('trans_type', 2)->where('trans_date', date('Y-m-d'))->sum('credit_amount');
+        $today_debit_balance = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 3)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
+        $total_agent          = AgentRecord::where('is_active','=', 1)->count();   
 
         return view('dashboard', compact(
                                 'today_sale_balance',
-                                'today_collection_balance',
+                                'today_credit_balance',
+                                'today_debit_balance',
                                 'total_agent'));
     }
     
@@ -47,5 +49,11 @@ class DashboardController extends Controller
         $today_credit_balance = $this->sale_model->today_credit_balance();
 
         return view('dashboard_view.today_credit_balance_view', compact('today_credit_balance'));
+    }
+    // today debit balance
+    public function today_debit_balance_view(){
+        $today_debit_balance = $this->sale_model->today_debit_balance();
+
+        return view('dashboard_view.today_debit_balance_view', compact('today_debit_balance'));
     }
 }

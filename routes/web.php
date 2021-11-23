@@ -35,7 +35,7 @@ Route::get('/home', [DashboardController::class, 'index'])->name('home');
 Route::get('/dashboard', [DashboardController::class, "index"])->name('dashboard');
 Route::get('/today-sale-balance-view', [DashboardController::class, "today_sale_balance_view"])->name('today-sale-balance-view');
 Route::get('/today-credit-balance-view', [DashboardController::class, "today_credit_balance_view"])->name('today-credit-balance-view');
-
+Route::get('/today-debit-balance-view', [DashboardController::class, "today_debit_balance_view"])->name('today-debit-balance-view');
 // User area 
 Route::get('/user-list', [UserController::class, "index"])->name('user-list');
 Route::get('/add-user', [UserController::class, "create"])->name('add-user');
