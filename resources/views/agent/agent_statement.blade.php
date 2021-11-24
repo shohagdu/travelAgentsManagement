@@ -52,16 +52,17 @@
                 <tr>
                     <td>{{$i++}}</td>
                     <td>{{ date('d-m-Y', strtotime($item->trans_date))}}</td>
-                    <td>@if($item->trans_type==1) Sale @elseif($item->trans_type ==2) Collection @endif 
+                    <td>@if($item->trans_type==1) Sale @elseif($item->trans_type ==2) Credit Bill @elseif($item->trans_type ==3) Debit Bill @endif 
                         @if($item->account_name !='') ({{$item->account_name}}) @endif
                          <br> {{$item->remarks}}</td>
                     <td> <?php 
-                        if($item->trans_type ==1){ 
+                        if($item->trans_type ==1 || $item->trans_type ==3 ){ 
                             $dr = $item->debit_amount; echo $dr;
                             $dr_total += $item->debit_amount ; 
                           }else{
                             $dr = 0;
                         } ?>
+                        
                     </td>
                     <td> <?php 
                         if($item->trans_type ==2){
@@ -85,5 +86,5 @@
   </div>
 @endsection
 @section('js')
-    <script src="{{ asset('js/report.js')}}"></script>
+    <script src="{{ asset('public/js/report.js')}}"></script>
 @endsection

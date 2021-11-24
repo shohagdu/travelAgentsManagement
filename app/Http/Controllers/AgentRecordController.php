@@ -45,7 +45,6 @@ class AgentRecordController extends Controller
         $limit = $request->length;
         $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
 
-
         $request_data = [
             'start'   => $start,
             'limit'   => $limit,
@@ -53,9 +52,6 @@ class AgentRecordController extends Controller
             'city'    => $city,
             'mobile'  => $mobile,
         ];
-
-        // echo "<pre>";
-        // print_r($request_data);exit;
 
         $response = $this->agent_model->agent_list_data($request_data, $search_content);
         $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
