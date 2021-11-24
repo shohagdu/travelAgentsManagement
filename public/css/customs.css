@@ -96,7 +96,7 @@ input::-webkit-input-placeholder {
 
   .FlightSaleTable, tr:nth-child(even) {
     background-color: #fff;
-    font-size: 12px;
+    /*font-size: 12px;*/
     width: 100%;
   }
 .FlightTd{
@@ -139,7 +139,7 @@ input::-webkit-input-placeholder {
 
 .FlightSaleTable, tr:nth-child(even) {
     background-color: #fff;
-    font-size: 12px;
+    /*font-size: 12px;*/
     width: 100%;
   }
   .HotelSaleTable{
@@ -173,10 +173,10 @@ input::-webkit-input-placeholder {
     font-weight: bold;
 }
 
-.AgentInfoStatement { 
+.AgentInfoStatement {
     margin-top: 30px;
     border-collapse: collapse;
-    
+
 }
 .AgentInfoStatement td th {
     border: none;
