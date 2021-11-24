@@ -91,7 +91,7 @@ function filghtCaculation(row_id){
     var NetTotal = parseFloat((fare+tax+aitAmount+add)- commissionAmount);
 
     $('#amount_'+row_id).val(isNaN(NetTotal) ? 0:  NetTotal.toFixed(2));
- 
+
 
     totalSummation();
 
@@ -229,7 +229,7 @@ $(document).off('change').on('change', '.FlightInfo', function(e) {
                    $('#commissionPer_'+lastChar).val(commission_per.toFixed(2));
                    $('#ait_'+lastChar).val(ait.toFixed(2));
                    $('#aitPer_'+lastChar).val(ait_per.toFixed(2));
-                   
+
                    $('#add_'+lastChar).val(add);
                    var total_amount = parseFloat((fare+tax+ait+add)-commission);
                    $('#amount_'+lastChar).val(total_amount.toFixed(2));
@@ -377,7 +377,7 @@ $(document).on("submit","#SaleFormUpdate",function (e){
                             });
                     }else{
                         $('#SaleSaveBtn').attr('disabled',false);
-                
+
                         swal("Something went wrong","Field Cannot be Empty", "error");
                     }
                 } else {

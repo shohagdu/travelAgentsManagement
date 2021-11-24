@@ -22,4 +22,18 @@ class SaleDetail extends Model
 
         return $data = $sale_query->get();
     }
+    public function sale_info($id){
+        $sale_query = DB::table("sales")
+                    ->select('sales.*','users.name as userName')
+                    ->join('users', function($join){
+                        $join->on('users.id', '=', 'sales.created_by');
+                    })
+                   ->where('sales.id', '=',$id);
+        if($sale_query->count()>0){
+            return $sale_query->first();
+        }else{
+            return false;
+        }
+    }
+
 }

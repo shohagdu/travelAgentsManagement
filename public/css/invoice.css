@@ -7,7 +7,7 @@
     font-weight: bold;
 }
 .InvoiceDateText{
-  
+
     border: none;
     font-size: 12px;
     background-color: #fff;
@@ -21,13 +21,14 @@
 .InvoiceLeftTextArea{
     border: none;
     font-size: 12px;
-    background-color: #fff;
+    margin-top: 50px;
 }
 .InvoiceLeftTextArea tr td{
     border: none;
 }
 .InvoiceLeftTextArea .InvoiceName{
-    font-size: 20px;
+    font-size: 15px;
+    font-weight: bold;
 }
 .InvoiceIteamTable{
     width: 100%;
@@ -48,4 +49,15 @@
 }
 .InviceLftHeader img{
     height: 80px;
+}
+.InvoiceNameText{
+    font-weight: bold;
+    font-size: 22px;
+    text-decoration: underline;
+}
+.invoiceCompanyAddress{
+    font-size:14px;
+}
+.copyrightInvoice{
+    font-size:10px !important;
 }

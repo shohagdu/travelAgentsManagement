@@ -41,7 +41,7 @@ class SaleController extends Controller
         header("Content-Type: application/json");
         $sale_category_id   = $request->sale_category_id;
         $agent_id           = $request->agent_id;
- 
+
 
         $start = $request->start;
         $limit = $request->length;
@@ -63,7 +63,7 @@ class SaleController extends Controller
         $response['recordsTotal']    = $count;
         $response['recordsFiltered'] = $count;
         $response['draw']            = $request->draw;
-        
+
         echo json_encode($response);
     }
 
@@ -77,7 +77,7 @@ class SaleController extends Controller
         $agent_info         = AgentRecord::all();
         $airline_info       = AirlineSetup::all();
         $sale_category_info = SaleCategory::take(7)->get();
-      
+
         return view('sale.sale', compact('agent_info', 'airline_info', 'sale_category_info'));
     }
 
@@ -156,7 +156,7 @@ class SaleController extends Controller
 
             // transaction data
             $transaction_data = new  AccTransactionInfo();
-            
+
             $transaction_data->sales_id      = $sale_id;
             $transaction_data->debit_acc     = $request->agent_id;
             $transaction_data->credit_acc    = 0;
@@ -171,7 +171,7 @@ class SaleController extends Controller
             $transaction_data->created_at    = date('Y-m-d H:i:s');
 
             $transaction_save = $transaction_data->save();
-           
+
         }else{
 
             $sale_data = [
@@ -215,7 +215,7 @@ class SaleController extends Controller
 
             // transaction data
             $transaction_data = new  AccTransactionInfo();
-            
+
             $transaction_data->sales_id      = $sale_id;
             $transaction_data->debit_acc     = $request->agent_id;
             $transaction_data->credit_acc    = 0;
@@ -230,13 +230,13 @@ class SaleController extends Controller
             $transaction_data->created_at    = date('Y-m-d H:i:s');
 
             $transaction_save = $transaction_data->save();
-        }    
+        }
 
         return response()->json([
             'status' => $sale_save ? 'success' : 'error',
             'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
             'data'   => $sale_id,
-        ]);     
+        ]);
     }
 
     /**
@@ -264,7 +264,7 @@ class SaleController extends Controller
         $sale_id = $sale_data->id;
         $sale_details = SaleDetail::where('sale_id', $sale_id)->get();
         $transaction_data = AccTransactionInfo::where('sales_id', $sale_id)->first();
-       
+
         return view('sale.edit_sale', compact('agent_info', 'airline_info','sale_data','sale_details','transaction_data'));
     }
 
@@ -310,9 +310,9 @@ class SaleController extends Controller
 
             //$sale_detail_data = [];
             $sale_detail_data_new = [];
-        
+
             for($i=0;$i<count($flight_id);$i++){
-                 
+
                 if(isset($request->data_primary_id[$i]) > 0){
 
                         $sale_detail_data = [
@@ -370,7 +370,7 @@ class SaleController extends Controller
 
             // transaction data
             $transaction_data = AccTransactionInfo::where('sales_id', $id)->first();
-            
+
             $transaction_data->sales_id      = $id;
             $transaction_data->debit_acc     = $request->agent_id;
             $transaction_data->credit_acc    = 0;
@@ -386,7 +386,7 @@ class SaleController extends Controller
 
             $transaction_save = $transaction_data->save();
 
-          
+
         }else{
 
             $sale_data = [
@@ -411,7 +411,7 @@ class SaleController extends Controller
             $sale_detail_data_new = [];
 
             for($i=0;$i<count($details);$i++){
-                 
+
                 if(isset($request->data_primary_id2[$i]) > 0){
                     $sale_detail_data = [
                         'id'                => $request->data_primary_id2[$i],
@@ -440,16 +440,16 @@ class SaleController extends Controller
                         'created_ip'        => request()->ip(),
                         'created_at'        => date('Y-m-d H:i:s'),
                     ];
-                }  
-            } 
-            
+                }
+            }
+
             if($sale_detail_data_new !='' ){
                 $sale_save = DB::table('sale_details')->insert($sale_detail_data_new);
               }
 
             // transaction data
             $transaction_data = AccTransactionInfo::where('sales_id', $id)->first();
-            
+
             $transaction_data->sales_id      = $id;
             $transaction_data->debit_acc     = $request->agent_id;
             $transaction_data->credit_acc    = 0;
@@ -464,13 +464,13 @@ class SaleController extends Controller
             $transaction_data->updated_at    = date('Y-m-d H:i:s');
 
             $transaction_save = $transaction_data->save();
-            
-        }    
+
+        }
         return response()->json([
             'status' => $sale_save ? 'success' : 'error',
             'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
             'data'   => $id,
-        ]);     
+        ]);
 
     }
 
@@ -490,7 +490,7 @@ class SaleController extends Controller
         return response()->json([
             'status' => $sale_delete ? 'success' : 'error',
             'msg'    => $sale_delete ? 'Successfully Sale Delated' : 'Someting went wrong',
-        ]);     
+        ]);
     }
     // today sale list
     public function today_sale_list()
@@ -504,7 +504,7 @@ class SaleController extends Controller
         header("Content-Type: application/json");
         $sale_category_id   = $request->sale_category_id;
         $agent_id           = $request->agent_id;
- 
+
 
         $start = $request->start;
         $limit = $request->length;
@@ -523,7 +523,7 @@ class SaleController extends Controller
         $response['recordsTotal']    = $count;
         $response['recordsFiltered'] = $count;
         $response['draw']            = $request->draw;
-        
+
         echo json_encode($response);
     }
 
@@ -538,9 +538,10 @@ class SaleController extends Controller
         $agent_debit  = DB::table('acc_transaction_infos')->select('debit_amount')->where('debit_acc', $agent_id)->sum('debit_amount');
         $agent_credit = DB::table('acc_transaction_infos')->select('credit_amount')->where('credit_acc', $agent_id)->sum('credit_amount');
         $due_balance =  $agent_debit-$agent_credit;
-        // echo "<pre>";
-        // print_r($agent_info);exit;
-        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info','due_balance','airline_id'));
+
+        $sale_info = $this->sale_details_model->sale_info($id);
+
+        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info','due_balance','airline_id','sale_info'));
     }
     public function get_flight_setup_info(Request $request){
 
@@ -555,7 +556,7 @@ class SaleController extends Controller
                 'flight_data'       => $filght_info,
                 //'organization_data' => $organization_info,
             ]
-        ]);    
-        
+        ]);
+
     }
 }
