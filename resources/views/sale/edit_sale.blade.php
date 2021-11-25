@@ -50,7 +50,23 @@
             </div>
             <div class="row">
                 <div class="col-md-12 ">
-                    <h5 id=""> Flight Information </h5>
+                    <h5 id="">  
+                        @if($sale_data->sale_category_id== 1)
+                        Flights
+                        @elseif($sale_data->sale_category_id== 2)
+                        Hotels
+                        @elseif($sale_data->sale_category_id== 3)
+                        Transfers
+                        @elseif($sale_data->sale_category_id== 4)
+                        Activities
+                        @elseif($sale_data->sale_category_id== 5)
+                        Holidays
+                        @elseif($sale_data->sale_category_id== 6)
+                        Visa
+                        @elseif($sale_data->sale_category_id== 7)
+                        Others
+                        @endif
+                        Information </h5>
                     @if($sale_data->sale_category_id== 1)
                     <table  class="FlightSaleTable2 SaleTable" style="width: 100%">
                         <tr>
@@ -109,17 +125,16 @@
                     @else
                     <table  class="HotelSaleTable2 SaleTable">
                         <tr>
-                            <th class="actionTh"> Action</th>
                             <th class="DetailsTh"> Details</th>
                             <th class="amountTh"> Amount</th>
                             <th class="DiscountTh"> Discount</th>
                             <th class="netTotalTh"> Net Total</th>
+                            <th class="actionTh"> Action</th>
                         </tr>
                         @foreach($sale_details as $k=> $value)
                         <tr  class="element2"  id="hotelAreaDiv_{{ $k+1}}">
                             <input type="hidden" name="data_primary_id2[]" id="data_primary_id2" value="{{  $value->id}}">
-                            <td class="actionTh">
-                            </td>
+                            
                             <td>
                                 <textarea name="details[]" id="details_{{ $k+1}}" rows="1" class="detailsTd" placeholder="Details">{{ $value->details}}</textarea>
                             </td>
@@ -131,6 +146,9 @@
                             </td>
                             <td>
                                 <input name="net_total_row[]" id="netTotal_{{ $k+1}}" type="text"  class="NetamountTd Amount" value="{{ $value->invoice_amount}}"readonly/>
+                            </td>
+                            <td class="actionTh">
+                                <button type="button" onclick="removeNewHotel({{ $k+1}});" class="btn btn-xs btn-danger"><i class="mdi mdi-minus-box-outline"></i> </button>
                             </td>
                         </tr>
                         @endforeach
@@ -148,7 +166,7 @@
                     <textarea class="form-control SaleRemaks" rows="3" name="remarks" id="remarks" placeholder="Remarks"> {{ $transaction_data->remarks}} </textarea>
                 </div>
                 <div class="col-md-4" >
-                   <p> <span style="width: 100px"> Net Total</span>
+                   <p> <span> Net Total</span>
                         <input id="NetTotal" name="net_total" type="text" class="saleFooterText @error('net_total') is-invalid @enderror" value="{{ $sale_data->sale_amount}}">
                         @error('net_total')
                             <span class="invalid-feedback" role="alert">
@@ -156,10 +174,10 @@
                         </span>
                         @enderror
                     </p>
-                   <p> <span style="width: 100px"> Discount</span>
+                   <p> <span> Discount</span>
                     <input id="Discount" onkeyup="DiscountSale()" name="discount" type="text" class="saleFooterText"  value="{{ $sale_data->discount}}">
                    </p>
-                   <p> <span style="width: 100px"> Invoice Amount</span>
+                   <p> <span> Invoice Amount</span>
                     <input id="invoice_amount" name="invoice_amount" type="text" class="saleFooterText @error('invoice_amount') is-invalid @enderror"  value="{{ $sale_data->amount}}">
                     @error('invoice_amount')
                         <span class="invalid-feedback" role="alert">
@@ -174,7 +192,6 @@
                         Update
                       </button>
                    </p>
-
                 </div>
             </div>
             </div>

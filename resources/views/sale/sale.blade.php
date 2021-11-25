@@ -1,5 +1,9 @@
 @extends('layouts.master')
 @section('title', 'Sale')
+@section('css')
+    <!-- Select2 -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/libs/select2/dist/css/select2.min.css')}}"/>
+@endsection
 @section('main_content')
     <div class="row">
         <div class="col-md-12">
@@ -11,7 +15,7 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0 lefttButtonText">Add New Sale Information</h5>
+                    <h5 class="card-title mb-0 lefttButtonText"> New Sale</h5>
                     <a href="{{ route('sale-list')}}" class="btn btn-success btn-sm text-white rightButton">
                         <i class="mdi mdi-view-list"></i> List </a>
                 </div>
@@ -33,13 +37,13 @@
                                 @error('sale_category_id')
                                 <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
-                    </span>
+                       </span>
                                 @enderror
                             </div>
                             <label for="agent_id" class="col-sm-2 text-end control-label col-form-label"> Agent</label>
                             <div class="col-sm-4">
                                 <select id="agent_id" name="agent_id"
-                                        class="form-control @error('agent_id') is-invalid @enderror">
+                                        class="select2 form-select shadow-none @error('agent_id') is-invalid @enderror">
                                     <option value=""> Select Agent</option>
                                     @foreach ($agent_info as $item)
                                         <option value="{{ $item->id}}"> {{ $item->name}} </option>
@@ -172,28 +176,28 @@
                                           placeholder="Enter Remarks"></textarea>
                             </div>
                             <div class="col-md-4">
-                                <p><span style="width: 100px"> Net Total</span>
+                                <p><span> Net Total</span>
                                     <input id="NetTotal" name="net_total" readonly type="text"
                                            class="saleFooterText @error('net_total') is-invalid @enderror"
                                            placeholder="0.00">
                                     @error('net_total')
                                     <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                    <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </p>
-                                <p><span style="width: 100px"> Discount</span>
+                                <p><span> Discount</span>
                                     <input id="Discount" onkeyup="DiscountSale()" name="discount" type="text"
                                            class="saleFooterText" value="0.00">
                                 </p>
-                                <p><span style="width: 100px"> Invoice Amount</span>
+                                <p><span> Invoice Amount</span>
                                     <input id="invoice_amount" name="invoice_amount" readonly type="text"
                                            class="saleFooterText @error('invoice_amount') is-invalid @enderror"
                                            placeholder="0.00">
                                     @error('invoice_amount')
                                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                    <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </p>
                                 <p>
@@ -220,5 +224,7 @@
 
 @section('js')
     <script src="{{ asset('public/js/sweetalert.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/select2/dist/js/select2.min.js')}}"></script>
     <script src="{{ asset('public/js/sale.js')}}"></script>
 @endsection

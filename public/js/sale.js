@@ -7,6 +7,11 @@ $.ajaxSetup({
     }
 });
 
+
+$(document).ready(function(){
+    $(".select2").select2();
+}); 
+
 function saleCategory(categoryId){
     // $(".showSalesFooterInfo").hide(200);
     if(categoryId == 1){
@@ -286,6 +291,7 @@ function addNewHotel(){
 function removeNewHotel(id){
 	var deleteindex = id;
 	$("#hotelAreaDiv_" + deleteindex).remove();
+    totalSummation();
 }
 
 //  Sale Save
