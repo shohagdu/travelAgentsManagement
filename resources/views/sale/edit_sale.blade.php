@@ -50,7 +50,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 ">
-                    <h5 id="">  
+                    <h5 id="">
                         @if($sale_data->sale_category_id== 1)
                         Flights
                         @elseif($sale_data->sale_category_id== 2)
@@ -134,7 +134,7 @@
                         @foreach($sale_details as $k=> $value)
                         <tr  class="element2"  id="hotelAreaDiv_{{ $k+1}}">
                             <input type="hidden" name="data_primary_id2[]" id="data_primary_id2" value="{{  $value->id}}">
-                            
+
                             <td>
                                 <textarea name="details[]" id="details_{{ $k+1}}" rows="1" class="detailsTd" placeholder="Details">{{ $value->details}}</textarea>
                             </td>
@@ -163,7 +163,7 @@
             @endif
             <div class="row">
                 <div class="col-md-8">
-                    <textarea class="form-control SaleRemaks" rows="3" name="remarks" id="remarks" placeholder="Remarks"> {{ $transaction_data->remarks}} </textarea>
+                    <textarea class="form-control SaleRemaks" rows="3" name="remarks" id="remarks" placeholder="Remarks"> {{ (!empty($sale_data->remarks)?$sale_data->remarks:'')}} </textarea>
                 </div>
                 <div class="col-md-4" >
                    <p> <span> Net Total</span>
@@ -195,7 +195,7 @@
                 </div>
             </div>
             </div>
-          </div>
+{{--          </div>--}}
           <div class="border-top">
             <div class="card-body">
 

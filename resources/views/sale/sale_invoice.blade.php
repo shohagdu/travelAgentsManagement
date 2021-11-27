@@ -33,11 +33,12 @@
                         <div class="InvoiceNameText"> Invoice </div>
                     </div>
                     <div class="col-md-3 InvicerhtHeader">
-                        <button type="button" onclick="printInvoiceBtn()"
+                         <a href="{{ url('salesInvoicePdf/'.(!empty($sale_info->id)?$sale_info->id:'')) }}" target="_blank"
                                 class="btn btn-warning btn-md topPrintbarbutton noSectionToPrint"><i
                                 class="mdi  mdi-printer"></i>
-                            Print
-                        </button>
+                             Print
+                        </a>
+
                         <div class="clearfix"></div>
                         <table class="InvoiceDateText" style="width: 100%;margin-top: 5px">
                             <tr>

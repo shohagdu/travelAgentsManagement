@@ -13,6 +13,7 @@ use App\Models\SaleDetail;
 use App\Models\AccTransactionInfo;
 use Session;
 use DB;
+use PDF;
 
 class SaleController extends Controller
 {
@@ -279,7 +280,6 @@ class SaleController extends Controller
     {
         $sale_category = $request->sale_category_id;
         $id = $request->id;
-
         // sale category 1= flight else others all
         if($sale_category == 1){
 
@@ -289,6 +289,7 @@ class SaleController extends Controller
                 'sale_amount'      => $request->net_total,
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
+                'remarks'          => $request->remarks,
                 "is_active"        => 1,
                 'updated_by'       => Auth::user()->id,
                 'updated_ip'       => request()->ip(),
@@ -395,6 +396,7 @@ class SaleController extends Controller
                 'sale_amount'      => $request->net_total,
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
+                'remarks'          => $request->remarks,
                 "is_active"        => 1,
                 'updated_by'       => Auth::user()->id,
                 'updated_ip'       => request()->ip(),
@@ -530,7 +532,6 @@ class SaleController extends Controller
     public function sale_invoice($id){
         $organization_info = OrganizationSetup::first();
         $sale_details_data = $this->sale_details_model->sale_details_data($id);
-        $invoice_discount = $sale_details_data[0]->invoice_discount;
         $agent_id = $sale_details_data[0]->agent_id;
         $airline_id = $sale_details_data[0]->airline_id;
         $agent_info = AgentRecord::find($agent_id);
@@ -557,6 +558,42 @@ class SaleController extends Controller
                 //'organization_data' => $organization_info,
             ]
         ]);
+
+    }
+    public function salesInvoicePdf($id) {
+
+        $organization_info = OrganizationSetup::first();
+        $sale_details_data = $this->sale_details_model->sale_details_data($id);
+        $agent_id = $sale_details_data[0]->agent_id;
+        $airline_id = $sale_details_data[0]->airline_id;
+        $agent_info = AgentRecord::find($agent_id);
+
+        $agent_debit  = DB::table('acc_transaction_infos')->select('debit_amount')->where('debit_acc', $agent_id)->sum('debit_amount');
+        $agent_credit = DB::table('acc_transaction_infos')->select('credit_amount')->where('credit_acc', $agent_id)->sum('credit_amount');
+        $due_balance =  $agent_debit-$agent_credit;
+        $sale_info = $this->sale_details_model->sale_info($id);
+
+
+        $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
+            $mpdf->SetWatermarkImage(asset('public/assets/images/logo_1634981462.png'));
+            $mpdf->SetWatermarkImage(
+                asset('public/assets/images/logo_1634981462.png') . "", .1,
+                array(70, 20),
+                array(77, 150)
+            );
+            $mpdf->showWatermarkImage = true;
+            $mpdf->SetTitle('Sales Invoice');
+            $page_footer_html = view()->make('pdf.pdfHeader', ['organization_info'=>$organization_info])->render();
+
+            $mpdf->SetHTMLHeader($page_footer_html);
+
+            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y')."<br/>Software Developed by &copy; Step Technology, www.steptechbd.com, ";
+            $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
+        }];
+
+        $pdf = PDF::loadHtml(view('pdf.document', compact('organization_info','sale_details_data', 'agent_info','due_balance','airline_id','sale_info')), $config);
+
+        return $pdf->stream('SalesInvoice.pdf');
 
     }
 }

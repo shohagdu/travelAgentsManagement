@@ -21,7 +21,7 @@
 .InvoiceLeftTextArea{
     border: none;
     font-size: 12px;
-    margin-top: 50px;
+    padding-top: 60px;
 }
 .InvoiceLeftTextArea tr td{
     border: none;
@@ -46,6 +46,7 @@
 .InviceFooterSign{
     border-top: 1px solid #222;
     text-align: center;
+    width: 200px;
 }
 .InviceLftHeader img{
     height: 80px;
@@ -54,10 +55,98 @@
     font-weight: bold;
     font-size: 22px;
     text-decoration: underline;
+    padding-top: 20px;
 }
 .invoiceCompanyAddress{
-    font-size:14px;
+    font-size:11px;
 }
 .copyrightInvoice{
     font-size:10px !important;
+}
+
+.width-100{
+    width: 100% !important;
+}
+.width-90{
+    width: 90% !important;
+}
+.width-80{
+    width: 80% !important;
+}
+.width-70{
+    width: 70% !important;
+}
+.width-60{
+    width: 60% !important;
+}
+.width-50{
+    width: 50% !important;
+}
+.width-40{
+    width: 40% !important;
+}
+.width-30{
+    width: 30% !important;
+}
+.width-20{
+    width: 20% !important;
+}
+.width-10{
+    width: 10% !important;
+}
+
+/*todo:: for PDF*/
+.bg-color-green{
+    background-color: green !important;
+}
+.text-center-invoice{
+    text-align: center;
+}
+.custom-table{
+    border-collapse: collapse;
+    border-spacing: 0em;
+    padding: 0px;
+    margin: 0px;
+}
+.custom-table td {
+    border: 1px solid #d0d2d0;
+    font-size: 11px;
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-bottom: 3px;
+    page-break-inside: avoid !important;
+}
+
+.custom-table th {
+    border: 1px solid #d0d2d0;
+    font-size: 11px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    page-break-inside: avoid !important;
+    font-weight: bold !important;
+}
+.margin-top-10px{
+    margin-top: 10px;
+}
+.invoiceFooter{
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: 650px;
+}
+.invoiceFooter td{
+    font-size:11px;
+}
+.font-size-9px{
+    font-size:9px !important;
+}
+.text-right{
+    text-align: right;
+}
+
+.vertical-align-top{
+    vertical-align: top;
+}
+.margin-top-60px{
+    margin-top: 60px;
 }
