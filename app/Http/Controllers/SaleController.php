@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\AccTransactionInfo;
+use Illuminate\Support\Facades\Crypt;
 use Session;
 use DB;
 use PDF;
@@ -95,6 +96,15 @@ class SaleController extends Controller
             'agent_id'         => ['required'],
             'net_total'        => ['required'],
         ]);
+        $total_count = DB::table('sales')
+                           ->where('is_active','=',1 )
+                           ->count();
+        $serial    = $total_count+1;
+        $invoice_key = $this->invoiceGenerator($serial);
+        $year = date('Y');
+           
+
+        $invoice_no = $year.$invoice_key;
 
         $sale_category = $request->sale_category_id;
 
@@ -102,6 +112,7 @@ class SaleController extends Controller
         if($sale_category == 1){
 
             $sale_data = [
+                'invoice_no'       => $invoice_no,
                 'sale_category_id' => $request->sale_category_id,
                 'agent_id'         => $request->agent_id,
                 'sale_amount'      => $request->net_total,
@@ -176,6 +187,7 @@ class SaleController extends Controller
         }else{
 
             $sale_data = [
+                'invoice_no'       => $invoice_no,
                 'sale_category_id' => $request->sale_category_id,
                 'agent_id'         => $request->agent_id,
                 'sale_amount'      => $request->net_total,
@@ -261,9 +273,9 @@ class SaleController extends Controller
     {
         $agent_info       = AgentRecord::all();
         $airline_info     = AirlineSetup::all();
-        $sale_data = Sale::find($id);
-        $sale_id = $sale_data->id;
-        $sale_details = SaleDetail::where('sale_id', $sale_id)->get();
+        $sale_data        = Sale::find($id);
+        $sale_id          = $sale_data->id;
+        $sale_details     = SaleDetail::where('sale_id', $sale_id)->get();
         $transaction_data = AccTransactionInfo::where('sales_id', $sale_id)->first();
 
         return view('sale.edit_sale', compact('agent_info', 'airline_info','sale_data','sale_details','transaction_data'));
@@ -530,19 +542,10 @@ class SaleController extends Controller
     }
 
     public function sale_invoice($id){
-        $organization_info = OrganizationSetup::first();
-        $sale_details_data = $this->sale_details_model->sale_details_data($id);
-        $agent_id = $sale_details_data[0]->agent_id;
-        $airline_id = $sale_details_data[0]->airline_id;
-        $agent_info = AgentRecord::find($agent_id);
+        $organization_info        = OrganizationSetup::first();
+        $sale_invoice_information = $this->sale_details_model->sale_invoice_information($id);
 
-        $agent_debit  = DB::table('acc_transaction_infos')->select('debit_amount')->where('debit_acc', $agent_id)->sum('debit_amount');
-        $agent_credit = DB::table('acc_transaction_infos')->select('credit_amount')->where('credit_acc', $agent_id)->sum('credit_amount');
-        $due_balance =  $agent_debit-$agent_credit;
-
-        $sale_info = $this->sale_details_model->sale_info($id);
-
-        return view('sale.sale_invoice',compact('organization_info','sale_details_data', 'agent_info','due_balance','airline_id','sale_info'));
+        return view('sale.sale_invoice',compact('organization_info','sale_invoice_information'));
     }
     public function get_flight_setup_info(Request $request){
 
@@ -562,22 +565,13 @@ class SaleController extends Controller
     }
     public function salesInvoicePdf($id) {
 
-        $organization_info = OrganizationSetup::first();
-        $sale_details_data = $this->sale_details_model->sale_details_data($id);
-        $agent_id = $sale_details_data[0]->agent_id;
-        $airline_id = $sale_details_data[0]->airline_id;
-        $agent_info = AgentRecord::find($agent_id);
-
-        $agent_debit  = DB::table('acc_transaction_infos')->select('debit_amount')->where('debit_acc', $agent_id)->sum('debit_amount');
-        $agent_credit = DB::table('acc_transaction_infos')->select('credit_amount')->where('credit_acc', $agent_id)->sum('credit_amount');
-        $due_balance =  $agent_debit-$agent_credit;
-        $sale_info = $this->sale_details_model->sale_info($id);
-
+        $organization_info        = OrganizationSetup::first();
+        $sale_invoice_information = $this->sale_details_model->sale_invoice_information($id);
 
         $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
-            $mpdf->SetWatermarkImage(asset('public/assets/images/logo_1634981462.png'));
+            $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));
             $mpdf->SetWatermarkImage(
-                asset('public/assets/images/logo_1634981462.png') . "", .1,
+                asset('public/assets/images/'.$organization_info->logo) . "", .1,
                 array(70, 20),
                 array(77, 150)
             );
@@ -591,9 +585,14 @@ class SaleController extends Controller
             $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
         }];
 
-        $pdf = PDF::loadHtml(view('pdf.document', compact('organization_info','sale_details_data', 'agent_info','due_balance','airline_id','sale_info')), $config);
+        $pdf = PDF::loadHtml(view('pdf.document', compact('organization_info','sale_invoice_information')), $config);
 
         return $pdf->stream('SalesInvoice.pdf');
 
+    }
+    // Invoice Generate  key
+    public function invoiceGenerator($serial_no, $length = 5)
+    {
+        return str_repeat("0", ($length - strlen($serial_no))) . $serial_no;
     }
 }

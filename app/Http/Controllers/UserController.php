@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Session;
 
 use DB;
@@ -85,7 +86,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user_info = User::find($id);
+        $userId    = Crypt::decrypt($id);
+        $user_info = User::find($userId);
 
         return view('user.user_edit' , compact('user_info'));
     }
@@ -100,8 +102,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
          $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email'],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 

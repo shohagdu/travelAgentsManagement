@@ -29,7 +29,7 @@
             <th scope="row">{{ $i++}}</th>
             <td>{{$item->name}}</td>
             <td>{{$item->email}}</td>
-            <td> <a href="{{ route('user-edit',  $item->id)}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
+            <td> <a href="{{ route('user-edit', Crypt::encrypt($item->id))}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
               Edit
             </a> 
             <a   onclick="return confirm('Are you sure you want to delete?')" href="{{ route('user-delete',  $item->id)}}" class="btn btn-danger btn-sm text-white">

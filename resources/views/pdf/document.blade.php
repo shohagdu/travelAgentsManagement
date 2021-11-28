@@ -10,13 +10,13 @@
         <td class="width-40" >
             <table class="margin-top-60px width-100" >
                 <tr>
-                    <td class=""> {{ (!empty($agent_info->name)?ucwords($agent_info->name):'')}} </td>
+                    <td class=""> {{ (!empty($sale_invoice_information[0]->name)?ucwords($sale_invoice_information[0]->name):'')}} </td>
                 </tr>
                 <tr>
-                    <td> {{$agent_info->address}} </td>
+                    <td> {{$sale_invoice_information[0]->address}} </td>
                 </tr>
                 <tr>
-                    <td>{{$agent_info->mobile}}, {{$agent_info->email}}</td>
+                    <td>{{$sale_invoice_information[0]->mobile}}, {{$sale_invoice_information[0]->email}}</td>
                 </tr>
             </table>
         </td>
@@ -26,12 +26,12 @@
         <td class="width-30">
             <table class="custom-table width-100 margin-top-60px"   >
                 <tr>
-                    <th  class="text-right width-40"> Inv. No</th>
-                    <th>   {{ $sale_details_data[0]->sale_id}}  </th>
+                    <th  class="text-right width-40"> Inv. No </th>
+                    <th>   {{ $sale_invoice_information[0]->saleId}}  </th>
                 </tr>
                 <tr>
-                    <th class="text-right"> Inv. Date</th>
-                    <th>  {{ date('d M, Y', strtotime($sale_details_data[0]->created_at))}}  </th>
+                    <th class="text-right"> Inv. Date </th>
+                    <th>  {{ date('d M, Y', strtotime($sale_invoice_information[0]->created_at))}}  </th>
                 </tr>
             </table>
         </td>
@@ -41,7 +41,7 @@
 
 
 <div class="row margin-top-10px">
-    @if($airline_id !='')
+    @if($sale_invoice_information[0]->airline_id !='')
         <table class="custom-table  width-100 table" rules="all">
             <tr>
                 <th> S/N</th>
@@ -55,7 +55,7 @@
                 <th class="text-center">Net Amount</th>
             </tr>
             @php $id; $sub_total = 0; $discout_total = 0; $i=1; @endphp
-            @foreach($sale_details_data as $item)
+            @foreach($sale_invoice_information as $item)
                 <tr>
                     <td>{{ $i++ }}</td>
                     <td > @if($item->airline_id !='') {{$item->airline_name}} @else {{$item->details}}  @endif</td>
@@ -82,7 +82,7 @@
                 <th class="text-right">Net Amount</th>
             </tr>
             @php $id; $sub_total = 0; $discout_total = 0; $i=1; @endphp
-            @foreach($sale_details_data as $item)
+            @foreach($sale_invoice_information as $item)
                 <tr>
                     <td>{{ $i++ }}</td>
                     <td> @if($item->airline_id !='') {{$item->airline_name}} @else {{$item->details}}  @endif</td>
@@ -108,7 +108,7 @@
 </div>
 <table class="width-100 margin-top-10px">
     <tr>
-        <td class="width-60 vertical-align-top"> @php echo  (!empty($sale_info->remarks)?"<b>Remarks:</b> ".$sale_info->remarks:'') @endphp</td>
+        <td class="width-60 vertical-align-top"> @php echo  (!empty($sale_invoice_information[0]->remarks)?"<b>Remarks:</b> ".$sale_invoice_information[0]->remarks:'') @endphp</td>
         <td class="width-40">
             <table class="custom-table  width-100 ">
                 <tr>
@@ -118,7 +118,7 @@
                 <tr>
                     <th class="text-right"> Invoice Discount</th>
                     <td class="text-right">
-                        @php  $invoice_discount = $sale_details_data[0]->invoice_discount; echo number_format((float)$invoice_discount, 2)  @endphp </td>
+                        @php  $invoice_discount = $sale_invoice_information[0]->invoice_discount; echo number_format((float)$invoice_discount, 2)  @endphp </td>
                 </tr>
                 <tr>
                     <th class="text-right"> Grand Total</th>
@@ -140,7 +140,7 @@
             <div class="InviceFooterSign"><b>Customer</b>  </div>
         </td>
         <td class="width-20 text-center-invoice">
-            {{ (!empty($sale_info->userName)?$sale_info->userName:'') }}
+            {{ (!empty($sale_invoice_information[0]->userName)?$sale_invoice_information[0]->userName:'') }}
             <div class="InviceFooterSign"><b>Issue By</b>  </div>
         </td>
     </tr>

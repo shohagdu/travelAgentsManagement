@@ -12,15 +12,16 @@
                     <div class="col-md-3 " >
                         <table class="InvoiceLeftTextArea" style="width: 100%">
                             <tr>
-                                <td class=""><span class="InvoiceName"> {{ (!empty($agent_info->name)?ucwords($agent_info->name):'')}} </span></td>
+                                <td class=""><span class="InvoiceName"> {{ (!empty($sale_invoice_information[0]->name)?ucwords($sale_invoice_information[0]->name):'')}} </span></td>
                             </tr>
                             <tr>
-                                <td><span class="Invoiceaddress"> {{$agent_info->address}} </span></td>
+                                <td><span class="Invoiceaddress"> {{$sale_invoice_information[0]->address}} </span></td>
                             </tr>
                             <tr>
-                                <td><span class="InvoiceEmail">{{$agent_info->mobile}}, {{$agent_info->email}}</span></td>
+                                <td><span class="InvoiceEmail">{{$sale_invoice_information[0]->mobile}}, {{$sale_invoice_information[0]->email}}</span></td>
                             </tr>
                         </table>
+                       
 
                     </div>
                     <div class="col-sm-6 InviceLftHeader text-center">
@@ -33,28 +34,28 @@
                         <div class="InvoiceNameText"> Invoice </div>
                     </div>
                     <div class="col-md-3 InvicerhtHeader">
-                         <a href="{{ url('salesInvoicePdf/'.(!empty($sale_info->id)?$sale_info->id:'')) }}" target="_blank"
+                         <a href="{{ url('salesInvoicePdf/'.(!empty($sale_invoice_information[0]->saleId)?$sale_invoice_information[0]->saleId:'')) }}" target="_blank"
                                 class="btn btn-warning btn-md topPrintbarbutton noSectionToPrint"><i
                                 class="mdi  mdi-printer"></i>
                              Print
                         </a>
-
                         <div class="clearfix"></div>
                         <table class="InvoiceDateText" style="width: 100%;margin-top: 5px">
                             <tr>
                                 <th style="width:30% !important;" class="text-end"> Inv. No</th>
-                                <th>   {{ $sale_details_data[0]->sale_id}}  </th>
+                                <th>   {{ $sale_invoice_information[0]->invoice_no}}  </th>
                             </tr>
                             <tr>
                                 <th class="text-end"> Inv. Date</th>
-                                <th>  {{ date('d M, Y', strtotime($sale_details_data[0]->created_at))}}  </th>
+                                <th>  {{ date('d M, Y', strtotime($sale_invoice_information[0]->created_at))}}  </th>
                             </tr>
                         </table>
                     </div>
                 </div>
+             
                 <div class="row">
                     <div class="col-md-12">
-                        @if($airline_id !='')
+                        @if($sale_invoice_information[0]->airline_id !='')
                             <table class="InvoiceIteamTable">
                                 <tr>
                                     <th> S/N</th>
@@ -68,7 +69,7 @@
                                     <th class="text-center">Net Amount</th>
                                 </tr>
                                 @php $id; $sub_total = 0; $discout_total = 0; $i=1; @endphp
-                                @foreach($sale_details_data as $item)
+                                @foreach($sale_invoice_information as $item)
                                     <tr>
                                          <td>{{ $i++ }}</td>
                                         <td > @if($item->airline_id !='') {{$item->airline_name}} @else {{$item->details}}  @endif</td>
@@ -95,7 +96,7 @@
                                     <th class="text-end">Net Amount</th>
                                 </tr>
                                 @php $id; $sub_total = 0; $discout_total = 0; $i=1; @endphp
-                                @foreach($sale_details_data as $item)
+                                @foreach($sale_invoice_information as $item)
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td> @if($item->airline_id !='') {{$item->airline_name}} @else {{$item->details}}  @endif</td>
@@ -123,7 +124,7 @@
 
                     </div>
                     <div class="col-md-8 pt-2">
-                        @php echo  (!empty($sale_info->remarks)?"<b>Remarks:</b> ".$sale_info->remarks:'') @endphp
+                        @php echo  (!empty($sale_invoice_information[0]->remarks)?"<b>Remarks:</b> ".$sale_invoice_information[0]->remarks:'') @endphp
                     </div>
                     <div class="col-md-4">
                         <table class="InvoiceTotalFotaerTbl">
@@ -138,7 +139,7 @@
                             <tr>
                                 <th class="text-end"> Invoice Discount</th>
                                 <td class="text-end">
-                                     @php  $invoice_discount = $sale_details_data[0]->invoice_discount; echo number_format((float)$invoice_discount, 2)  @endphp </td>
+                                     @php  $invoice_discount = $sale_invoice_information[0]->invoice_discount; echo number_format((float)$invoice_discount, 2)  @endphp </td>
                             </tr>
                             <tr>
                                 <th class="text-end"> Grand Total</th>
@@ -155,7 +156,7 @@
                        </i>
                     </div>
                     <div class="col-md-2">
-                        <div class="text-center">{{ (!empty($sale_info->userName)?$sale_info->userName:'') }}</div>
+                        <div class="text-center">{{ (!empty($sale_invoice_information[0]->userName)?$sale_invoice_information[0]->userName:'') }}</div>
                         <div class="InviceFooterSign"><b>Issue By</b>  </div>
                     </div>
                     <div class="col-md-12 text-center copyrightInvoice">

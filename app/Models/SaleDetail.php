@@ -9,14 +9,20 @@ use DB;
 class SaleDetail extends Model
 {
     use HasFactory;
-    public function sale_details_data($id){
+    public function sale_invoice_information($id){
         $sale_query = DB::table("sale_details AS SALED")
-                    ->select('SALED.*','AIRS.airline_name as airline_name', 'SALE.discount as invoice_discount','SALE.agent_id as agent_id')
+                    ->select('SALED.*','SALE.id as saleId','SALE.invoice_no','AGNT.name as agent_name','AGNT.address', 'AGNT.mobile','AGNT.email','AIRS.airline_name as airline_name', 'SALE.discount as invoice_discount','SALE.agent_id as agent_id','USER.name as userName')
                     ->leftJoin('airline_setups AS AIRS', function($join){
-                    $join->on('AIRS.id', '=', 'SALED.airline_id');
+                            $join->on('AIRS.id', '=', 'SALED.airline_id');
                     })
                     ->leftJoin('sales AS SALE', function($join){
                         $join->on('SALE.id', '=', 'SALED.sale_id');
+                    })
+                    ->leftJoin('agent_records AS AGNT', function($join){
+                        $join->on('AGNT.id', '=', 'SALE.agent_id');
+                    })
+                    ->leftJoin('users AS USER', function($join){
+                        $join->on('USER.id', '=', 'SALE.created_by');
                     })
                    ->where('SALED.sale_id', '=',$id);
 
