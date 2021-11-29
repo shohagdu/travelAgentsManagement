@@ -11,6 +11,7 @@ use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 Use DB;
 use Session;
 
@@ -245,11 +246,31 @@ class AgentRecordController extends Controller
         $agent_info        = AgentRecord::find($id);
         $transaction_info  = $this->agent_model->transaction_info_data($id);
 
-        $totalTran=  count($transaction_info);
+        $totalTran  =  count($transaction_info);
         $frist_date = $transaction_info[0]->trans_date;
         $last_date  = $transaction_info[$totalTran-1]->trans_date;
 
 
-        return view('agent.agent_statement', compact('organization_info', 'agent_info', 'transaction_info', 'frist_date', 'last_date'));
+        $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
+            $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));
+            $mpdf->SetWatermarkImage(
+                asset('public/assets/images/'.$organization_info->logo) . "", .1,
+                array(70, 20),
+                array(77, 150)
+            );
+            $mpdf->showWatermarkImage = true;
+            $mpdf->SetTitle('Agent Statement');
+            $page_footer_html = view()->make('pdf.pdfHeader', ['organization_info'=>$organization_info])->render();
+
+            $mpdf->SetHTMLHeader($page_footer_html);
+
+            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y')."<br/>Software Developed by &copy; Step Technology, www.steptechbd.com, ";
+            $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
+        }];
+
+        $pdf = PDF::loadHtml(view('pdf.agent_statement', compact('agent_info','transaction_info','totalTran','frist_date','last_date')), $config);
+
+        return $pdf->stream('AgentStatement.pdf');
+       
     }
 }

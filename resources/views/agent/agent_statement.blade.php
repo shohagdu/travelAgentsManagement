@@ -15,7 +15,7 @@
                     <h5 class="card-title mb-0 lefttButtonText" >Agent Statement</h5>
                     <a href="{{ route('agent-list')}}" class="btn btn-danger btn-sm text-white rightButton">
                         <i class="mdi mdi-backburger"></i>  Back  </a>
-                    <a href="{{ url('pdf_agent_statement/'.$agent_info->id)}}" style="margin-right:5px" class="btn btn-warning btn-sm text-white rightButton">
+                    <a href="{{ url('pdf_agent_statement/'.$agent_info->id)}}" style="margin-right:5px" target="_blank" class="btn btn-warning btn-sm text-white rightButton">
                         <i class="mdi mdi-printer"></i>  Print  </a>
                 </div>
                 <div class="card-body">
