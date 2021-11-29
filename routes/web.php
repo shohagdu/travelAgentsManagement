@@ -58,6 +58,8 @@ Route::get('/agent-delete/{id}', [AgentRecordController::class, "destroy"])->nam
 Route::post('/get_agent_list_data', [AgentRecordController::class, "get_agent_list_data"])->name('get_agent_list_data');
 
 Route::get('/agent-statement/{id}', [AgentRecordController::class, "agent_statement"])->name('agent-statement');
+Route::get('/pdf_agent_statement/{id}', [AgentRecordController::class, "pdf_agent_statement"])->name('pdf_agent_statement');
+
 
 Route::post('/get_city_info', [AgentRecordController::class, 'get_city_info'])->name('get_city_info');
 

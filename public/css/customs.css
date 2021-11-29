@@ -174,22 +174,31 @@ input::-webkit-input-placeholder {
 }
 
 .AgentInfoStatement {
-    margin-top: 30px;
+    margin-top: 10px;
     border-collapse: collapse;
 
+
 }
-.AgentInfoStatement td th {
-    border: none;
-    background-color: #811a1a;
+.AgentInfoStatement td {
+    font-size:11px !important;
 }
+.AgentInfoStatement th {
+    font-size:11px !important;
+}
+
 .AgentTranactionStatementListTbl{
-    margin-top: 50px;
+    margin-top: 20px;
     width: 100%;
 }
-.AgentTranactionStatementListTbl th {
-    /* border: 1px solid #8d3838; */
-    padding: 3px;
+.AgentTranactionStatementListTbl td {
+    font-size:11px !important;
+    /*padding: 3px;*/
   }
+.AgentTranactionStatementListTbl th {
+    font-size:11px !important;
+    /*padding: 3px;*/
+  }
+
 .topPrintbarbutton{
     float: right;
 }

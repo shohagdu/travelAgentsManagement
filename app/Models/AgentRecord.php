@@ -16,13 +16,13 @@ class AgentRecord extends Model
 
     	    ->join('countries AS CNT', function($join){
                 $join->on('CNT.id', '=', 'AGNT.country');
-           
+
              })
             ->join('states AS STE', function($join){
                 $join->on('STE.id', '=', 'AGNT.city');
-           
-             })		
-            
+
+             })
+
     		->select(DB::raw('SQL_CALC_FOUND_ROWS AGNT.id'), 'AGNT.name','AGNT.mobile','AGNT.email', 'CNT.name as country_name','STE.name as city_name')
 
             ->offset($receive['start'])
@@ -33,7 +33,7 @@ class AgentRecord extends Model
 
             $query->Where("AGNT.name", "LIKE", $search_content)
                     ->orWhere("AGNT.mobile", "LIKE", $search_content);
-         
+
         }
 
 		if($receive['country'] !=''){
@@ -41,7 +41,7 @@ class AgentRecord extends Model
             }
         if($receive['city'] !=''){
                 $query->Where("AGNT.city", "=", $receive['city']);
-            }    
+            }
         if($receive['mobile'] !=''){
                 $query->Where("AGNT.mobile", "=", $receive['mobile']);
             }
@@ -52,12 +52,16 @@ class AgentRecord extends Model
     }
 
     public function transaction_info_data($id){
-        
+
         $trans_query = DB::table("acc_transaction_infos AS TRNS")
-                     ->select('TRNS.*', 'TRNS.debit_amount','TRNS.credit_amount','ACC.name as account_name')
+                     ->select('TRNS.*', 'TRNS.debit_amount','TRNS.credit_amount','ACC.name as account_name','sales.invoice_no','sales.remarks','sales.remarks as invRemarks')
                      ->leftJoin('banks AS ACC', function($join){
                         $join->on('ACC.id', '=', 'TRNS.debit_acc');
                      })
+                     ->leftJoin('sales', function($join){
+                        $join->on('sales.id', '=', 'TRNS.sales_id');
+                     })
+
                      ->where(function ($trans_query) use ($id) {
                         $trans_query->where('TRNS.debit_acc', '=' , $id)
                             ->orWhere('TRNS.credit_acc', '=', $id);
@@ -65,6 +69,6 @@ class AgentRecord extends Model
                     ->where('TRNS.trans_type', '!=',4);
 
         return $data = $trans_query->get();
-                        
+
     }
 }

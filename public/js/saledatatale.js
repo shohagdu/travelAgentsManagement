@@ -1,7 +1,7 @@
 var url  = $('meta[name = path]').attr("content");
 var csrf    = $('mata[name = csrf-token]').attr("content");
 $.ajaxSetup({
-    
+
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
@@ -9,7 +9,7 @@ $.ajaxSetup({
 
 $(document).ready(function(){
     get_sale_info_list();
-}); 
+});
 
 // sale list
 var token_table;
@@ -26,7 +26,7 @@ function get_sale_info_list() {
         "paging": true,
         "searching": { "regex": true },
         "pageLength": 10,
-        
+
         ajax:{
             dataType: "JSON",
             type: "post",
@@ -41,7 +41,7 @@ function get_sale_info_list() {
                 data: null,
                 render: function(){
                     return token_table.page.info().start + token_table.column(0).nodes().length;
-                }           
+                }
             },
             {
             	title: "Agent Name",
@@ -90,9 +90,9 @@ function get_sale_info_list() {
             	title: "Action",
                 data: null,
                 render: function(data, type, row, meta){
-                   
-                    return '<a href="'+target+'sale-edit/'+data.encryptedID +')" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a href="'+target+'sale-invoice/'+data.id+'" class="btn btn-info btn-sm text-white"> <span class="mdi mdi-file-document-box"></span>Invoice </a> <button class="btn btn-danger btn-sm text-white SaleDelete " data-id="'+data.id+'"><span class="mdi mdi-delete-circle"></span>  Delete </button>';
-                   
+
+                    return '<a href="'+target+'sale-edit/'+data.encryptedID +')" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a href="'+target+'sale-invoice/'+data.encryptedID+'" class="btn btn-info btn-sm text-white"> <span class="mdi mdi-file-document-box"></span>Invoice </a> <button class="btn btn-danger btn-sm text-white SaleDelete " data-id="'+data.encryptedID+'"><span class="mdi mdi-delete-circle"></span>  Delete </button>';
+
                 }
             },
         ],
@@ -114,7 +114,7 @@ function search_sale_reports ()
 // today sale list
 $(document).ready(function(){
     get_today_sale_info_list();
-}); 
+});
 
 // today sale list
 var token_table2;
@@ -131,7 +131,7 @@ function get_today_sale_info_list() {
         "paging": true,
         "searching": { "regex": true },
         "pageLength": 10,
-        
+
         ajax:{
             dataType: "JSON",
             type: "post",
@@ -146,7 +146,7 @@ function get_today_sale_info_list() {
                 data: null,
                 render: function(){
                     return token_table2.page.info().start + token_table2.column(0).nodes().length;
-                }           
+                }
             },
             {
             	title: "Agent Name",
@@ -195,7 +195,7 @@ function get_today_sale_info_list() {
             	title: "Action",
                 data: null,
                 render: function(data, type, row, meta){
-                 
+
                     return '<a href="'+target+'sale-edit/'+data.id+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a href="'+target+'sale-invoice/'+data.id+'" class="btn btn-info btn-sm text-white"> <span class="mdi mdi-file-document-box"></span>Invoice </a> <button class="btn btn-danger btn-sm text-white SaleDelete " data-id="'+data.id+'"><span class="mdi mdi-delete-circle"></span>  Delete </button>';
                 }
             },
@@ -228,7 +228,7 @@ $(document).on("click",".SaleDelete",function(){
         })
         .then((willDelete) => {
              if (willDelete) {
-                   
+
                     $.ajax({
                         url:target+ "sale-delete",
                         type:"POST",
@@ -246,7 +246,7 @@ $(document).on("click",".SaleDelete",function(){
                         }
                     });
                     } else {
-                        
+
                         swal("Sale information is safe!");
                     }
         });

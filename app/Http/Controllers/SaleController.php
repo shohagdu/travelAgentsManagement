@@ -61,6 +61,7 @@ class SaleController extends Controller
         // print_r($request_data);exit;
 
         $response = $this->sale_model->sale_list_data($request_data, $search_content);
+
         $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
         $response['recordsTotal']    = $count;
         $response['recordsFiltered'] = $count;
@@ -102,7 +103,7 @@ class SaleController extends Controller
         $serial    = $total_count+1;
         $invoice_key = $this->invoiceGenerator($serial);
         $year = date('Y');
-           
+
 
         $invoice_no = $year.$invoice_key;
 
@@ -269,16 +270,19 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($encodedID)
     {
-        $agent_info       = AgentRecord::all();
-        $airline_info     = AirlineSetup::all();
-        $sale_data        = Sale::find($id);
-        $sale_id          = $sale_data->id;
-        $sale_details     = SaleDetail::where('sale_id', $sale_id)->get();
-        $transaction_data = AccTransactionInfo::where('sales_id', $sale_id)->first();
+        $id=($encodedID?crypt::decrypt($encodedID):'');
+        if(!empty($id)) {
+            $agent_info = AgentRecord::all();
+            $airline_info = AirlineSetup::all();
+            $sale_data = Sale::find($id);
+            $sale_id = $sale_data->id;
+            $sale_details = SaleDetail::where('sale_id', $sale_id)->get();
+            $transaction_data = AccTransactionInfo::where('sales_id', $sale_id)->first();
 
-        return view('sale.edit_sale', compact('agent_info', 'airline_info','sale_data','sale_details','transaction_data'));
+            return view('sale.edit_sale', compact('agent_info', 'airline_info', 'sale_data', 'sale_details', 'transaction_data'));
+        }
     }
 
     /**
@@ -541,11 +545,14 @@ class SaleController extends Controller
         echo json_encode($response);
     }
 
-    public function sale_invoice($id){
-        $organization_info        = OrganizationSetup::first();
-        $sale_invoice_information = $this->sale_details_model->sale_invoice_information($id);
+    public function sale_invoice($encodedID){
+        $id=($encodedID?crypt::decrypt($encodedID):'');
+        if(!empty($id)) {
+            $organization_info = OrganizationSetup::first();
+            $sale_invoice_information = $this->sale_details_model->sale_invoice_information($id);
 
-        return view('sale.sale_invoice',compact('organization_info','sale_invoice_information'));
+            return view('sale.sale_invoice', compact('organization_info', 'sale_invoice_information'));
+        }
     }
     public function get_flight_setup_info(Request $request){
 

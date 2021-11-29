@@ -58,7 +58,7 @@ class AgentRecordController extends Controller
         $response['recordsTotal']    = $count;
         $response['recordsFiltered'] = $count;
         $response['draw']            = $request->draw;
-        
+
         echo json_encode($response);
     }
 
@@ -111,7 +111,7 @@ class AgentRecordController extends Controller
         $agent_id = DB::getPdo()->lastInsertId();
 
         $user_data = new User();
-        
+
         $user_data->record_id  = $agent_id;
         $user_data->name       = $request->name;
         $user_data->email      = $request->email;
@@ -206,7 +206,7 @@ class AgentRecordController extends Controller
     {
         $delete = AgentRecord::find($id);
         $delete->delete();
-        
+
         if($delete){
             return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully delated!')->with('flash.class', 'success');
         }else{
@@ -232,11 +232,24 @@ class AgentRecordController extends Controller
     public function get_city_info(Request $request)
     {
         $response = State::where('country_id', '=', $request->country_id)->get();
-        
+
         if (!empty($response)) {
                 echo json_encode(['status' => 'success', "message" => "data found", 'data' => $response]);
             }else{
                 echo json_encode(['status' => 'error', "message" => "data not found", 'data' => []]);
             }
+    }
+    public function pdf_agent_statement($id){
+
+        $organization_info = OrganizationSetup::first();
+        $agent_info        = AgentRecord::find($id);
+        $transaction_info  = $this->agent_model->transaction_info_data($id);
+
+        $totalTran=  count($transaction_info);
+        $frist_date = $transaction_info[0]->trans_date;
+        $last_date  = $transaction_info[$totalTran-1]->trans_date;
+
+
+        return view('agent.agent_statement', compact('organization_info', 'agent_info', 'transaction_info', 'frist_date', 'last_date'));
     }
 }
