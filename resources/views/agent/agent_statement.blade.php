@@ -60,7 +60,7 @@
                                 <td>
                                     @if($item->trans_type==1) Sale @elseif($item->trans_type ==2) Credit Bill @elseif($item->trans_type ==3) Debit Bill @endif
                                     @if($item->account_name !='') ({{$item->account_name}}) @endif
-                                     {{ (!empty($item->remarks)?" >> ".$item->remarks:'') }}
+                                     {{ (!empty($item->remarks)?" >> ".$item->remarks:'') }} {{ (!empty($item->invoice_no)?" >> ".$item->invoice_no:'') }}
                                 </td>
                                 <td class="text-end">
                                     <?php
@@ -90,8 +90,8 @@
                         @endforeach
                         <tr>
                             <th colspan="3"> <span class="SalatemtTotal"> Total</span></th>
-                            <th class="text-end"> {{ $dr_total}}</th>
-                            <th class="text-end"> {{ $cr_total}}</th>
+                            <th class="text-end"> {{ number_format($dr_total,2)}}</th>
+                            <th class="text-end"> {{ number_format($cr_total,2)}}</th>
                             <th class="text-end"> {{ number_format($dr_total-$cr_total,2) }}</th>
                         </tr>
                     </table>
