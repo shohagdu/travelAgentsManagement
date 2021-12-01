@@ -149,7 +149,12 @@
               <li class="sidebar-item">
                 <a href="{{ route('statement-report')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
-                  ><span class="hide-menu"> Statement Report </span></a>
+                  ><span class="hide-menu"> Statement Report </span>
+                </a>
+                <a href="{{ route('agent-date-wise-statement')}}" class="sidebar-link"
+                ><i class="mdi mdi-note-outline"></i
+                ><span class="hide-menu"> Agent Date Wise Statement </span>
+                </a>
               </li>
               <li class="sidebar-item">
                 <a href="{{ route('account-report')}}" class="sidebar-link"

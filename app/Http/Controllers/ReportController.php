@@ -56,4 +56,42 @@ class ReportController extends Controller
         echo json_encode($response);
     }
 
+    public function agent_date_wise_statement()
+    {
+        $agent_info   = AgentRecord::all();
+        return view('statement_report.agent_date_wise_statement', compact('agent_info'));
+    }
+
+    public function get_agent_date_wise_statement_data(Request $request)
+    {
+        header("Content-Type: application/json");
+        $agent_id  = $request->agent_id;
+        $from_date = $request->from_date;
+        $to_date   = $request->to_date;
+
+        $start = $request->start;
+        $limit = $request->length;
+        $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
+
+        $request_data = [
+            'start'     => $start,
+            'limit'     => $limit,
+            'agent_id'  => $agent_id,
+            'from_date' => $from_date,
+            'to_date'   => $to_date,
+        ];
+
+        $response = $this->transaction_model->get_agent_date_wise_statement_data($request_data, $search_content);
+
+        // echo "<pre>";
+        // print_r($response);exit;
+    
+        $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
+        $response['recordsTotal']    = $count;
+        $response['recordsFiltered'] = $count;
+        $response['draw']            = $request->draw;
+        
+        echo json_encode($response);
+    }
+
 }

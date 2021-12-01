@@ -174,4 +174,52 @@ class AccTransactionInfo extends Model
 
         return $data;
     }
+
+    // agent date wise statement 
+    public function get_agent_date_wise_statement_data($receive, $search_content)
+    {
+        $from_date = date('Y-m-d', strtotime($receive['from_date']));
+        $to_date   = date('Y-m-d', strtotime($receive['to_date']));
+        $id        =  $receive['agent_id'];
+
+    	$query  = DB::table("acc_transaction_infos AS TRNS")
+                    ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'), 'TRNS.trans_type','TRNS.trans_date','TRNS.reference_number','TRNS.remarks as transRemark','TRNS.debit_amount','TRNS.credit_amount','ACC.name as account_name','sales.invoice_no','sales.remarks','sales.remarks as invRemarks', 'AGNT.name as agent_name', 'AGNT2.name as agent_name2', 'CTG.title as category_name')
+                    ->leftJoin('banks AS ACC', function($join){
+                        $join->on('ACC.id', '=', 'TRNS.debit_acc');
+                    })
+                    ->leftJoin('sales', function($join){
+                        $join->on('sales.id', '=', 'TRNS.sales_id');
+                    })
+                    ->leftJoin('sale_categories AS CTG', function($join){
+                        $join->on('CTG.id', '=', 'sales.sale_category_id');
+                    })
+                    ->leftJoin('agent_records AS AGNT', function($join){
+                        $join->on('AGNT.id', '=', 'TRNS.credit_acc');
+                    })
+                    ->leftJoin('agent_records AS AGNT2', function($join){
+                        $join->on('AGNT2.id', '=', 'TRNS.debit_acc');
+                    })
+                    ->where('TRNS.trans_type', '!=',4)
+                    ->offset($receive['start'])
+                    ->limit($receive['limit'])
+                    //->orderBy('TRNS.trans_type', 'ASC')
+                    ->orderBy('TRNS.id', 'DESC');
+
+                    if($search_content != false){
+                        $query->Where("TRNS.agent_id", "LIKE", $search_content)
+                                ->orWhere("TRNS.agent_id", "LIKE", $search_content);
+                    }
+                    
+                    if($receive['agent_id'] !=''){
+                        $query->where('TRNS.debit_acc', '=' , $id)
+                              ->orWhere('TRNS.credit_acc', '=', $id);
+                    }
+                    if($receive['from_date'] !='' || $receive['to_date'] !=''){ 
+                        $query->whereBetween("TRNS.trans_date", [$from_date, $to_date]);
+                    } 
+                
+                    $data['data'] = $query->get();
+
+                    return $data;
+    }
 }

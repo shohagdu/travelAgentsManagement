@@ -146,6 +146,10 @@ Route::post('/get_bill_refund_list_data', [BillCollectionController::class, "get
 Route::get('/statement-report', [ReportController::class, "index"])->name('statement-report');
 Route::post('/get_statement_report_data', [ReportController::class, "get_statement_report_data"])->name('get_statement_report_data');
 
+// Agent date wise Statement 
+Route::get('/agent-date-wise-statement', [ReportController::class, "agent_date_wise_statement"])->name('agent-date-wise-statement');
+Route::post('/get_agent_date_wise_statement_data', [ReportController::class, "get_agent_date_wise_statement_data"])->name('get_agent_date_wise_statement_data');
+
 // Account Wise report
 Route::get('/account-report', [BankController::class, "account_report"])->name('account-report');
 Route::post('/get_account_report_data', [BankController::class, "get_account_report_data"])->name('get_account_report_data');
