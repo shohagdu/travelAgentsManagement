@@ -266,11 +266,19 @@ class AgentRecordController extends Controller
 
             $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y')."<br/>Software Developed by &copy; Step Technology, www.steptechbd.com, ";
             $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
+
+            $margin_left = 5;
+            $margin_right = 5;
+            $margin_top = 10;
+            $margin_bottom = 5;
+            $paper_type = 'a4';
+
+            $mpdf->AddPage('P', '', '', '', '', $margin_left, $margin_right, $margin_top, $margin_bottom, 5, 5, '', '', '', '', '', '', '', '', '', $paper_type);
         }];
 
         $pdf = PDF::loadHtml(view('pdf.agent_statement', compact('agent_info','transaction_info','totalTran','frist_date','last_date')), $config);
 
         return $pdf->stream('AgentStatement.pdf');
-       
+
     }
 }
