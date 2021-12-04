@@ -1,5 +1,4 @@
 $.ajaxSetup({
-    
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
@@ -21,11 +20,11 @@ jQuery("#to_date").datepicker({
     autoclose: true,
     todayHighlight: true,
     format: 'dd-mm-yyyy',
-    });
+});
 
 $(document).ready(function(){
     get_statement_report_info_list();
-}); 
+});
 
 // statement report
 var token_table;
@@ -42,7 +41,7 @@ function get_statement_report_info_list() {
         "paging": true,
         "searching": { "regex": true },
         "pageLength": 10,
-        
+
         ajax:{
             dataType: "JSON",
             type: "post",
@@ -57,7 +56,7 @@ function get_statement_report_info_list() {
                 data: null,
                 render: function(){
                     return token_table.page.info().start + token_table.column(0).nodes().length;
-                }           
+                }
             },
             {
                 title: "Agent Name",
@@ -69,7 +68,7 @@ function get_statement_report_info_list() {
                     else if(data.agent_name2 == null){
                         return  data.agent_name;
                     }
-                    
+
                 }
             },
             {
@@ -90,7 +89,7 @@ function get_statement_report_info_list() {
                     else if(data.agent_name2 == null){
                         return  data.credit_amount;
                     }
-                    
+
                 }
             },
         ],
@@ -115,7 +114,7 @@ function search_statement_report_reports ()
 
 $(document).ready(function(){
     get_agent_wise_statement_report_info_list();
-}); 
+});
 
 // agent date wise statement report
 var token_table2;
@@ -132,7 +131,7 @@ function get_agent_wise_statement_report_info_list() {
         "paging": true,
         "searching": { "regex": true },
         "pageLength": 10,
-        
+
         ajax:{
             dataType: "JSON",
             type: "post",
@@ -147,7 +146,7 @@ function get_agent_wise_statement_report_info_list() {
                 data: null,
                 render: function(){
                     return token_table2.page.info().start + token_table2.column(0).nodes().length;
-                }           
+                }
             },
             {
                 title: "Date",
@@ -230,7 +229,7 @@ function search_agent_date_wise_statement_report_reports ()
 
 $(document).ready(function(){
     get_account_report_info_list();
-}); 
+});
 
 // Account report
 var account_table;
@@ -247,7 +246,7 @@ function get_account_report_info_list() {
         "paging": true,
         "searching": { "regex": true },
         "pageLength": 10,
-        
+
         ajax:{
             dataType: "JSON",
             type: "post",
@@ -262,7 +261,7 @@ function get_account_report_info_list() {
                 data: null,
                 render: function(){
                     return account_table.page.info().start + account_table.column(0).nodes().length;
-                }           
+                }
             },
             {
                 title: "Account Name",
@@ -296,4 +295,27 @@ function search_account_report_reports ()
     $("#AccountReportListTable").dataTable().fnSettings().ajax.data.to_date     = to_date;
 
     account_table.ajax.reload();
+}
+
+function searchAgentStatementBtn(){
+    $(".showReports").html('')
+   // $('#searchAgentStatement').attr('disabled',true);
+    $.ajax({
+        url:"agentStatementAction",
+        type:"POST",
+        // dataType:"json",
+        data: $("#agentStatementForm").serialize(),
+        processData: false,
+        // contentType: false,
+        success:function(response){
+            console.log(response);
+            $('#searchAgentStatement').attr('disabled',false);
+            if (response != '') {
+                $(".showReports").html(response)
+            }else{
+                $("#showReports").html('')
+            }
+        }
+    });
+
 }

@@ -14,7 +14,7 @@ class AccTransactionInfo extends Model
     	$query = DB::table("acc_transaction_infos AS TRNS")
     	    ->join('agent_records AS AGRD', function($join){
                 $join->on('AGRD.id', '=', 'TRNS.credit_acc');
-           
+
              })
     		->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_date', 'TRNS.remarks',  'AGRD.name as agent_name')
 
@@ -30,10 +30,10 @@ class AccTransactionInfo extends Model
 
         if($receive['agent_id'] !=''){
                 $query->Where("TRNS.credit_acc", "=", $receive['agent_id']);
-            } 
+            }
         if($receive['trans_date'] !=''){
             $query->Where("TRNS.trans_date", "=", date('Y-m-d', strtotime($receive['trans_date'])));
-        }   
+        }
 
         $data['data'] = $query->get();
 
@@ -45,7 +45,7 @@ class AccTransactionInfo extends Model
     	$query = DB::table("acc_transaction_infos AS TRNS")
     	    ->join('agent_records AS AGRD', function($join){
                 $join->on('AGRD.id', '=', 'TRNS.debit_acc');
-           
+
              })
     		->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks',  'AGRD.name as agent_name')
 
@@ -61,10 +61,10 @@ class AccTransactionInfo extends Model
 
         if($receive['agent_id'] !=''){
                 $query->Where("TRNS.debit_acc", "=", $receive['agent_id']);
-            } 
+            }
         if($receive['trans_date'] !=''){
             $query->Where("TRNS.trans_date", "=", date('Y-m-d', strtotime($receive['trans_date'])));
-        }   
+        }
 
         $data['data'] = $query->get();
 
@@ -76,7 +76,7 @@ class AccTransactionInfo extends Model
     	$query = DB::table("acc_transaction_infos AS TRNS")
     	    ->join('agent_records AS AGRD', function($join){
                 $join->on('AGRD.id', '=', 'TRNS.credit_acc');
-           
+
              })
     		->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_date', 'TRNS.remarks',  'AGRD.name as agent_name')
 
@@ -92,10 +92,10 @@ class AccTransactionInfo extends Model
 
         if($receive['agent_id'] !=''){
                 $query->Where("TRNS.credit_acc", "=", $receive['agent_id']);
-            } 
+            }
         if($receive['trans_date'] !=''){
             $query->Where("TRNS.trans_date", "=", date('Y-m-d', strtotime($receive['trans_date'])));
-        }   
+        }
 
         $data['data'] = $query->get();
 
@@ -110,11 +110,11 @@ class AccTransactionInfo extends Model
     	$query = DB::table("acc_transaction_infos AS TRNS")
     	    ->leftJoin('agent_records AS AGRD', function($join){
                 $join->on('AGRD.id', '=', 'TRNS.credit_acc');
-           
+
              })
              ->leftJoin('agent_records AS AGRD2', function($join){
                 $join->on('AGRD2.id', '=', 'TRNS.debit_acc');
-           
+
              })
     		->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2')
 
@@ -133,10 +133,10 @@ class AccTransactionInfo extends Model
             $query->Where("TRNS.credit_acc", "=", $receive['agent_id'])
             ->orWhere("TRNS.debit_acc", "=", $receive['agent_id']);
         }
-        if($receive['from_date'] !='' || $receive['to_date'] !=''){ 
+        if($receive['from_date'] !='' || $receive['to_date'] !=''){
             $query->whereBetween("TRNS.trans_date", [$from_date, $to_date]);
-         } 
-       
+         }
+
         $data['data'] = $query->get();
 
         return $data;
@@ -150,7 +150,7 @@ class AccTransactionInfo extends Model
     	$query = DB::table("acc_transaction_infos AS TRNS")
     	    ->leftJoin('banks AS ACC', function($join){
                 $join->on('ACC.id', '=', 'TRNS.debit_acc');
-           
+
              })
     		->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'), 'TRNS.credit_amount','TRNS.trans_date', 'TRNS.remarks','ACC.name as account_name')
 
@@ -166,16 +166,16 @@ class AccTransactionInfo extends Model
         if($receive['account_id'] !=''){
             $query->Where("TRNS.debit_acc", "=", $receive['account_id']);
         }
-        if($receive['from_date'] !='' || $receive['to_date'] !=''){ 
+        if($receive['from_date'] !='' || $receive['to_date'] !=''){
             $query->whereBetween("TRNS.trans_date", [$from_date, $to_date]);
-         } 
-       
+         }
+
         $data['data'] = $query->get();
 
         return $data;
     }
 
-    // agent date wise statement 
+    // agent date wise statement
     public function get_agent_date_wise_statement_data($receive, $search_content)
     {
         $from_date = date('Y-m-d', strtotime($receive['from_date']));
@@ -209,17 +209,46 @@ class AccTransactionInfo extends Model
                         $query->Where("TRNS.agent_id", "LIKE", $search_content)
                                 ->orWhere("TRNS.agent_id", "LIKE", $search_content);
                     }
-                    
+
                     if($receive['agent_id'] !=''){
                         $query->where('TRNS.debit_acc', '=' , $id)
                               ->orWhere('TRNS.credit_acc', '=', $id);
                     }
-                    if($receive['from_date'] !='' || $receive['to_date'] !=''){ 
+                    if($receive['from_date'] !='' || $receive['to_date'] !=''){
                         $query->whereBetween("TRNS.trans_date", [$from_date, $to_date]);
-                    } 
-                
+                    }
+
                     $data['data'] = $query->get();
 
                     return $data;
+    }
+
+    public function searchAgentStatement($receive)
+    {
+        $query = DB::table("acc_transaction_infos AS TRNS")
+            ->leftJoin('agent_records AS AGRD', function($join){
+                $join->on('AGRD.id', '=', 'TRNS.credit_acc');
+
+            })
+            ->leftJoin('agent_records AS AGRD2', function($join){
+                $join->on('AGRD2.id', '=', 'TRNS.debit_acc');
+
+            })
+            ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2')
+            ->orderBy('id', 'DESC');
+
+        if($receive['agent_id'] !=''){
+            $query->Where("TRNS.credit_acc", "=", $receive['agent_id'])
+                ->orWhere("TRNS.debit_acc", "=", $receive['agent_id']);
+        }
+        if($receive['from_date'] !='' && $receive['to_date'] !=''){
+            $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['to_date']]);
+        }elseif($receive['from_date'] !='' && $receive['to_date'] ==''){
+            $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['from_date']]);
+        }
+
+        $data['data'] = $query->get();
+
+        return $data;
     }
 }
