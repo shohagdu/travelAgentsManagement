@@ -13,6 +13,10 @@
             <th>Balance</th>
         </tr>
     </thead>
+    <tr>
+        <td class="text-center" colspan="5"> Carry over head balance &nbsp; </td>
+        <td class="text-end"> {{ $balance}}</td>
+    </tr>
     <tbody>
 {{--    {{ dd($record['data']) }}--}}
     @if(!empty($record['data']))

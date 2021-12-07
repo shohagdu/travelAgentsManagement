@@ -251,4 +251,20 @@ class AccTransactionInfo extends Model
 
         return $data;
     }
+    // debit balance
+    public function AgentDebitBalance($receive)
+    {
+        return $query  = DB::table('acc_transaction_infos')->select('debit_amount')
+                        ->where('debit_acc', $receive['agent_id'])
+                        ->where("trans_date", ">=", $receive['from_date'])
+                        ->sum('debit_amount');         
+    }
+    // credit balance
+    public function AgentCreditBalance($receive)
+    {
+        return $query  = DB::table('acc_transaction_infos')->select('debit_amount')
+                        ->where('credit_acc', $receive['agent_id'])
+                        ->where("trans_date", ">=", $receive['from_date'])
+                        ->sum('credit_amount');         
+    }
 }

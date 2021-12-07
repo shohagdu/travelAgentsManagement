@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Bank;
 use App\Models\AgentRecord;
 use App\Models\AccTransactionInfo;
+use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Session;
@@ -98,12 +99,18 @@ class ReportController extends Controller
 
     public function agentStatementAction(Request $request)
     {
-        $param['agent_id'] = (!empty($request->agent_id) ? $request->agent_id : '');
-        $param['from_date'] = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : '');
-        $param['to_date'] = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : '');
-        $data = $this->transaction_model->searchAgentStatement($param);
-        return view('statement_report.agentStatementAction', ['record'=>$data]);
+        $param['agent_id']    = (!empty($request->agent_id) ? $request->agent_id : '');
+        $param['from_date']   = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : '');
+        $param['to_date']     = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : '');
+        $agent_debit_balance  = $this->transaction_model->AgentDebitBalance($param);
+        $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
+        $balance              = ($agent_debit_balance- $agent_credit_balance);
+        $data                 = $this->transaction_model->searchAgentStatement($param);
+        
+        return view('statement_report.agentStatementAction', ['record'=>$data, 'balance' => $balance]);
     }
 
-
+    public function agent_date_wise_statement_pdf($id) {
+       
+    }
 }

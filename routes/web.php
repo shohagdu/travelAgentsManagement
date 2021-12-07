@@ -149,6 +149,7 @@ Route::post('/get_statement_report_data', [ReportController::class, "get_stateme
 // Agent date wise Statement
 Route::get('/agent-date-wise-statement', [ReportController::class, "agent_date_wise_statement"])->name('agent-date-wise-statement');
 Route::post('/get_agent_date_wise_statement_data', [ReportController::class, "get_agent_date_wise_statement_data"])->name('get_agent_date_wise_statement_data');
+Route::get('/agent_date_wise_statement_pdf/{id}', [ReportController::class, "agent_date_wise_statement_pdf"])->name('agent_date_wise_statement_pdf');
 
 // Account Wise report
 Route::get('/account-report', [BankController::class, "account_report"])->name('account-report');
