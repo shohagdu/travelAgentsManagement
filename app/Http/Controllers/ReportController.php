@@ -10,6 +10,7 @@ use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Session;
+use PDF;
 
 class ReportController extends Controller
 {
@@ -107,10 +108,49 @@ class ReportController extends Controller
         $balance              = ($agent_debit_balance- $agent_credit_balance);
         $data                 = $this->transaction_model->searchAgentStatement($param);
         
-        return view('statement_report.agentStatementAction', ['record'=>$data, 'balance' => $balance]);
+        return view('statement_report.agentStatementAction', ['record'=>$data, 'balance' => $balance, 'param_info' => $param]);
     }
 
-    public function agent_date_wise_statement_pdf($id) {
-       
+    public function agent_date_wise_statement_pdf($agent_id, $from_date, $to_date) {
+        $organization_info = OrganizationSetup::first();
+        $agent_info        = AgentRecord::find($agent_id);  
+        $param = [
+            'agent_id'  => $agent_id,
+            'from_date' => $from_date,
+            'to_date'   => $to_date,
+          ];
+        $agent_debit_balance  = $this->transaction_model->AgentDebitBalance($param);
+        $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
+        $balance              = ($agent_debit_balance- $agent_credit_balance);
+        $data                 = $this->transaction_model->searchAgentStatement($param);
+
+        $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
+            $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));
+            $mpdf->SetWatermarkImage(
+                asset('public/assets/images/'.$organization_info->logo) . "", .1,
+                array(70, 20),
+                array(77, 150)
+            );
+            $mpdf->showWatermarkImage = true;
+            $mpdf->SetTitle('Agent Date Wise Statement');
+            $page_footer_html = view()->make('pdf.pdfHeader', ['organization_info'=>$organization_info])->render();
+
+            $mpdf->SetHTMLHeader($page_footer_html);
+
+            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y')."<br/>Software Developed by &copy; Step Technology, www.steptechbd.com, ";
+            $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
+
+            $margin_left   = 5;
+            $margin_right  = 5;
+            $margin_top    = 10;
+            $margin_bottom = 5;
+            $paper_type    = 'a4';
+
+            $mpdf->AddPage('P', '', '', '', '', $margin_left, $margin_right, $margin_top, $margin_bottom, 5, 5, '', '', '', '', '', '', '', '', '', $paper_type);
+            }];
+
+        $pdf = PDF::loadHtml(view('pdf.agent_date_wise_statement_pdf', compact('agent_info','balance', 'from_date','to_date','data')), $config);
+
+        return $pdf->stream('AgentdateWiseStatement.pdf');
     }
 }

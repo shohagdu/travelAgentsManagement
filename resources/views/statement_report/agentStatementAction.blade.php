@@ -2,6 +2,7 @@
     $i=1;
     $balanceAmount='0.00';
 ?>
+<a style="float: right; margin-bottom: 5px;"  target="_blank" href="agent_date_wise_statement_pdf/{{ $param_info['agent_id'] }}/{{ $param_info['from_date'] }}/{{ $param_info['to_date'] }}" class="btn btn-warning btn-sm text-white "> <i class="mdi mdi-printer"></i>  Print  </a><br>
 <table  class="table table-bordered">
     <thead>
         <tr>
@@ -15,7 +16,7 @@
     </thead>
     <tr>
         <td class="text-center" colspan="5"> Carry over head balance &nbsp; </td>
-        <td class="text-end"> {{ $balance}}</td>
+        <td class="text-end"> {{ $balance}} </td>
     </tr>
     <tbody>
 {{--    {{ dd($record['data']) }}--}}

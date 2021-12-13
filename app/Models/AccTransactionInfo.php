@@ -243,9 +243,11 @@ class AccTransactionInfo extends Model
         }
         if($receive['from_date'] !='' && $receive['to_date'] !=''){
             $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['to_date']]);
-        }elseif($receive['from_date'] !='' && $receive['to_date'] ==''){
-            $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['from_date']]);
+            
         }
+        // elseif($receive['from_date'] !='' && $receive['to_date'] ==''){
+        //     $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['from_date']]);
+        // }
 
         $data['data'] = $query->get();
 

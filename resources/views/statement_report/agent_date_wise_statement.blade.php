@@ -12,9 +12,9 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0 lefttButtonText">Agent Date Wise Statement</h5>
+                    <h5 class="card-title mb-0 lefttButtonText">Agent Date Wise Statement </h5>
                     <a href="{{ route('agent-date-wise-statement')}}" class="btn btn-danger btn-sm text-white rightButton"> <i class="mdi mdi-refresh"></i>  Refresh  </a>
-                    <a href="" class="btn btn-warning btn-sm text-white rightButton" style="margin-right: 5px"> <i class="mdi mdi-printer"></i>  Print  </a>
+                    
                 </div>
                 <div class="card-body">
                     <form method="post" id="agentStatementForm"  action="javascript:void(0)" >
