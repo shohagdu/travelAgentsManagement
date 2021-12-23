@@ -116,7 +116,7 @@ class BillCollectionController extends Controller
 
         return response()->json([
             'status' => $transaction_save ? 'success' : 'error',
-            'msg'    => $transaction_save ? 'Successfully Bill Collection' : 'Someting went wrong',
+            'msg'    => $transaction_save ? 'Successfully Credit Bill' : 'Someting went wrong',
         ]);     
 
     }

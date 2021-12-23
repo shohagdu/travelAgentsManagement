@@ -221,9 +221,14 @@ class AgentRecordController extends Controller
         $agent_info        = AgentRecord::find($id);
         $transaction_info  = $this->agent_model->transaction_info_data($id);
 
+        // echo "<pre>";
+        // print_r($transaction_info);exit;
+
         $totalTran=  count($transaction_info);
-        $frist_date = $transaction_info[0]->trans_date;
-        $last_date  = $transaction_info[$totalTran-1]->trans_date;
+        $frist_date = $totalTran> 0 ?  $transaction_info[0]->trans_date : date('d-m-Y') ;
+        $last_date  = $totalTran> 0 ?  $transaction_info[$totalTran-1]->trans_date : date('d-m-Y');
+
+       // echo $frist_date; exit;
 
 
         return view('agent.agent_statement', compact('organization_info', 'agent_info', 'transaction_info', 'frist_date', 'last_date'));
@@ -247,8 +252,8 @@ class AgentRecordController extends Controller
         $transaction_info  = $this->agent_model->transaction_info_data($id);
 
         $totalTran  =  count($transaction_info);
-        $frist_date = $transaction_info[0]->trans_date;
-        $last_date  = $transaction_info[$totalTran-1]->trans_date;
+        $frist_date = $totalTran> 0 ?  $transaction_info[0]->trans_date : date('d-m-Y') ;
+        $last_date  = $totalTran> 0 ?  $transaction_info[$totalTran-1]->trans_date : date('d-m-Y');
 
 
         $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {

@@ -196,7 +196,7 @@ function get_today_sale_info_list() {
                 data: null,
                 render: function(data, type, row, meta){
 
-                    return '<a href="'+target+'sale-edit/'+data.id+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a href="'+target+'sale-invoice/'+data.id+'" class="btn btn-info btn-sm text-white"> <span class="mdi mdi-file-document-box"></span>Invoice </a> <button class="btn btn-danger btn-sm text-white SaleDelete " data-id="'+data.id+'"><span class="mdi mdi-delete-circle"></span>  Delete </button>';
+                    return '<a href="'+target+'sale-edit/'+data.encryptedID+'" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>Edit </a> <a href="'+target+'sale-invoice/'+data.encryptedID+'" class="btn btn-info btn-sm text-white"> <span class="mdi mdi-file-document-box"></span>Invoice </a> <button class="btn btn-danger btn-sm text-white SaleDelete " data-id="'+data.encryptedID+'"><span class="mdi mdi-delete-circle"></span>  Delete </button>';
                 }
             },
         ],
