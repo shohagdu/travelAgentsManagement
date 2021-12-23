@@ -246,10 +246,12 @@ class SaleController extends Controller
             $transaction_save = $transaction_data->save();
         }
 
+        $saleEncryptId = Crypt::encrypt($sale_id);
+
         return response()->json([
             'status' => $sale_save ? 'success' : 'error',
             'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
-            'data'   => $sale_id,
+            'data'   => $saleEncryptId,
         ]);
     }
 

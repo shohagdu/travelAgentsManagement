@@ -80,8 +80,15 @@ class Sale extends Model
             $query->Where("SALE.agent_id", "=", $receive['agent_id']);
         }
 
-        $data['data'] = $query->get();
-
+        $info = $query->get();
+        $allData = [];
+        if (!empty($info)) {
+            foreach ($info as $key => $row) {
+                $allData[$key] = $row;
+                $allData[$key]->encryptedID = Crypt::encrypt($row->id);
+            }
+        }
+        $data['data'] = $allData;
         return $data;
     }
 

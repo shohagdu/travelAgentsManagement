@@ -16,7 +16,7 @@ class AirlineSetupController extends Controller
      */
     public function index()
     {
-        $airline_info = AirlineSetup::all();
+        $airline_info = AirlineSetup::orderBy('id', 'DESC')->get();
 
         return view('airline_setup.airline_setup_list', compact('airline_info'));
     }
