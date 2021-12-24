@@ -103,22 +103,33 @@ class ReportController extends Controller
         $param['agent_id']    = (!empty($request->agent_id) ? $request->agent_id : '');
         $param['from_date']   = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : '');
         $param['to_date']     = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : '');
+
         $agent_debit_balance  = $this->transaction_model->AgentDebitBalance($param);
         $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
         $balance              = ($agent_debit_balance- $agent_credit_balance);
+
         $data                 = $this->transaction_model->searchAgentStatement($param);
-        
+//        dd($data);
         return view('statement_report.agentStatementAction', ['record'=>$data, 'balance' => $balance, 'param_info' => $param]);
     }
 
-    public function agent_date_wise_statement_pdf($agent_id, $from_date, $to_date) {
-        $organization_info = OrganizationSetup::first();
-        $agent_info        = AgentRecord::find($agent_id);  
-        $param = [
-            'agent_id'  => $agent_id,
-            'from_date' => $from_date,
-            'to_date'   => $to_date,
-          ];
+    public function agent_date_wise_statement_pdf($agent_id, $from_date=NULL, $to_date=NULL) {
+        $organization_info  = OrganizationSetup::first();
+        $agent_info         = AgentRecord::find($agent_id);
+        $from_date          =(($from_date=='0000-00-00')?'':$from_date);
+        $to_date          =(($to_date=='0000-00-00')?'':$to_date);
+
+        if(!empty($agent_id)){
+            $param['agent_id']=$agent_id;
+        }else{
+            echo "<h1>Agent ID is required</h1>";exit;
+        }
+        if(!empty($from_date)){
+            $param['from_date']=$from_date;
+        }
+        if(!empty($to_date)){
+            $param['to_date']=$to_date;
+        }
         $agent_debit_balance  = $this->transaction_model->AgentDebitBalance($param);
         $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
         $balance              = ($agent_debit_balance- $agent_credit_balance);
@@ -137,7 +148,7 @@ class ReportController extends Controller
 
             $mpdf->SetHTMLHeader($page_footer_html);
 
-            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y')."<br/>Software Developed by &copy; Step Technology, www.steptechbd.com, ";
+            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y');
             $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
 
             $margin_left   = 5;
