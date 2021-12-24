@@ -285,8 +285,14 @@ function currencyList(){
         "YER" => "Yemeni Rial",
         "ZMK" => "Zambian Kwacha"
     );
-    
+
     return $currency_list;
 }
-
+function getTransType(){
+     return [
+         1=>'Sales',
+         2=>'Credit Bill',
+         3=>'Debit Bill'
+     ];
+}
 ?>

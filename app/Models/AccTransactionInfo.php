@@ -234,16 +234,19 @@ class AccTransactionInfo extends Model
                 $join->on('AGRD2.id', '=', 'TRNS.debit_acc');
 
             })
-            ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2')
-            ->orderBy('id', 'DESC');
+
+            ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_type','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2')
+            ->orderBy('trans_date', 'ASC')->orderBy('id', 'ASC');
 
         if($receive['agent_id'] !=''){
-            $query->Where("TRNS.credit_acc", "=", $receive['agent_id'])
-                ->orWhere("TRNS.debit_acc", "=", $receive['agent_id']);
+            $query->Where(function ($query) use ($receive) {
+                $query->orWhere('TRNS.credit_acc', '=' , $receive['agent_id']);
+                $query->orWhere('TRNS.debit_acc', '=' , $receive['agent_id']);
+            });
         }
-        if($receive['from_date'] !='' && $receive['to_date'] !=''){
+        if(!empty($receive['from_date']) && !empty($receive['to_date'])){
             $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['to_date']]);
-            
+
         }
         // elseif($receive['from_date'] !='' && $receive['to_date'] ==''){
         //     $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['from_date']]);
@@ -256,17 +259,20 @@ class AccTransactionInfo extends Model
     // debit balance
     public function AgentDebitBalance($receive)
     {
-        return $query  = DB::table('acc_transaction_infos')->select('debit_amount')
-                        ->where('debit_acc', $receive['agent_id'])
-                        ->where("trans_date", ">=", $receive['from_date'])
-                        ->sum('debit_amount');         
+         $query  = DB::table('acc_transaction_infos')->select('debit_amount')
+                        ->where('debit_acc', $receive['agent_id']);
+         if(!empty($receive['from_date'])) {
+             $query->where("trans_date", "<", $receive['from_date']);
+         }
+         return $query->sum('debit_amount');
     }
     // credit balance
     public function AgentCreditBalance($receive)
     {
-        return $query  = DB::table('acc_transaction_infos')->select('debit_amount')
-                        ->where('credit_acc', $receive['agent_id'])
-                        ->where("trans_date", ">=", $receive['from_date'])
-                        ->sum('credit_amount');         
+             $query  = DB::table('acc_transaction_infos')->select('credit_amount')->where('credit_acc', $receive['agent_id']);
+             if(!empty($receive['from_date'])) {
+                 $query->where("trans_date", "<", $receive['from_date']);
+             }
+             return $query->sum('credit_amount');
     }
 }
