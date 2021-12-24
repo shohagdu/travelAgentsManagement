@@ -10,9 +10,10 @@
                 <div class="row">
 
                     <div class="col-md-3 " >
-                        <table class="InvoiceLeftTextArea" style="width: 100%">
+                       
+                        <table class="InvoiceLeftTextArea" style="width: 100%; margin-top: 35px">
                             <tr>
-                                <td class=""><span class="InvoiceName"> {{ (!empty($sale_invoice_information[0]->name)?ucwords($sale_invoice_information[0]->name):'')}} </span></td>
+                                <td class=""><span class="InvoiceName"> {{ ucwords($sale_invoice_information[0]->agent_name)}} </span></td>
                             </tr>
                             <tr>
                                 <td><span class="Invoiceaddress"> {{$sale_invoice_information[0]->address}} </span></td>
@@ -34,7 +35,8 @@
                         <div class="InvoiceNameText"> Invoice </div>
                     </div>
                     <div class="col-md-3 InvicerhtHeader">
-                         <a href="{{ url('salesInvoicePdf/'.(!empty($sale_invoice_information[0]->saleId)?$sale_invoice_information[0]->saleId:'')) }}" target="_blank"
+                        @php  $saleEncryptId = Crypt::encrypt($sale_invoice_information[0]->saleId);  @endphp
+                         <a href="{{ url('salesInvoicePdf/'.(!empty($saleEncryptId)? $saleEncryptId:'')) }}" target="_blank"
                                 class="btn btn-warning btn-md topPrintbarbutton noSectionToPrint"><i
                                 class="mdi  mdi-printer"></i>
                              Print
@@ -124,7 +126,7 @@
 
                     </div>
                     <div class="col-md-8 pt-2">
-                        @php echo  (!empty($sale_invoice_information[0]->remarks)?"<b>Remarks:</b> ".$sale_invoice_information[0]->remarks:'') @endphp
+                        @php echo  (!empty($sale_invoice_information[0]->saleRemarks)?"<b>Remarks : </b> ".$sale_invoice_information[0]->saleRemarks:'') @endphp
                     </div>
                     <div class="col-md-4">
                         <table class="InvoiceTotalFotaerTbl">
@@ -159,9 +161,9 @@
                         <div class="text-center">{{ (!empty($sale_invoice_information[0]->userName)?$sale_invoice_information[0]->userName:'') }}</div>
                         <div class="InviceFooterSign"><b>Issue By</b>  </div>
                     </div>
-                    <div class="col-md-12 text-center copyrightInvoice">
+                    {{-- <div class="col-md-12 text-center copyrightInvoice">
                         Software Developed by &copy; <a href="https://steptechbd.com" target="_blank">Step Technology.</a> www.steptechbd.com
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

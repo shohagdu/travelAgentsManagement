@@ -11,7 +11,7 @@ class SaleDetail extends Model
     use HasFactory;
     public function sale_invoice_information($id){
         $sale_query = DB::table("sale_details AS SALED")
-                    ->select('SALED.*','SALE.id as saleId','SALE.invoice_no','AGNT.name as agent_name','AGNT.address', 'AGNT.mobile','AGNT.email','AIRS.airline_name as airline_name', 'SALE.discount as invoice_discount','SALE.agent_id as agent_id','USER.name as userName')
+                    ->select('SALED.*','SALE.id as saleId','SALE.invoice_no','AGNT.name as agent_name','AGNT.address', 'AGNT.mobile','AGNT.email','AIRS.airline_name as airline_name', 'SALE.discount as invoice_discount','SALE.agent_id as agent_id', 'SALE.remarks as saleRemarks','USER.name as userName')
                     ->leftJoin('airline_setups AS AIRS', function($join){
                             $join->on('AIRS.id', '=', 'SALED.airline_id');
                     })

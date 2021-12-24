@@ -54,11 +54,11 @@
                   ><i class="mdi mdi-note-outline"></i
                   ><span class="hide-menu"> Debit Bill  </span></a>
               </li>
-              <li class="sidebar-item">
+              {{-- <li class="sidebar-item">
                 <a href="{{ route('bill-refund')}}" class="sidebar-link"
                   ><i class="mdi mdi-note-outline"></i
                   ><span class="hide-menu"> Refund Bill </span></a>
-              </li>
+              </li> --}}
             </ul>
           </li>
           <li class="sidebar-item">

@@ -27,62 +27,55 @@
             <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
               <a class="text-white" href="{{ route('today-sale-balance-view') }}">
-              <div class="card card-hover">
+              <div class="card">
                 <div class="box bg-success text-center">
                   <h1 class="font-light text-white">
                     {{$today_sale_balance}}
                   </h1>
                   <h6 class="text-white"> Today Sale Balance</h6>
+                  <a href="{{ route('today-sale-balance-view') }}"  class="btn btn-xs btn-warning text-white"> <i class="mdi mdi-view-day"></i> View </a>
                 </div>
               </div>
               </a>
             </div>
              <!-- Column -->
              <div class="col-md-6 col-lg-3 col-xlg-3">
-              <a class="text-white" href="{{ route('today-credit-balance-view') }}">
-              <div class="card card-hover">
+              <a class="text-white">
+              <div class="card">
                 <div class="box bg-info text-center">
                   <h1 class="font-light text-white">
                     {{$today_credit_balance}}
                   </h1>
                   <h6 class="text-white">Today Credit Balance </h6>
+                  <a href="{{ route('today-credit-balance-view') }}"  class="btn btn-xs btn-warning text-white"> <i class="mdi mdi-view-day"></i> View </a>
                 </div>
               </div>
               </a>
             </div>
             <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
-              <a class="text-white" href="{{ route('today-debit-balance-view') }}">
-              <div class="card card-hover">
+              <a class="text-white">
+              <div class="card">
                 <div class="box bg-primary text-center">
                   <h1 class="font-light text-white">
                     {{$today_debit_balance}}
                   </h1>
                   <h6 class="text-white"> Today Debit Balance </h6>
+                  <a href="{{ route('today-debit-balance-view') }}"  class="btn btn-xs btn-warning text-white"> <i class="mdi mdi-view-day"></i> View </a>
                 </div>
               </div>
               </a>
             </div>
             <!-- Column -->
-           <!-- <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box todaySaleShow text-center">
-                  <h1 class="font-light text-white">
-                    
-                  </h1>
-                  <h6 class="text-white">Today Credit Balance </h6>
-                </div>
-              </div>
-            </div>-->
-            <!-- Column -->
             <div class="col-md-6 col-lg-3 col-xlg-3">
-              <a class="text-white" href="{{ route('agent-list') }}">
-              <div class="card card-hover">
+              <a class="text-white" >
+              <div class="card">
                 <div class="box bg-secondary text-center">
                   <h1 class="font-light text-white">
                     {{$total_agent}}
                   </h1>
                   <h6 class="text-white">Total Agent</h6>
+                  <a href="{{ route('agent-list') }}"  class="btn btn-xs btn-warning text-white"> <i class="mdi mdi-view-day"></i> View </a>
                 </div>
               </div>
               </a>

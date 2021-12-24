@@ -100,12 +100,10 @@ class SaleController extends Controller
         $total_count = DB::table('sales')
                            ->where('is_active','=',1 )
                            ->count();
-        $serial    = $total_count+1;
-        $invoice_key = $this->invoiceGenerator($serial);
-        $year = date('Y');
-
-
-        $invoice_no = $year.$invoice_key;
+        $serial       = $total_count+1;
+        $invoice_key  = $this->invoiceGenerator($serial);
+        $dayMonthYear = date('dmY');
+        $invoice_no   = $dayMonthYear.$invoice_key;
 
         $sale_category = $request->sale_category_id;
 
@@ -119,6 +117,7 @@ class SaleController extends Controller
                 'sale_amount'      => $request->net_total,
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
+                'remarks'          => $request->remarks,
                 "is_active"        => 1,
                 'created_by'       => Auth::user()->id,
                 'created_ip'       => request()->ip(),
@@ -572,7 +571,8 @@ class SaleController extends Controller
         ]);
 
     }
-    public function salesInvoicePdf($id) {
+    public function salesInvoicePdf($encodedID) {
+        $id=($encodedID?crypt::decrypt($encodedID):'');
 
         $organization_info        = OrganizationSetup::first();
         $sale_invoice_information = $this->sale_details_model->sale_invoice_information($id);
@@ -590,7 +590,7 @@ class SaleController extends Controller
 
             $mpdf->SetHTMLHeader($page_footer_html);
 
-            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y')."<br/>Software Developed by &copy; Step Technology, www.steptechbd.com, ";
+            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y')."<br/>";
             $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
         }];
 
@@ -600,7 +600,7 @@ class SaleController extends Controller
 
     }
     // Invoice Generate  key
-    public function invoiceGenerator($serial_no, $length = 5)
+    public function invoiceGenerator($serial_no, $length = 4)
     {
         return str_repeat("0", ($length - strlen($serial_no))) . $serial_no;
     }

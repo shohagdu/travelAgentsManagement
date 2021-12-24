@@ -10,7 +10,7 @@
         <td class="width-40" >
             <table class="margin-top-60px width-100" >
                 <tr>
-                    <td class=""> {{ (!empty($sale_invoice_information[0]->name)?ucwords($sale_invoice_information[0]->name):'')}} </td>
+                    <td class=""> {{ ucwords($sale_invoice_information[0]->agent_name)}} </td>
                 </tr>
                 <tr>
                     <td> {{$sale_invoice_information[0]->address}} </td>
@@ -27,7 +27,7 @@
             <table class="custom-table width-100 margin-top-60px"   >
                 <tr>
                     <th  class="text-right width-40"> Inv. No </th>
-                    <th>   {{ $sale_invoice_information[0]->saleId}}  </th>
+                    <th>   {{ $sale_invoice_information[0]->invoice_no}}  </th>
                 </tr>
                 <tr>
                     <th class="text-right"> Inv. Date </th>
@@ -106,6 +106,7 @@
         </table>
     @endif
 </div>
+@php echo  (!empty($sale_invoice_information[0]->saleRemarks)?"<b>Remarks : </b> ".$sale_invoice_information[0]->saleRemarks:'') @endphp
 <table class="width-100 margin-top-10px">
     <tr>
         <td class="width-60 vertical-align-top"> @php echo  (!empty($sale_invoice_information[0]->remarks)?"<b>Remarks:</b> ".$sale_invoice_information[0]->remarks:'') @endphp</td>

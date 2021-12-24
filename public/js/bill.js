@@ -130,7 +130,9 @@ function AgentBillPaymentData(){
             console.log(response.data);
             //$("#dueAmount").val(response.data);
             $('#AgentNameTxt').html(response.data.agent_name.name);
-            $('#Balance').html(response.data.agent_credit);
+            $('#AgentAddressTxt').html(response.data.agent_name.address);
+            $('#AgentCompanyTxt').html(response.data.agent_name.company_name);
+           // $('#Balance').html(response.data.agent_credit);
             $('#dueAmount').html(response.data.due_balance);
         }
     })
