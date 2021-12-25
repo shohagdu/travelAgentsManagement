@@ -487,8 +487,8 @@ class SaleController extends Controller
         }
         return response()->json([
             'status' => $sale_save ? 'success' : 'error',
-            'msg'    => $sale_save ? 'Successfully Sale' : 'Someting went wrong',
-            'data'   => $id,
+            'msg'    => $sale_save ? 'Successfully Sale' : 'Something went wrong',
+            'data'   => ($id?crypt::encrypt($id):'')
         ]);
 
     }
