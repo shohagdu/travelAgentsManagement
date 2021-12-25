@@ -98,8 +98,8 @@
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
-        <div class="container-fluid">
-        
+        <div class="container-fluid" style="min-height: 500px">
+
          @yield('main_content')
 
         </div>

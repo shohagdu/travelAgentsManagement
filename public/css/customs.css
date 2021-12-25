@@ -237,3 +237,14 @@ input::-webkit-input-placeholder {
   .BillCreditHeadTxt{
       border: none;
   }
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #d0d0d0;
+    /*color: white;*/
+    text-align: right;
+    /*padding-bottom: 10px;*/
+    /*font-size: 11px;*/
+}
