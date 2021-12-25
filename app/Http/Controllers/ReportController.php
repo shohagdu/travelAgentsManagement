@@ -104,9 +104,13 @@ class ReportController extends Controller
         $param['from_date']   = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : '');
         $param['to_date']     = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : '');
 
-        $agent_debit_balance  = $this->transaction_model->AgentDebitBalance($param);
-        $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
-        $balance              = ($agent_debit_balance- $agent_credit_balance);
+        if(!empty($param['from_date'])) {
+            $agent_debit_balance = $this->transaction_model->AgentDebitBalance($param);
+            $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
+            $balance = ($agent_debit_balance - $agent_credit_balance);
+        }else{
+            $balance=0;
+        }
 
         $data                 = $this->transaction_model->searchAgentStatement($param);
 //        dd($data);
@@ -130,9 +134,14 @@ class ReportController extends Controller
         if(!empty($to_date)){
             $param['to_date']=$to_date;
         }
-        $agent_debit_balance  = $this->transaction_model->AgentDebitBalance($param);
-        $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
-        $balance              = ($agent_debit_balance- $agent_credit_balance);
+        if(!empty($from_date)) {
+            $agent_debit_balance = $this->transaction_model->AgentDebitBalance($param);
+            $agent_credit_balance = $this->transaction_model->AgentCreditBalance($param);
+            $balance = ($agent_debit_balance - $agent_credit_balance);
+        }else{
+            $balance=0;
+        }
+
         $data                 = $this->transaction_model->searchAgentStatement($param);
 
         $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {

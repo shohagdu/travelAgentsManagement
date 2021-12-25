@@ -34,11 +34,11 @@
     <thead>
         <tr>
             <th class="width-4">SL</th>
-            <th>Date</th>
+            <th class="width-12">Date</th>
             <th>Transaction Details</th>
-            <th class="text-right paddingRight5px">Debit</th>
-            <th class="text-right paddingRight5px">Credit</th>
-            <th class="text-right paddingRight5px">Balance</th>
+            <th class="text-right paddingRight5px  width-12">Debit</th>
+            <th class="text-right paddingRight5px width-12">Credit</th>
+            <th class="text-right paddingRight5px  width-12">Balance</th>
         </tr>
     </thead>
     <tr>
@@ -54,7 +54,13 @@
             <tr>
                 <td>{{ $i++ }}</td>
                 <td>{{ (!empty($row->trans_date)?date('d M, Y',strtotime($row->trans_date)):'') }}</td>
-                <td>{{ (!empty($getTransType[$row->trans_type])?$getTransType[$row->trans_type]:'') }}{{ (!empty($row->remarks)?" <> ".$row->remarks:'') }}</td>
+                <td>
+                    {{ (!empty($getTransType[$row->trans_type])?$getTransType[$row->trans_type]:'') }}
+                    {{ (!empty($row->remarks)?" >> ".$row->remarks:'') }}
+                    {{ (!empty($row->invoice_no)?" >> Inv. # ".$row->invoice_no:'') }}
+                    {{ (!empty($row->receipt_cheque_no)?" >> Cheque # ".$row->receipt_cheque_no:'') }}
+                    {{ (!empty($row->reference_number)?" >> Ref. No# ".$row->reference_number:'') }}
+                </td>
                 <td class="text-right paddingRight5px">{{ (!empty($row->debit_amount)?$row->debit_amount:'') }}</td>
                 <td class="text-right paddingRight5px">
                     {{ (!empty($row->credit_amount)?$row->credit_amount:'') }}

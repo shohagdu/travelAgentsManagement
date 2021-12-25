@@ -54,7 +54,7 @@ class AgentRecord extends Model
     public function transaction_info_data($id){
 
         $trans_query = DB::table("acc_transaction_infos AS TRNS")
-                     ->select('TRNS.*', 'TRNS.debit_amount','TRNS.credit_amount','ACC.name as account_name','sales.invoice_no','sales.remarks','sales.remarks as invRemarks')
+                     ->select('TRNS.*', 'TRNS.debit_amount','TRNS.credit_amount','ACC.name as account_name','sales.invoice_no','sales.remarks as invRemarks')
                      ->leftJoin('banks AS ACC', function($join){
                         $join->on('ACC.id', '=', 'TRNS.debit_acc');
                      })

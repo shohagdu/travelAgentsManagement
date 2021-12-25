@@ -38,10 +38,6 @@
                             <th> Address </th>
                             <td>  {{$agent_info->address}}</td>
                         </tr>
-                        <tr>
-                            <th> Duration </th>
-                            <td>  {{date('d-m-Y', strtotime($frist_date))}} to {{date('d-m-Y', strtotime($last_date))}}  </td>
-                        </tr>
                     </table>
                     <table class="AgentTranactionStatementListTbl table table-bordered">
                         <tr>
@@ -60,7 +56,11 @@
                                 <td>
                                     @if($item->trans_type==1) Sale @elseif($item->trans_type ==2) Credit Bill @elseif($item->trans_type ==3) Debit Bill @endif
                                     @if($item->account_name !='') ({{$item->account_name}}) @endif
-                                     {{ (!empty($item->remarks)?" >> ".$item->remarks:'') }} {{ (!empty($item->invoice_no)?" >> ".$item->invoice_no:'') }}
+                                        {{ (!empty($item->remarks)?" >> ".$item->remarks:'') }}
+
+                                        {{ (!empty($item->invoice_no)?" >> Inv. # ".$item->invoice_no:'') }}
+                                        {{ (!empty($item->receipt_cheque_no)?" >> Cheque # ".$item->receipt_cheque_no:'') }}
+                                        {{ (!empty($item->reference_number)?" >> Ref. No# ".$item->reference_number:'') }}
                                 </td>
                                 <td class="text-end">
                                     <?php

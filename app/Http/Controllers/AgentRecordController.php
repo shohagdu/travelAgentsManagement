@@ -220,17 +220,8 @@ class AgentRecordController extends Controller
         $organization_info = OrganizationSetup::first();
         $agent_info        = AgentRecord::find($id);
         $transaction_info  = $this->agent_model->transaction_info_data($id);
-
-        // echo "<pre>";
-        // print_r($transaction_info);exit;
-
-        $totalTran=  count($transaction_info);
-        $frist_date = $totalTran> 0 ?  $transaction_info[0]->trans_date : date('d-m-Y') ;
-        $last_date  = $totalTran> 0 ?  $transaction_info[$totalTran-1]->trans_date : date('d-m-Y');
-
-       // echo $frist_date; exit;
-
-
+        $frist_date =  '-' ;
+        $last_date  =  '-';
         return view('agent.agent_statement', compact('organization_info', 'agent_info', 'transaction_info', 'frist_date', 'last_date'));
     }
 

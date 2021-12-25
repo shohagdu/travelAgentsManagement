@@ -234,8 +234,11 @@ class AccTransactionInfo extends Model
                 $join->on('AGRD2.id', '=', 'TRNS.debit_acc');
 
             })
+            ->leftJoin('sales', function($join){
+                $join->on('sales.id', '=', 'TRNS.sales_id');
+            })
 
-            ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_type','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2')
+            ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_type','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2','TRNS.reference_number','TRNS.remarks','TRNS.receipt_cheque_no','sales.invoice_no')
             ->orderBy('trans_date', 'ASC')->orderBy('id', 'ASC');
 
         if($receive['agent_id'] !=''){

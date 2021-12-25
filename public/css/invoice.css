@@ -93,7 +93,13 @@
 }
 .width-10{
     width: 10% !important;
+}.width-15{
+    width: 15% !important;
 }
+ .width-12{
+    width: 12% !important;
+}
+
 .width-4{
     width: 4% !important;
 }
