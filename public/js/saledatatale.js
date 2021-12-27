@@ -75,6 +75,10 @@ function get_sale_info_list() {
                 }
             },
             {
+            	title: "Remarks",
+                data: "remarks"
+            },
+            {
                 title: "Net Total",
                 data: "sale_amount"
             },
@@ -178,6 +182,10 @@ function get_today_sale_info_list() {
                         return 'Others';
                     }
                 }
+            },
+            {
+            	title: "Remarks",
+                data: "remarks"
             },
             {
                 title: "Net Total",

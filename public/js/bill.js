@@ -85,7 +85,7 @@ function get_bill_collection_info_list() {
                 data: "credit_amount"
             },
             {
-                title: "Transaction date",
+                title: "Payment date",
                 data: "trans_date"
             },
             {
@@ -172,9 +172,10 @@ $(document).on("submit","#BillCollectionForm",function (e){
     var target  = $("#target").val();
     var agent   = $("#AgentId").val();
     var payment = $("#payment_amount").val();
+    var payment_date = $("#payment_date").val();
     $('#BillCollectionSaveBtn').attr('disabled',true);
 
-    if(agent !='' && payment> 0){
+    if(agent !='' && payment> 0 && payment_date !=''){
         e.preventDefault();
             $.ajax({
                 url:target +"bill-collection-save",
@@ -316,7 +317,7 @@ function get_debit_bill_info_list() {
                 data: "debit_amount"
             },
             {
-                title: "Transaction date",
+                title: "Payment date",
                 data: "trans_date"
             },
             {
@@ -352,9 +353,10 @@ $(document).on("submit","#DebitBillCollectionForm",function (e){
     var target  = $("#target").val();
     var agent   = $("#AgentId").val();
     var payment = $("#payment_amount").val();
+    var payment_date = $("#payment_date").val();
     $('#BillCollectionSaveBtn').attr('disabled',true);
 
-    if(agent !='' && payment> 0){
+    if(agent !='' && payment> 0 && payment_date != ''){
         e.preventDefault();
             $.ajax({
                 url:target +"debit-bill-save",
@@ -493,7 +495,7 @@ function get_bill_refund_info_list() {
                 data: "credit_amount"
             },
             {
-                title: "Transaction date",
+                title: "Payment date",
                 data: "trans_date"
             },
             {
@@ -572,6 +574,8 @@ function AgentBillDebitPaymentData(){
         success:function(response){
             //console.log(response.data);
             $('#AgentNameTxt').html(response.data.agent_name.name);
+            $('#AgentAddressTxt').html(response.data.agent_name.address);
+            $('#AgentCompanyTxt').html(response.data.agent_name.company_name);
             $('#Balance').html(response.data.agent_debit);
             $('#dueAmount').html(response.data.due_balance);
         }

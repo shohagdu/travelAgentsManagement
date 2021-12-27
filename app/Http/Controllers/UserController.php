@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Session;
-
 use DB;
 class UserController extends Controller
 {
@@ -139,5 +138,44 @@ class UserController extends Controller
         }else{
             return redirect()->route('user-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
+    }
+    public function myProfile(){
+        $id = Auth::user()->id;
+        $user_info = User::findOrFail($id);
+        return view('user.user_profile' , compact('user_info'));
+    }
+    public function changePassword(){
+        return view('user.user_password_change');
+    }
+
+    public function change_password_stote(Request $request){
+        $id = Auth::user()->id;
+        $user_info = User::findOrFail($id);
+
+        if (Hash::check($request->old_password, $user_info->password)) { 
+
+            $validated = $request->validate([
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+    
+            $user_data =  [
+                'password'  => Hash::make($request['password']),
+                'updated_by'=> Auth::user()->id,
+                'updated_ip'=> request()->ip(),
+                'updated_at'=> date('Y-m-d H:i:s'),
+            ];
+            $save_user = DB::table('users')->where('id', $id)->update($user_data);
+
+            if($save_user){
+                return redirect()->route('myProfile')->with('flash.message', 'Password Change Sucessfully')->with('flash.class', 'success');
+            }else{
+                return redirect()->route('changePassword')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+            }
+
+        }else{
+           
+            return redirect()->route('changePassword')->with('flash.message', 'Password does not match. Please Try Again!')->with('flash.class', 'danger');
+        }
+
     }
 }

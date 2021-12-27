@@ -63,11 +63,21 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>
+        <table style="width: 80%; margin-left: 100px; font-weight: 600">
+          <tr>
+            <td> Name :   <span id="AgentNameTxt"> </span> </td>
+            <td> Due Amount  : <span id="dueAmount"> </span></td>
+          </tr>
+          <tr>
+            <td> Address : <span id="AgentAddressTxt"> </span>  </td>
+            <td> Company Name   : <span id="AgentCompanyTxt"> </span>  </td>
+          </tr>
+        </table><br>
+        {{-- <p>
           <span> Name :</span><span id="AgentNameTxt"></span><br>
           <span> Balance : </span> <span id="Balance"></span> <br>
           <span> Due Amount : </span>  <span id="dueAmount"><br>
-         </p>
+         </p> --}}
         <div class="form-group row">
           <label for="agent_id" class="col-sm-3 text-end control-label col-form-label"> Agent Name</label>
           <div class="col-sm-9">
@@ -102,7 +112,7 @@
             <input type="text" name="payment_amount" id="payment_amount"  onkeyup="BillCurrentDue()" class="form-control" autocomplete="off" placeholder="0.00">
           </div>
         </div>
-        <div class="form-group row" id="BankNameId">
+        {{-- <div class="form-group row" id="BankNameId">
           <label for="bank_name" class="col-sm-3 text-end control-label col-form-label"> Account Name</label>
           <div class="col-sm-9">
               <select id="bank_name" name="bank_name" class="form-control" >
@@ -118,12 +128,12 @@
           <div class="col-sm-9">
             <input type="text" name="receipt_cheque_no" id="receipt_cheque_no" class="form-control"  placeholder="Receipt/Cheque No">
           </div>
-        </div>
+        </div> --}}
         <div class="form-group row">
           <label for="payment_date" class="col-sm-3 text-end control-label col-form-label"> Payment Date </label>
           <div class="col-sm-9">
             <div class="input-group">
-              <input name="payment_date" type="text" class="form-control" id="payment_date" placeholder="dd-mm-yyyy"  autocomplete="off">
+              <input name="payment_date" type="text" class="form-control" id="payment_date"  placeholder="dd-mm-yyyy"  autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text h-100"><i class="mdi mdi-calendar"></i></span>
               </div>
@@ -131,7 +141,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="remarks" class="col-sm-3 text-end control-label col-form-label"> Comments </label>
+          <label for="remarks" class="col-sm-3 text-end control-label col-form-label"> Remarks </label>
           <div class="col-sm-9">
             <textarea name="remarks" id="remarks" class="form-control"></textarea> 
           </div>

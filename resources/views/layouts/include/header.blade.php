@@ -82,11 +82,11 @@
                         class="dropdown-menu dropdown-menu-end user-dd animated"
                         aria-labelledby="navbarDropdown"
                     >
-                        <a class="dropdown-item" href="{{asset('/myProfile')}}"
+                        <a class="dropdown-item" href="{{ route('myProfile')}}"
                         ><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a
                         >
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{asset('/changePassword')}}"
+                        <a class="dropdown-item" href="{{ route('changePassword')}}"
                         ><i class="mdi mdi-settings me-1 ms-1"></i> Change Password</a
                         >
                         <div class="dropdown-divider"></div>

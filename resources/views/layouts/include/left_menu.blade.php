@@ -165,24 +165,23 @@
                                 ><span class="hide-menu"> Add New User </span></a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{  asset('user-list')}}" class="sidebar-link"
+                            <a href="{{  route('user-list')}}" class="sidebar-link"
                             ><i class="mdi mdi-account-card-details"></i
-                                ><span class="hide-menu">View All User </span></a
-                            >
+                                ><span class="hide-menu">View All User </span></a>
                         </li>
                     </ul>
                 </li>
                 <li class="sidebar-item">
                     <a
                         class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{asset('/changePassword')}}"
+                        href="{{ route('changePassword')}}"
                     ><i class="mdi mdi-settings me-1 ms-1"></i
                         ><span class="hide-menu">Change Password</span></a>
                 </li>
                 <li class="sidebar-item">
                     <a
                         class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{asset('/logout')}}"
+                        href="{{ route('logout')}}"
                         onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
                     ><i class="fa fa-power-off me-1 ms-1"></i
@@ -191,8 +190,6 @@
                         @csrf
                     </form>
                 </li>
-
-
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

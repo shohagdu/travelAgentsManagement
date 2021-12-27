@@ -257,12 +257,12 @@ class BillCollectionController extends Controller
 
         // transaction data
         $transaction_data->debit_acc         = $request->agent_id;
-        $transaction_data->credit_acc        = isset($request->bank_name) ? $request->bank_name : NULL;
+        $transaction_data->credit_acc        =  NULL;
         $transaction_data->debit_amount      = $request->payment_amount;
         $transaction_data->towards_type      = $request->towards_type;
         $transaction_data->reference_number  = $request->reference_number;
         $transaction_data->credit_amount     = 0.00;
-        $transaction_data->receipt_cheque_no = $request->receipt_cheque_no;
+        $transaction_data->receipt_cheque_no = NULL;
         $transaction_data->remarks           = $request->remarks;
         $transaction_data->trans_type        = 3;
         $transaction_data->is_active         = 1;

@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('title', 'User List')
+@section('css')
+<link href="{{ asset('public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
+@endsection
 @section('main_content')
 <div class="row">
   <div class="col-12">
@@ -11,9 +14,9 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title mb-0">User List</h5>
+        <h5 class="card-title ">User List</h5>
       </div>
-      <table class="table">
+      <table id="zero_config" class="table table-bordered">
         <thead>
           <tr>
             <th scope="col">Sl</th>
@@ -39,8 +42,12 @@
           </tr>
           @endforeach
         </tbody>
-      </table>
+      </table><br><br>
     </div>
   </div>
 </div>
+@endsection
+@section('js')
+<script src="{{ asset('public/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<script src="{{ asset('public/js/global.js')}}"></script>
 @endsection

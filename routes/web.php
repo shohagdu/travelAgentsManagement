@@ -43,6 +43,9 @@ Route::post('/user-register', [UserController::class, "store"])->name('user-regi
 Route::get('/user-edit/{id}', [UserController::class, "edit"])->name('user-edit');
 Route::post('/user-update/{id}', [UserController::class, "update"])->name('user-update');
 Route::get('/user-delete/{id}', [UserController::class, "destroy"])->name('user-delete');
+Route::get('/myProfile', [UserController::class, "myProfile"])->name('myProfile');
+Route::get('/changePassword', [UserController::class, "changePassword"])->name('changePassword');
+Route::post('/change_password_stote', [UserController::class, "change_password_stote"])->name('change_password_stote');
 
 // Organization setup
 Route::get('/organization-setup', [OrganizationSetupController::class, "index"])->name('organization-setup');
