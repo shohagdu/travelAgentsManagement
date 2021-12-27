@@ -111,9 +111,7 @@ class ReportController extends Controller
         }else{
             $balance=0;
         }
-
         $data                 = $this->transaction_model->searchAgentStatement($param);
-//        dd($data);
         return view('statement_report.agentStatementAction', ['record'=>$data, 'balance' => $balance, 'param_info' => $param]);
     }
 
@@ -173,4 +171,22 @@ class ReportController extends Controller
 
         return $pdf->stream('AgentdateWiseStatement.pdf');
     }
+
+    public function dailyStatement()
+    {
+        $param['from_date']   = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-d'));
+        $param['to_date']     = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d'));
+
+        $data                 = $this->transaction_model->searchAgentStatement($param);
+        return view('dashboard_view.due_statement', ['record'=>$data, 'param_info' => $param]);
+    }
+    public function dailyStatementAction(Request $request)
+    {
+        $param['from_date']   = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-d'));
+        $param['to_date']     = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d'));
+
+        $data                 = $this->transaction_model->searchAgentStatement($param);
+        return view('dashboard_view.dailyStatementAction', ['record'=>$data, 'param_info' => $param]);
+    }
+
 }

@@ -241,7 +241,7 @@ class AccTransactionInfo extends Model
             ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_type','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2','TRNS.reference_number','TRNS.remarks','TRNS.receipt_cheque_no','sales.invoice_no')
             ->orderBy('trans_date', 'ASC')->orderBy('id', 'ASC');
 
-        if($receive['agent_id'] !=''){
+        if(!empty($receive['agent_id'])){
             $query->Where(function ($query) use ($receive) {
                 $query->orWhere('TRNS.credit_acc', '=' , $receive['agent_id']);
                 $query->orWhere('TRNS.debit_acc', '=' , $receive['agent_id']);
@@ -277,5 +277,49 @@ class AccTransactionInfo extends Model
                  $query->where("trans_date", "<", $receive['from_date']);
              }
              return $query->sum('credit_amount');
+    }
+    public function searchAgentStatementSum($receive)
+    {
+        $query = DB::table("acc_transaction_infos AS TRNS")
+            ->leftJoin('agent_records AS AGRD', function($join){
+                $join->on('AGRD.id', '=', 'TRNS.credit_acc');
+
+            })
+            ->leftJoin('agent_records AS AGRD2', function($join){
+                $join->on('AGRD2.id', '=', 'TRNS.debit_acc');
+
+            })
+            ->leftJoin('sales', function($join){
+                $join->on('sales.id', '=', 'TRNS.sales_id');
+            })
+
+            ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_type','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2','TRNS.reference_number','TRNS.remarks','TRNS.receipt_cheque_no','sales.invoice_no')
+            ->orderBy('trans_date', 'ASC')->orderBy('id', 'ASC');
+
+        if(!empty($receive['agent_id'])){
+            $query->Where(function ($query) use ($receive) {
+                $query->orWhere('TRNS.credit_acc', '=' , $receive['agent_id']);
+                $query->orWhere('TRNS.debit_acc', '=' , $receive['agent_id']);
+            });
+        }
+        if(!empty($receive['from_date']) && !empty($receive['to_date'])){
+            $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['to_date']]);
+
+        }
+        // elseif($receive['from_date'] !='' && $receive['to_date'] ==''){
+        //     $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['from_date']]);
+        // }
+
+        $data['data'] = $query->get();
+
+        return $data;
+    }
+    public function balanceSum($receive,$field)
+    {
+        $query  = DB::table('acc_transaction_infos')->select($field);
+        if(!empty($receive['from_date'])) {
+            $query->where("trans_date", "=", $receive['from_date']);
+        }
+        return $query->sum($field);
     }
 }

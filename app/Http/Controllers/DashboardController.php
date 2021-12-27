@@ -23,21 +23,32 @@ class DashboardController extends Controller
 	{
 	    $this->middleware('auth');
         $this->sale_model = new Sale();
+        $this->transaction_model = new AccTransactionInfo();
 	}
     public function index()
     {
+        $param['from_date']   = date('Y-m-d');
         $today_sale_balance   = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 1)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
         $today_credit_balance = DB::table('acc_transaction_infos')->select('credit_amount')->where('trans_type', 2)->where('trans_date', date('Y-m-d'))->sum('credit_amount');
         $today_debit_balance = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 3)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
-        $total_agent          = AgentRecord::where('is_active','=', 1)->count();   
+
+        $total_agent          = AgentRecord::where('is_active','=', 1)->count();
+
+
+        $todayTransaction='0.00';
+        $todayTransactionCr     = $this->transaction_model->balanceSum($param,'credit_amount');
+        $todayTransactionDr     = $this->transaction_model->balanceSum($param,'debit_amount');
+        $todayTransaction       = ($todayTransactionDr-$todayTransactionCr);
 
         return view('dashboard', compact(
                                 'today_sale_balance',
                                 'today_credit_balance',
                                 'today_debit_balance',
-                                'total_agent'));
+                                'total_agent',
+                                'todayTransaction'
+        ));
     }
-    
+
     // today sale balance
     public function today_sale_balance_view(){
         $today_sale_balance = $this->sale_model->today_sale_balance();
@@ -55,5 +66,11 @@ class DashboardController extends Controller
         $today_debit_balance = $this->sale_model->today_debit_balance();
 
         return view('dashboard_view.today_debit_balance_view', compact('today_debit_balance'));
+    }
+
+    // Due Statement
+    public function due_statement(){
+        $today_sale_balance = $this->sale_model->today_sale_balance();
+        return view('dashboard_view.due_statement', compact('today_sale_balance'));
     }
 }

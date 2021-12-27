@@ -36,6 +36,12 @@ Route::get('/dashboard', [DashboardController::class, "index"])->name('dashboard
 Route::get('/today-sale-balance-view', [DashboardController::class, "today_sale_balance_view"])->name('today-sale-balance-view');
 Route::get('/today-credit-balance-view', [DashboardController::class, "today_credit_balance_view"])->name('today-credit-balance-view');
 Route::get('/today-debit-balance-view', [DashboardController::class, "today_debit_balance_view"])->name('today-debit-balance-view');
+
+Route::get('/due_statement', [DashboardController::class, "due_statement"])->name('due_statement');
+Route::get('/dailyStatement', [ReportController::class, "dailyStatement"])->name('dailyStatement');
+
+
+
 // User area
 Route::get('/user-list', [UserController::class, "index"])->name('user-list');
 Route::get('/add-user', [UserController::class, "create"])->name('add-user');
@@ -163,4 +169,6 @@ Route::post('/get_account_report_data', [BankController::class, "get_account_rep
 Route::get('/salesInvoicePdf/{id}', [SaleController::class, "salesInvoicePdf"])->name('salesInvoicePdf');
 
 Route::post('/agentStatementAction', [ReportController::class, "agentStatementAction"])->name('agentStatementAction');
+Route::post('/dailyStatementAction', [ReportController::class, "dailyStatementAction"])->name('dailyStatementAction');
+
 

@@ -84,6 +84,24 @@
                 </div>
             </a>
         </div>
+
+        <!-- Column -->
+        <div class="col-md-6 col-lg-3 col-xlg-3">
+            <a class="text-white">
+                <div class="card">
+                    <div class="box bg-info text-center">
+                        <h1 class="font-light text-white">
+                            {{ (!empty($todayTransaction)?$todayTransaction:'0.00') }}
+                        </h1>
+                        <h6 class="text-white">Today Balance</h6>
+                        <a href="{{ route('dailyStatement') }}" class="btn btn-xs btn-warning text-white"> <i
+                                class="mdi mdi-view-day"></i> View </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
     </div>
 
 @endsection

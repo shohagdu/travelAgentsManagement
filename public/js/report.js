@@ -319,3 +319,24 @@ function searchAgentStatementBtn(){
     });
 
 }
+
+function search_statement_reports ()
+{
+    $(".showReports").html('')
+     $('#searchStatement').attr('disabled',true);
+    $.ajax({
+        url:"dailyStatementAction",
+        type:"POST",
+        data: $("#agentStatementForm").serialize(),
+        processData: false,
+        // contentType: false,
+        success:function(response){
+            $('#searchStatement').attr('disabled',false);
+            if (response != '') {
+                $(".showReports").html(response)
+            }else{
+                $("#showReports").html('')
+            }
+        }
+    });
+}
