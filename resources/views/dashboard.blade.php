@@ -100,7 +100,28 @@
                 </div>
             </a>
         </div>
-
+        <!-- Column -->
+        <div class="col-md-6 col-lg-3 col-xlg-3">
+            <a class="text-white">
+                <div class="card">
+                    <div class="box bg-info text-center">
+                        <h1 class="font-light text-white"> 0.00
+                           @php 
+                                // $today_sale_amount   =  !empty($today_sale_balance) ? $today_sale_balance : 0;
+                                // $today_debit_amount  =  !empty($today_debit_balance) ? $today_debit_balance : 0;
+                                // $today_credit_amount =  !empty($today_credit_balance) ? $today_credit_balance : 0;
+                                
+                                // $due_amount   = ($today_sale_amount + $today_debit_amount)  - $today_credit_amount;
+                                // echo $due_amount;
+                           @endphp
+                        </h1>
+                        <h6 class="text-white">Today Due</h6>
+                        <a href="{{ route('due_list_view') }}" class="btn btn-xs btn-warning text-white"> <i
+                                class="mdi mdi-view-day"></i> View </a>
+                    </div>
+                </div>
+            </a>
+        </div>
 
     </div>
 

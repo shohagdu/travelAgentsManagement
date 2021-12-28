@@ -22,6 +22,7 @@
             <th scope="col">Sl</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Picture</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -32,6 +33,13 @@
             <th scope="row">{{ $i++}}</th>
             <td>{{$item->name}}</td>
             <td>{{$item->email}}</td>
+            <td>
+              @if($item->picture != NULL)
+                <img width="50px" height="40px" src="{{ asset('public/assets/images/users')}}/{{ $item->picture}}">
+              @else
+              <img width="50px" height="40px"  src="{{ asset('public/assets/images/users/profile.jpg')}}">
+              @endif
+            </td>
             <td> <a href="{{ route('user-edit', Crypt::encrypt($item->id))}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
               Edit
             </a> 

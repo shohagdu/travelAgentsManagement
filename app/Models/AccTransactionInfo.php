@@ -35,8 +35,15 @@ class AccTransactionInfo extends Model
             $query->Where("TRNS.trans_date", "=", date('Y-m-d', strtotime($receive['trans_date'])));
         }
 
-        $data['data'] = $query->get();
-
+        $info = $query->get();
+        $allData = [];
+        if (!empty($info)) {
+            foreach ($info as $key => $row) {
+                $allData[$key] = $row;
+                $allData[$key]->paymentDate = date('d-m-Y', strtotime($row->trans_date));
+            }
+        }
+        $data['data'] = $allData;
         return $data;
     }
 
@@ -66,8 +73,15 @@ class AccTransactionInfo extends Model
             $query->Where("TRNS.trans_date", "=", date('Y-m-d', strtotime($receive['trans_date'])));
         }
 
-        $data['data'] = $query->get();
-
+        $info = $query->get();
+        $allData = [];
+        if (!empty($info)) {
+            foreach ($info as $key => $row) {
+                $allData[$key] = $row;
+                $allData[$key]->paymentDate = date('d-m-Y', strtotime($row->trans_date));
+            }
+        }
+        $data['data'] = $allData;
         return $data;
     }
 

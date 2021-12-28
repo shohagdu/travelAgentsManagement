@@ -18,9 +18,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
     public function index()
     {
-        $user_info = User::all();
+        $user_info = User::orderBy('id', 'DESC')->get();
 
         return view('user.user_list', compact('user_info'));
     }
@@ -49,9 +53,18 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+        if(isset($request->picture)){
+            $imageName = 'picture_'.time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('assets/images/users'), $imageName);
+            $pictureName = $imageName;
+          }else{
+            $pictureName = "profile.jpg";
+          }
+          
         $data=  User::create([
             'name'      => $request['name'],
             'email'     => $request['email'],
+            'picture'   => $pictureName,
             'password'  => Hash::make($request['password']),
             'created_by'=> Auth::user()->id,
             'created_ip'=> request()->ip(),
@@ -106,9 +119,18 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+        if(isset($request->picture)){
+            $imageName = 'picture_'.time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('assets/images/users'), $imageName);
+            $pictureName = $imageName;
+          }else{
+            $pictureName = $request->old_picture;
+          }
+          
         $user_data =  [
             'name'      => $request['name'],
             'email'     => $request['email'],
+            'picture'   => $pictureName,
             'password'  => Hash::make($request['password']),
             'updated_by'=> Auth::user()->id,
             'updated_ip'=> request()->ip(),

@@ -10,7 +10,7 @@
 
     <div class="col-md-8">
       <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('user-update', $user_info->id ) }}">
+        <form class="form-horizontal" method="POST" action="{{ route('user-update', $user_info->id ) }}" enctype="multipart/form-data">
                 @csrf
           <div class="card-body">
             <h4 class="card-title">Update User</h4>
@@ -46,6 +46,17 @@
                     @enderror
               </div>
             </div>
+            <div class="form-group row">
+              <label
+                for="picture"
+                class="col-sm-3 text-end control-label col-form-label"
+                >Picture </label>
+              <div class="col-sm-9">
+                <input id="picture" type="file" class="form-control" name="picture" value="{{ old('picture') }}">
+                <input name="old_picture" type="hidden" value="{{ $user_info->picture}}">
+              </div>
+            </div>
+            
             <div class="form-group row">
               <label
                 for="lname"

@@ -26,11 +26,11 @@
             </div>
 
           <label for="agent_id" class="col-sm-1 text-end control-label col-form-label"> Agent</label>
-          <div class="col-sm-2">
+          <div class="col-sm-3">
               <select name="agent_id" id="agent_id" class="select2 form-select shadow-none">
                   <option value=""> Select </option>
                   @foreach ($agent_info as $item )
-                  <option value="{{$item->id}}"> {{$item->name}} </option>
+                  <option value="{{$item->id}}"> {{$item->name}} ({{ $item->company_name}}) </option>
                   @endforeach
               </select>
           </div>

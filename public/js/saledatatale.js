@@ -6,6 +6,12 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+//  select2
+$( document ).ready(function() {
+    if ($(".select2").length > 0){
+        $(".select2").select2();
+    }
+});
 
 $(document).ready(function(){
     get_sale_info_list();

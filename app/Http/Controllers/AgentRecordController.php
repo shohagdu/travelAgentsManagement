@@ -7,6 +7,8 @@ use App\Models\AgentRecord;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\User;
+use App\Models\Sale;
+use App\Models\AccTransactionInfo;
 use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -205,14 +207,24 @@ class AgentRecordController extends Controller
      */
     public function destroy($id)
     {
-        $delete = AgentRecord::find($id);
-        $delete->delete();
 
-        if($delete){
-            return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully delated!')->with('flash.class', 'success');
+        $check_exists = Sale::where('agent_id', $id)->first();
+        $check_exists_trans = AccTransactionInfo::where('credit_acc', $id)->first();
+
+        if(!empty($check_exists) || !empty($check_exists_trans)){
+            return redirect()->route('agent-list')->with('flash.message', 'Please delete the sales table data first !')->with('flash.class', 'danger');
         }else{
-            return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+            $delete = AgentRecord::find($id);
+            $delete->delete();
+
+            if($delete){
+                return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully delated!')->with('flash.class', 'success');
+            }else{
+                return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+            }
+       
         }
+        
     }
 
     public function agent_statement($id){

@@ -120,7 +120,6 @@ class Sale extends Model
 
     public function today_debit_balance()
     {
-
         return $query = DB::table("acc_transaction_infos AS TRNS")
             ->select('TRNS.debit_amount', 'TRNS.trans_date', 'TRNS.remarks', 'AGRD.name as agent_name')
             ->join('agent_records AS AGRD', function ($join) {
@@ -130,5 +129,19 @@ class Sale extends Model
             ->where('TRNS.created_at', '>=', date('Y-m-d') . ' 00:00:00')
             ->orderBy('TRNS.id', 'DESC')
             ->get();
+    }
+
+    public function due_list_view(){
+        return $query  = DB::table("agent_records AS AGNT")
+                        ->select('TRNSDR.debit_amount','TRNSCR.credit_amount', 'AGNT.name as agent_name')
+                    ->join('acc_transaction_infos AS TRNSCR', function($join){
+                        $join->on('TRNSCR.credit_acc', '=', 'AGNT.id');
+                    })
+                    ->join('acc_transaction_infos AS TRNSDR', function($join){ 
+                        $join->on('TRNSDR.debit_acc', '=', 'AGNT.id');
+                    })
+                   // ->where('TRNS.trans_type', '!=',4)
+                    ->orderBy('AGNT.id', 'DESC')
+                    ->get();
     }
 }

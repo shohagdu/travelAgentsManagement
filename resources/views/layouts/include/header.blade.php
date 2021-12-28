@@ -47,8 +47,7 @@
                         class="nav-link sidebartoggler waves-effect waves-light"
                         href="javascript:void(0)"
                         data-sidebartype="mini-sidebar"
-                    ><i class="mdi mdi-menu font-24"></i
-                        ></a>
+                    ><i class="mdi mdi-menu font-24"></i></a>
                 </li>
             </ul>
             <!-- ============================================================== -->
@@ -56,45 +55,27 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav float-end">
                 <li class="nav-item dropdown">
-                    <a
-                        class="
-                nav-link
-                dropdown-toggle
-                text-muted
-                waves-effect waves-dark
-                pro-pic
-              "
-                        href="#"
-                        id="navbarDropdown"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
-                        <img
-                            src="public/assets/images/users/1.jpg"
-                            alt="user"
-                            class="rounded-circle"
-                            width="20"
-                        />
+                    <a class=" nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    @if(!empty(Auth::user()->picture))
+                        <img src="{{ asset('public/assets/images/users')}}/{{Auth::user()->picture}} " alt="user" class="rounded-circle" width="20"/>
+                    @else
+                    <img src="{{ asset('public/assets/images/users/1.jpg')}}" alt="user" class="rounded-circle" width="20"/>
+                    @endif
                        {{ (!empty(Auth::user()->name)?Auth::user()->name:'') }}
                     </a>
                     <ul
                         class="dropdown-menu dropdown-menu-end user-dd animated"
-                        aria-labelledby="navbarDropdown"
-                    >
+                        aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('myProfile')}}"
-                        ><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a
-                        >
+                        ><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('changePassword')}}"
-                        ><i class="mdi mdi-settings me-1 ms-1"></i> Change Password</a
-                        >
+                        ><i class="mdi mdi-settings me-1 ms-1"></i> Change Password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
-                        ><i class="fa fa-power-off me-1 ms-1"></i> {{ __('Logout') }}</a
-                        >
+                        ><i class="fa fa-power-off me-1 ms-1"></i> {{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>

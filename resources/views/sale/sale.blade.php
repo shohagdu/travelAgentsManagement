@@ -46,13 +46,13 @@
                                         class="select2 form-select shadow-none @error('agent_id') is-invalid @enderror">
                                     <option value=""> Select Agent</option>
                                     @foreach ($agent_info as $item)
-                                        <option value="{{ $item->id}}"> {{ $item->name}} </option>
+                                        <option value="{{ $item->id}}"> {{ $item->name}} ({{ $item->company_name}}) </option>
                                     @endforeach
                                 </select>
                                 @error('agent_id')
                                 <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                <strong>{{ $message }}</strong>
+                                 </span>
                                 @enderror
                             </div>
                         </div>

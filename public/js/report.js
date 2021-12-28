@@ -21,6 +21,12 @@ jQuery("#to_date").datepicker({
     todayHighlight: true,
     format: 'dd-mm-yyyy',
 });
+//  select2
+$( document ).ready(function() {
+    if ($(".select2").length > 0){
+        $(".select2").select2();
+    }
+});
 
 $(document).ready(function(){
     get_statement_report_info_list();

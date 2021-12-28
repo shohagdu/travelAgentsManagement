@@ -6,6 +6,12 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+//  select2
+$( document ).ready(function() {
+    if ($(".select2").length > 0){
+        $(".select2").select2();
+    }
+});
 
 function PaymentMethod(id){
     
@@ -86,7 +92,7 @@ function get_bill_collection_info_list() {
             },
             {
                 title: "Payment date",
-                data: "trans_date"
+                data: "paymentDate"
             },
             {
                 title: "Remarks",
@@ -318,7 +324,7 @@ function get_debit_bill_info_list() {
             },
             {
                 title: "Payment date",
-                data: "trans_date"
+                data: "paymentDate"
             },
             {
                 title: "Remarks",

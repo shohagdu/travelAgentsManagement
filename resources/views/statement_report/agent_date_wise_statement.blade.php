@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('title', 'Agent Date Wise Statement')
-
+@section('css')
+<link rel="stylesheet" type="text/css"href="{{ asset('public/assets/libs/select2/dist/css/select2.min.css')}}"/>
+@endsection
 @section('main_content')
     <div class="row">
         <div class="col-12">
@@ -20,12 +22,12 @@
                     <form method="post" id="agentStatementForm"  action="javascript:void(0)" >
                         <?php echo csrf_field(); ?>
                         <div class="form-group row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <label> Agent </label>
-                                <select name="agent_id" id="agent_id" class="form-control">
+                                <select name="agent_id" id="agent_id" class="select2 form-select shadow-none ">
                                     <option value=""> Select Agent</option>
                                     @foreach ($agent_info as $item )
-                                        <option value="{{$item->id}}"> {{$item->name}} </option>
+                                        <option value="{{$item->id}}"> {{$item->name}} ({{ $item->company_name}}) </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -71,6 +73,8 @@
 @endsection
 @section('js')
     <script src="{{ asset('public/assets/datatable/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/select2/dist/js/select2.min.js')}}"></script>
     <script src="{{ asset('public/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ asset('public/js/report.js')}}"></script>
 @endsection

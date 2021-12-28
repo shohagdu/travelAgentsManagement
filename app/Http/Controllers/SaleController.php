@@ -193,6 +193,7 @@ class SaleController extends Controller
                 'sale_amount'      => $request->net_total,
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
+                'remarks'          => $request->remarks,
                 "is_active"        => 1,
                 'created_by'       => Auth::user()->id,
                 'created_ip'       => request()->ip(),

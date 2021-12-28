@@ -10,19 +10,17 @@
 
     <div class="col-md-8">
       <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('user-register') }}">
+        <form class="form-horizontal" method="POST" action="{{ route('user-register') }}" enctype="multipart/form-data">
                 @csrf
           <div class="card-body">
-            <h4 class="card-title">Add User</h4>
+            <h4 class="card-title"> Add User</h4>
             <div class="form-group row">
               <label
                 for="fname"
                 class="col-sm-3 text-end control-label col-form-label"
-                > Name</label
-              >
+                > Name</label>
               <div class="col-sm-9">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name">
-
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -34,8 +32,7 @@
               <label
                 for="email"
                 class="col-sm-3 text-end control-label col-form-label"
-                >Email</label
-              >
+                >Email</label>
               <div class="col-sm-9">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
 
@@ -48,10 +45,18 @@
             </div>
             <div class="form-group row">
               <label
-                for="lname"
+                for="picture"
                 class="col-sm-3 text-end control-label col-form-label"
-                >Password</label
-              >
+                >Picture </label>
+              <div class="col-sm-9">
+                <input id="picture" type="file" class="form-control" name="picture" value="{{ old('picture') }}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                for="password"
+                class="col-sm-3 text-end control-label col-form-label"
+                >Password</label>
               <div class="col-sm-9">
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password">
 
@@ -64,10 +69,9 @@
             </div>
             <div class="form-group row">
               <label
-                for="email1"
+                for="password_confirmation"
                 class="col-sm-3 text-end control-label col-form-label"
-                >Confirm Password</label
-              >
+                >Confirm Password</label>
               <div class="col-sm-9">
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
               </div>
