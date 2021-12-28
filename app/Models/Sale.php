@@ -133,15 +133,27 @@ class Sale extends Model
 
     public function due_list_view(){
         return $query  = DB::table("agent_records AS AGNT")
-                        ->select('TRNSDR.debit_amount','TRNSCR.credit_amount', 'AGNT.name as agent_name')
-                    ->join('acc_transaction_infos AS TRNSCR', function($join){
-                        $join->on('TRNSCR.credit_acc', '=', 'AGNT.id');
-                    })
-                    ->join('acc_transaction_infos AS TRNSDR', function($join){ 
-                        $join->on('TRNSDR.debit_acc', '=', 'AGNT.id');
-                    })
-                   // ->where('TRNS.trans_type', '!=',4)
-                    ->orderBy('AGNT.id', 'DESC')
-                    ->get();
+                        ->select('AGNT.address as agent_address','AGNT.mobile as agent_mobile','AGNT.company_name as company_name','AGNT.name as agent_name','cr.creditAmnt as credit_amount','dr.debitAmnt as debit_amount')
+                        ->leftJoinSub(self::payableCreditSubQuery(), 'cr', function($pcs) {
+                        $pcs->on('cr.credit_acc', '=', 'AGNT.id');
+                        })
+                        ->leftJoinSub(self::getDebitAmnt(), 'dr', function($pcs) {
+                        $pcs->on('dr.debit_acc', '=', 'AGNT.id');
+                        })
+                        ->where('AGNT.is_active', '=',1)
+                        ->orderBy('AGNT.id', 'DESC')
+                        ->groupBy('AGNT.id')
+                        ->get();
     }
+    public static  function payableCreditSubQuery()
+    {
+        return DB::table("acc_transaction_infos")
+            ->selectRaw('SUM(credit_amount) AS creditAmnt,credit_acc')->where('is_active','=',1)->groupBy('credit_acc');
+    }
+    public static  function getDebitAmnt()
+    {
+        return DB::table("acc_transaction_infos as drTbl")
+            ->selectRaw('SUM(drTbl.debit_amount) AS debitAmnt,drTbl.debit_acc')->where('drTbl.is_active','=',1)->groupBy('debit_acc');
+    }
+
 }

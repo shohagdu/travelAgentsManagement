@@ -66,12 +66,12 @@ class DashboardController extends Controller
         return view('dashboard_view.today_debit_balance_view', compact('today_debit_balance'));
     }
 
-    // today due list 
+    // today due list
     public function due_list_view(){
         $due_list_view = $this->sale_model->due_list_view();
-        // echo "<pre>";
-        // print_r($due_list_view);
-        // exit;
+//         echo "<pre>";
+//         print_r($due_list_view);
+//         exit;
         return view('dashboard_view.due_list_view', compact('due_list_view'));
     }
 
