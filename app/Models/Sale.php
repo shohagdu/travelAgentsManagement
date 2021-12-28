@@ -155,5 +155,18 @@ class Sale extends Model
         return DB::table("acc_transaction_infos as drTbl")
             ->selectRaw('SUM(drTbl.debit_amount) AS debitAmnt,drTbl.debit_acc')->where('drTbl.is_active','=',1)->groupBy('debit_acc');
     }
+    public function currentDueAmount(){
+        return $query  = DB::table("agent_records AS AGNT")
+            ->selectRaw('SUM(dr.debitAmnt)-SUM(cr.creditAmnt) as dueAmount')
+            ->leftJoinSub(self::payableCreditSubQuery(), 'cr', function($pcs) {
+                $pcs->on('cr.credit_acc', '=', 'AGNT.id');
+            })
+            ->leftJoinSub(self::getDebitAmnt(), 'dr', function($pcs) {
+                $pcs->on('dr.debit_acc', '=', 'AGNT.id');
+            })
+            ->where('AGNT.is_active', '=',1)
+            ->orderBy('AGNT.id', 'DESC')
+            ->first();
+    }
 
 }

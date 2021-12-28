@@ -37,13 +37,15 @@ class DashboardController extends Controller
         $todayTransactionCr   = $this->transaction_model->balanceSum($param,'credit_amount');
         $todayTransactionDr   = $this->transaction_model->balanceSum($param,'debit_amount');
         $todayTransaction     = ($todayTransactionDr-$todayTransactionCr);
+        $currentDueAmount     = $this->sale_model->currentDueAmount();
 
         return view('dashboard', compact(
                                 'today_sale_balance',
                                 'today_credit_balance',
                                 'today_debit_balance',
                                 'total_agent',
-                                'todayTransaction'
+                                'todayTransaction',
+                                'currentDueAmount'
         ));
     }
 
