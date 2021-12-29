@@ -14,6 +14,10 @@ class SaleCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+	{
+	    $this->middleware('auth');
+	}
     public function index()
     {
         $category_info = SaleCategory::where('type','!=', 19)->where('type','!=', 20)->get();

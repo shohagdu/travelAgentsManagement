@@ -66,20 +66,14 @@
                     <ul
                         class="dropdown-menu dropdown-menu-end user-dd animated"
                         aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('myProfile')}}"
-                        ><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('changePassword')}}"
-                        ><i class="mdi mdi-settings me-1 ms-1"></i> Change Password</a>
-                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('myProfile')}}"><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a>
+                        <a class="dropdown-item" href="{{ route('changePassword')}}"><i class="mdi mdi-settings me-1 ms-1"></i> Change Password</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();"
-                        ><i class="fa fa-power-off me-1 ms-1"></i> {{ __('Logout') }}</a>
+                            document.getElementById('logout-form').submit();"><i class="fa fa-power-off me-1 ms-1"></i> {{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                        <div class="dropdown-divider"></div>
                     </ul>
                 </li>
             </ul>

@@ -11,11 +11,14 @@
     <div class="col-md-6">
       <div class="card">
           <div class="card-body">
-            <h4 class="card-title"> My Profile </h4>
-
+            <h4 class="card-title"> My Profile 
+              <a style="float: right" href="{{ route('user-edit', Crypt::encrypt(Auth::user()->id))}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
+              Update </a>
+            </h4><br>
             <div class="row">
               <div class="col-md-8">
                 <h3> Name : {{ $user_info->name }}  </h4>
+                <h5> Mobile : {{ $user_info->mobile }}  </h5>
                 <h5> Email : {{ $user_info->email }}  </h5>
               </div>
               <div class="col-md-3">

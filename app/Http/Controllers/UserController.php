@@ -63,6 +63,7 @@ class UserController extends Controller
           
         $data=  User::create([
             'name'      => $request['name'],
+            'mobile'    => $request['mobile'],
             'email'     => $request['email'],
             'picture'   => $pictureName,
             'password'  => Hash::make($request['password']),
@@ -129,6 +130,7 @@ class UserController extends Controller
           
         $user_data =  [
             'name'      => $request['name'],
+            'mobile'    => $request['mobile'],
             'email'     => $request['email'],
             'picture'   => $pictureName,
             'password'  => Hash::make($request['password']),

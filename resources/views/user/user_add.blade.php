@@ -30,6 +30,20 @@
             </div>
             <div class="form-group row">
               <label
+                for="mobile"
+                class="col-sm-3 text-end control-label col-form-label"
+                >Mobile</label>
+              <div class="col-sm-9">
+                <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('name') }}" required autocomplete="off" placeholder="Mobile">
+                    @error('mobile')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
                 for="email"
                 class="col-sm-3 text-end control-label col-form-label"
                 >Email</label>

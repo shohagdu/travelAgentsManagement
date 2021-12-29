@@ -18,8 +18,7 @@
               <label
                 for="fname"
                 class="col-sm-3 text-end control-label col-form-label"
-                > Name</label
-              >
+                > Name</label>
               <div class="col-sm-9">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user_info->name }}" required autocomplete="name" autofocus>
 
@@ -32,13 +31,25 @@
             </div>
             <div class="form-group row">
               <label
+                for="mobile"
+                class="col-sm-3 text-end control-label col-form-label"
+                >Mobile</label>
+              <div class="col-sm-9">
+                <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ $user_info->mobile }}" required autocomplete="off" >
+                    @error('mobile')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
                 for="email"
                 class="col-sm-3 text-end control-label col-form-label"
-                >Email</label
-              >
+                >Email</label>
               <div class="col-sm-9">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user_info->email }}" required autocomplete="email" readonly>
-
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

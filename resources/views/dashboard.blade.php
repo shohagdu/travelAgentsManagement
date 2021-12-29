@@ -89,7 +89,7 @@
         <div class="col-md-6 col-lg-3 col-xlg-3">
             <a class="text-white">
                 <div class="card">
-                    <div class="box bg-info text-center">
+                    <div class="box CurrentTodayBalanceTxtBg text-center">
                         <h1 class="font-light text-white">
                             {{ (!empty($todayTransaction)?$todayTransaction:'0.00') }}
                         </h1>
@@ -104,11 +104,35 @@
         <div class="col-md-6 col-lg-3 col-xlg-3">
             <a class="text-white">
                 <div class="card">
-                    <div class="box bg-info text-center">
-                        <h1 class="font-light text-white">{{ (!empty($currentDueAmount->dueAmount)?$currentDueAmount->dueAmount:'0.00') }}
+                    <div class="box CurrentDueAmountTxtBg text-center">
+                        <h1 class="font-light text-white"> @if($currentDueAmount->dueAmount < 0)
+                                                             0.00
+                                                            @else
+                                                            {{$currentDueAmount->dueAmount}}
+                                                            @endif
                         </h1>
                         <h6 class="text-white">Current Due Amount</h6>
                         <a href="{{ route('due_list_view') }}" class="btn btn-xs btn-warning text-white"> <i
+                                class="mdi mdi-view-day"></i> View </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+         <!-- Column -->
+         <div class="col-md-6 col-lg-3 col-xlg-3">
+            <a class="text-white">
+                <div class="card">
+                    <div class="box CurrentAdvanceAmountTxtBg text-center">
+                        <h1 class="font-light text-white">
+                            @if($currentDueAmount->dueAmount < 0)
+                            {{ number_format((float) abs($currentDueAmount->dueAmount), 2)}}
+                           @else
+                           0.00
+                           @endif
+                        </h1>
+                        <h6 class="text-white">Current Advance Amount</h6>
+                        <a href="{{ route('advance_list_view') }}" class="btn btn-xs btn-warning text-white"> <i
                                 class="mdi mdi-view-day"></i> View </a>
                     </div>
                 </div>

@@ -21,6 +21,7 @@
           <tr>
             <th scope="col">Sl</th>
             <th scope="col">Name</th>
+            <th scope="col">Mobile</th>
             <th scope="col">Email</th>
             <th scope="col">Picture</th>
             <th scope="col">Action</th>
@@ -32,6 +33,7 @@
           <tr>
             <th scope="row">{{ $i++}}</th>
             <td>{{$item->name}}</td>
+            <td>{{$item->mobile}}</td>
             <td>{{$item->email}}</td>
             <td>
               @if($item->picture != NULL)

@@ -14,6 +14,10 @@ class AirlineSetupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+	{
+	    $this->middleware('auth');
+	}
     public function index()
     {
         $airline_info = AirlineSetup::orderBy('id', 'DESC')->get();

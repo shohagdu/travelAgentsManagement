@@ -45,7 +45,7 @@ class DashboardController extends Controller
                                 'today_debit_balance',
                                 'total_agent',
                                 'todayTransaction',
-                                'currentDueAmount'
+                                'currentDueAmount',
         ));
     }
 
@@ -68,13 +68,32 @@ class DashboardController extends Controller
         return view('dashboard_view.today_debit_balance_view', compact('today_debit_balance'));
     }
 
-    // today due list
+    //  due list view 
     public function due_list_view(){
+        $agent_info = AgentRecord::all();
         $due_list_view = $this->sale_model->due_list_view();
-//         echo "<pre>";
-//         print_r($due_list_view);
-//         exit;
-        return view('dashboard_view.due_list_view', compact('due_list_view'));
+        return view('dashboard_view.due_list_view', compact('agent_info','due_list_view'));
+    }
+    public function agent_due_balance_view(Request $request){
+        $agent_info = AgentRecord::all();
+        $agent_id = $request->agent_id;
+        $due_list_view = $this->sale_model->agent_due_balance_view($agent_id);
+        return view('dashboard_view.due_list_view', compact('agent_info','due_list_view'));
+    }
+    //  advance list view 
+    public function advance_list_view(){
+        $agent_info = AgentRecord::all();
+        $advance_list_view = $this->sale_model->due_list_view();
+        return view('dashboard_view.advance_list_view', compact('agent_info','advance_list_view'));
+    }
+    public function agent_advance_balance_view(Request $request){
+        $agent_info = AgentRecord::all();
+        $agent_id = $request->agent_id;
+        $advance_list_view = $this->sale_model->agent_due_balance_view($agent_id);
+
+        // echo "<pre>";
+        // print_r($advance_list_view);exit;
+        return view('dashboard_view.advance_list_view', compact('agent_info','advance_list_view'));
     }
 
     // Due Statement

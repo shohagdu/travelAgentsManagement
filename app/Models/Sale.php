@@ -145,6 +145,22 @@ class Sale extends Model
                         ->groupBy('AGNT.id')
                         ->get();
     }
+    public function agent_due_balance_view($agent_id){
+        return $query  = DB::table("agent_records AS AGNT")
+                        ->select('AGNT.address as agent_address','AGNT.mobile as agent_mobile','AGNT.company_name as company_name','AGNT.name as agent_name','cr.creditAmnt as credit_amount','dr.debitAmnt as debit_amount')
+                        ->leftJoinSub(self::payableCreditSubQuery(), 'cr', function($pcs) {
+                        $pcs->on('cr.credit_acc', '=', 'AGNT.id');
+                        })
+                        ->leftJoinSub(self::getDebitAmnt(), 'dr', function($pcs) {
+                        $pcs->on('dr.debit_acc', '=', 'AGNT.id');
+                        })
+                        ->where('AGNT.is_active', '=',1)
+                        ->where('AGNT.id', '=', $agent_id)
+                        ->orderBy('AGNT.id', 'DESC')
+                        ->groupBy('AGNT.id')
+                        ->get();
+    }
+    
     public static  function payableCreditSubQuery()
     {
         return DB::table("acc_transaction_infos")

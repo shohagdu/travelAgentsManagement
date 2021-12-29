@@ -248,3 +248,12 @@ input::-webkit-input-placeholder {
     /*padding-bottom: 10px;*/
     /*font-size: 11px;*/
 }
+.CurrentAdvanceAmountTxtBg{
+    background-color: #67407f;
+}
+.CurrentDueAmountTxtBg{
+    background-color: #7b1b3a;
+}
+.CurrentTodayBalanceTxtBg{
+    background-color: #2e7995;
+}
