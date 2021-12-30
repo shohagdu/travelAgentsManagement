@@ -117,7 +117,6 @@ class UserController extends Controller
          $validated = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'string', 'email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         if(isset($request->picture)){
@@ -133,7 +132,6 @@ class UserController extends Controller
             'mobile'    => $request['mobile'],
             'email'     => $request['email'],
             'picture'   => $pictureName,
-            'password'  => Hash::make($request['password']),
             'updated_by'=> Auth::user()->id,
             'updated_ip'=> request()->ip(),
             'updated_at'=> date('Y-m-d H:i:s'),

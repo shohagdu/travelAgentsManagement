@@ -67,33 +67,6 @@
                 <input name="old_picture" type="hidden" value="{{ $user_info->picture}}">
               </div>
             </div>
-            
-            <div class="form-group row">
-              <label
-                for="lname"
-                class="col-sm-3 text-end control-label col-form-label"
-                >Password</label
-              >
-              <div class="col-sm-9">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password">
-
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-              </div>
-            </div>
-            <div class="form-group row">
-              <label
-                for="email1"
-                class="col-sm-3 text-end control-label col-form-label"
-                >Confirm Password</label
-              >
-              <div class="col-sm-9">
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
-              </div>
-            </div>
           </div>
           <div class="border-top">
             <div class="card-body">
