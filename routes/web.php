@@ -176,3 +176,13 @@ Route::post('/agentStatementAction', [ReportController::class, "agentStatementAc
 Route::post('/dailyStatementAction', [ReportController::class, "dailyStatementAction"])->name('dailyStatementAction');
 
 
+
+Route::get('/clear', function () {
+
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+
+    return "Cleared!";
+});
