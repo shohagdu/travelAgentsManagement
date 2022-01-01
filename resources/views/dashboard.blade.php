@@ -105,7 +105,7 @@
             <a class="text-white">
                 <div class="card">
                     <div class="box CurrentDueAmountTxtBg text-center">
-                        <h1 class="font-light text-white"> @if($currentDueAmount->dueAmount < 0)
+                        <h1 class="font-light text-white"> @if($currentDueAmount->dueAmount < 0 || empty($currentDueAmount->dueAmount)
                                                              0.00
                                                             @else
                                                             {{$currentDueAmount->dueAmount}}
@@ -125,7 +125,7 @@
                 <div class="card">
                     <div class="box CurrentAdvanceAmountTxtBg text-center">
                         <h1 class="font-light text-white">
-                            @if($currentDueAmount->dueAmount < 0)
+                            @if($currentDueAmount->dueAmount < 0 || empty($currentDueAmount->dueAmount)
                             {{ number_format((float) abs($currentDueAmount->dueAmount), 2)}}
                            @else
                            0.00
