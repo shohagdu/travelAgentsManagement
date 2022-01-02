@@ -502,7 +502,8 @@ class SaleController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = $request->id;
+     
+        $id = ($request->id ? crypt::decrypt($request->id):'');
         $sale_delete = Sale::where('id', $id)->delete();
         $sale_details_delete = SaleDetail::where('sale_id', $id)->delete();
         $transaction_delete  = AccTransactionInfo::where('sales_id', $id)->delete();

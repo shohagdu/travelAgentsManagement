@@ -328,6 +328,7 @@ class AccTransactionInfo extends Model
 
         return $data;
     }
+    
     public function balanceSum($receive,$field)
     {
         $query  = DB::table('acc_transaction_infos')->select($field);
@@ -335,5 +336,28 @@ class AccTransactionInfo extends Model
             $query->where("trans_date", "=", $receive['from_date']);
         }
         return $query->sum($field);
+    }
+
+    public function searchAgentStatementPdf($receive)
+    {
+        $query = DB::table("acc_transaction_infos AS TRNS")
+            ->leftJoin('sales', function($join){
+                $join->on('sales.id', '=', 'TRNS.sales_id');
+            })
+
+            ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_type','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','TRNS.reference_number','TRNS.remarks','TRNS.receipt_cheque_no','sales.invoice_no')
+            ->orderBy('trans_date', 'ASC')->orderBy('id', 'ASC');
+
+        if(!empty($receive['from_date']) && !empty($receive['to_date'])){
+            $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['to_date']]);
+
+        }
+        // elseif($receive['from_date'] !='' && $receive['to_date'] ==''){
+        //     $query->whereBetween("TRNS.trans_date", [$receive['from_date'], $receive['from_date']]);
+        // }
+
+        $data = $query->get();
+
+        return $data;
     }
 }

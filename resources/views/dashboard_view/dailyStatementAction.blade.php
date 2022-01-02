@@ -2,6 +2,7 @@
 $i=1;
 $balance='0.00';
 ?>
+<a style="float: right; margin-bottom: 5px;"  target="_blank" href="dailyStatementPdf/{{ (!empty($param_info['from_date'])?$param_info['from_date']:'0000-00-00') }}/{{ (!empty($param_info['to_date'])?$param_info['to_date']:'0000-00-00') }}" class="btn btn-warning btn-sm text-white "> <i class="mdi mdi-printer"></i>  Print  </a><br>
 <table  class="table table-bordered">
     <thead>
     <tr>

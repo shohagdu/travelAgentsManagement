@@ -35,6 +35,8 @@ Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
 Route::get('/dashboard', [DashboardController::class, "index"])->name('dashboard');
 Route::get('/today-sale-balance-view', [DashboardController::class, "today_sale_balance_view"])->name('today-sale-balance-view');
+Route::post('/searchTodaySaleBalanceBtnAction', [DashboardController::class, "searchTodaySaleBalanceBtnAction"])->name('searchTodaySaleBalanceBtnAction');
+Route::get('/search_today_sale_balance_pdf/{id}', [DashboardController::class, "search_today_sale_balance_pdf"])->name('search_today_sale_balance_pdf');
 Route::get('/today-credit-balance-view', [DashboardController::class, "today_credit_balance_view"])->name('today-credit-balance-view');
 Route::get('/today-debit-balance-view', [DashboardController::class, "today_debit_balance_view"])->name('today-debit-balance-view');
 
@@ -44,6 +46,7 @@ Route::get('/advance_list_view', [DashboardController::class, "advance_list_view
 Route::post('/agent-advance-balance-view', [DashboardController::class, "agent_advance_balance_view"])->name('agent-advance-balance-view');
 Route::get('/due_statement', [DashboardController::class, "due_statement"])->name('due_statement');
 Route::get('/dailyStatement', [ReportController::class, "dailyStatement"])->name('dailyStatement');
+Route::get('/dailyStatementPdf/{from_date}/{to_date}', [ReportController::class, "dailyStatementPdf"])->name('dailyStatementPdf');
 
 
 

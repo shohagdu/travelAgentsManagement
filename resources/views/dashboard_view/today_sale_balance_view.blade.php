@@ -1,16 +1,34 @@
 @extends('layouts.master')
 @section('title', 'Today Sale Balance')
-@section('css')
-<link rel="stylesheet" href="{{ asset('public/assets/customs.css')}}">
-@endsection
 @section('main_content')
 <div class="row">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title mb-0 lefttButtonText" > Today Sale Balance</h5>
-      </div>
-      <table class="TodaySaleBalanceTbl" >
+        <form method="post" id="todaySaleBalanceForm"  action="javascript:void(0)" >
+          <?php echo csrf_field(); ?>
+          <div class="form-group row">
+            <div class="col-sm-4"><h5>Today Sale Balance</h5></div>
+            <label class="col-sm-2" > Sale Categoy </label>
+              <div class="col-sm-4">
+                  <select name="sale_category_id" id="sale_category_id"
+                  class="form-control">
+                    <option value=""> Select</option>
+                    @foreach($sale_category_info as $item)
+                        <option value="{{$item->id}}"> {{$item->title}} </option>
+                    @endforeach
+                </select>
+              </div>
+             
+              <div class="col-sm-2">
+                      <button type="button" onclick="searchTodaySaleBalanceBtn()"  id="searchTodaySaleBalance"
+                              class="btn btn-success text-white"><i class="mdi mdi-account-search"></i>Search
+                      </button>
+              </div>
+          </div>
+      </form>
+      
+      <table class="TodaySaleBalanceTbl showReportsHide " >
         <thead>
           <tr>
             <th scope="col">Sl</th>
@@ -58,8 +76,14 @@
           <th>  &nbsp; {{ number_format((float)$total_amount, 2, '.', '')}} </th>
         </tr>
       </table>
+
+      <div class="showReportsToday">
+
+      </div>
     </div>
+    
   </div>
+</div>
 </div>
 @endsection
 @section('js')

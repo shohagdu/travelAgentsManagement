@@ -103,6 +103,19 @@ class Sale extends Model
             ->orderBy('SALE.id', 'DESC')
             ->get();
     }
+    
+    public function search_today_sale_balance($sale_category_id)
+    {
+        return $query = DB::table("sales AS SALE")
+            ->select('SALE.sale_amount', 'SALE.discount', 'SALE.amount', 'SALE.sale_category_id', 'AGRD.name as agent_name')
+            ->join('agent_records AS AGRD', function ($join) {
+                $join->on('AGRD.id', '=', 'SALE.agent_id');
+            })
+            ->where('SALE.created_at', '>=', date('Y-m-d') . ' 00:00:00')
+            ->where('SALE.sale_category_id', '=', $sale_category_id)
+            ->orderBy('SALE.id', 'DESC')
+            ->get();
+    }
 
     public function today_credit_balance()
     {

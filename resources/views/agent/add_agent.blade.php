@@ -47,13 +47,18 @@
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 text-end control-label col-form-label">Email</label>
                             <div class="col-sm-4">
-                                <input type="text" name="email" id="email" class="form-control" required
+                                <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror " required
                                        placeholder="Email">
+                                @error('email')
+                                       <span class="invalid-feedback" role="alert">
+                                           <strong>{{ $message }}</strong>
+                                       </span>
+                                @enderror      
                             </div>
                             <label for="office_phone" class="col-sm-2 text-end control-label col-form-label"> Office
                                 Phone</label>
                             <div class="col-sm-4">
-                                <input type="text" name="office_phone" id="office_phone" class="form-control" required
+                                <input type="text" name="office_phone" id="office_phone" class="form-control"
                                        placeholder="Office Phone">
                             </div>
                         </div>

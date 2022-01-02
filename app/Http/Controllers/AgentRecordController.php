@@ -88,6 +88,7 @@ class AgentRecordController extends Controller
         $validated = $request->validate([
             'name'         => ['required'],
             'mobile'       => ['required'],
+            'email'        => ['required', 'string', 'email', 'max:255', 'unique:agent_records'],
             'company_name' => ['required'],
         ]);
 
@@ -124,6 +125,40 @@ class AgentRecordController extends Controller
         $user_data->created_at = date('Y-m-d H:i:s');
 
         $user_save =  $user_data->save();
+
+        $opening_balance = $request->opening_balance;
+
+        if($opening_balance > 0) {
+            $transaction_data = [
+                'debit_acc'        => $agent_id,
+                'credit_acc'       => NULL,
+                'debit_amount'     => $opening_balance,
+                'towards_type'     => NULL,
+                'reference_number' => NULL,
+                'credit_amount'    => NULL,
+                'receipt_cheque_no'=> NULL,
+                'remarks'          => "Opending balance Advance Amount",
+                'trans_type'       => 2,
+                'is_active'        => 1, 
+                'trans_date'       => date('Y-m-d'),
+            ];
+        }else{
+            $transaction_data = [
+                'debit_acc'        => NULL,
+                'credit_acc'       => $agent_id,
+                'debit_amount'     => 0.00,
+                'towards_type'     => NULL,
+                'reference_number' => NULL,
+                'credit_amount'    => abs($opening_balance),
+                'receipt_cheque_no'=> NULL,
+                'remarks'          => "Opending balance Due Amount",
+                'trans_type'       => 2,
+                'is_active'        => 1, 
+                'trans_date'       => date('Y-m-d'),
+            ];
+        }
+
+        $transaction_save = DB::table('acc_transaction_infos')->insert($transaction_data);
 
         if($user_data){
             return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully Added!')->with('flash.class', 'success');

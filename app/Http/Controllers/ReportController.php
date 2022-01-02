@@ -188,5 +188,48 @@ class ReportController extends Controller
         $data                 = $this->transaction_model->searchAgentStatement($param);
         return view('dashboard_view.dailyStatementAction', ['record'=>$data, 'param_info' => $param]);
     }
+    public function dailyStatementPdf($from_date=NULL, $to_date=NULL) {
+        $organization_info  = OrganizationSetup::first();
+        $from_date          =(($from_date=='0000-00-00')?'':$from_date);
+        $to_date          =(($to_date=='0000-00-00')?'':$to_date);
+
+        if(!empty($from_date)){
+            $param['from_date']=$from_date;
+        }
+        if(!empty($to_date)){
+            $param['to_date']=$to_date;
+        }
+    
+        $data = $this->transaction_model->searchAgentStatementPdf($param);
+
+        $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
+            $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));
+            $mpdf->SetWatermarkImage(
+                asset('public/assets/images/'.$organization_info->logo) . "", .1,
+                array(70, 20),
+                array(77, 150)
+            );
+            $mpdf->showWatermarkImage = true;
+            $mpdf->SetTitle('Today Balance Statement');
+            $page_footer_html = view()->make('pdf.pdfHeader', ['organization_info'=>$organization_info])->render();
+
+            $mpdf->SetHTMLHeader($page_footer_html);
+
+            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y');
+            $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
+
+            $margin_left   = 5;
+            $margin_right  = 5;
+            $margin_top    = 10;
+            $margin_bottom = 5;
+            $paper_type    = 'a4';
+
+            $mpdf->AddPage('P', '', '', '', '', $margin_left, $margin_right, $margin_top, $margin_bottom, 5, 5, '', '', '', '', '', '', '', '', '', $paper_type);
+            }];
+
+        $pdf = PDF::loadHtml(view('pdf.dailyStatementPdf', compact('from_date','to_date','data')), $config);
+
+        return $pdf->stream('AgentdateWiseStatement.pdf');
+    }
 
 }

@@ -87,3 +87,28 @@ function AirlineTotalFare(){
     $(".invoice_total").val(isNaN(invoiceAmount) ? 0.00 : invoiceAmount.toFixed(2));
 
 }
+
+// today sale balance report
+function searchTodaySaleBalanceBtn(){
+    $(".showReportsToday").html('')
+   // $('#searchAgentStatement').attr('disabled',true);
+    $.ajax({
+        url:"searchTodaySaleBalanceBtnAction",
+        type:"POST",
+        // dataType:"json",
+        data: $("#todaySaleBalanceForm").serialize(),
+        processData: false,
+        // contentType: false,
+        success:function(response){
+            console.log(response);
+            $('#searchTodaySaleBalance').attr('disabled',false);
+            if (response != '') {
+                $(".showReportsToday").html(response)
+                $(".showReportsHide").hide();
+            }else{
+                $("#showReports").html('')
+            }
+        }
+    });
+
+}
