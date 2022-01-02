@@ -169,6 +169,16 @@
                             ><i class="mdi mdi-account-card-details"></i
                                 ><span class="hide-menu">View All User </span></a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="{{  url('acl-menu/create')}}" class="sidebar-link"
+                            ><i class="mdi mdi-account-card-details"></i
+                                ><span class="hide-menu"> Add Menu </span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{  url('acl-menu-list')}}" class="sidebar-link"
+                            ><i class="mdi mdi-account-card-details"></i
+                                ><span class="hide-menu"> Menu list </span></a>
+                        </li>
                     </ul>
                 </li>
                 <li class="sidebar-item">

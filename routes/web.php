@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AclMenuRoleController;
 use App\Http\Controllers\OrganizationSetupController;
 use App\Http\Controllers\AgentRecordController;
 use App\Http\Controllers\AirlineSetupController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\SaleCategoryController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BillCollectionController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReportController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -175,6 +176,13 @@ Route::get('/salesInvoicePdf/{id}', [SaleController::class, "salesInvoicePdf"])-
 Route::post('/agentStatementAction', [ReportController::class, "agentStatementAction"])->name('agentStatementAction');
 Route::post('/dailyStatementAction', [ReportController::class, "dailyStatementAction"])->name('dailyStatementAction');
 
+// Acl  menu 
+Route::get('/acl-menu-list', [AclMenuRoleController::class, 'index'])->name('menu.list');
+Route::get('/acl-menu/create', [AclMenuRoleController::class, 'create'])->name('menu.create');
+Route::post('/acl-menu/store', [AclMenuRoleController::class, 'store'])->name('menu.store');
+Route::get('/acl-menu/edit/{id}', [AclMenuRoleController::class, 'edit'])->name('menu.edit');
+Route::post('/acl-menu/update/{id}', [AclMenuRoleController::class, 'update'])->name('menu.update');
+Route::get('/acl-menu/delete/{id}', [AclMenuRoleController::class, 'destroy'])->name('menu.delete');
 
 
 Route::get('/clear', function () {
