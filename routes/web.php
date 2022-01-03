@@ -187,6 +187,15 @@ Route::get('/acl-menu/edit/{id}', [AclMenuRoleController::class, 'edit'])->name(
 Route::post('/acl-menu/update/{id}', [AclMenuRoleController::class, 'update'])->name('menu.update');
 Route::get('/acl-menu/delete/{id}', [AclMenuRoleController::class, 'destroy'])->name('menu.delete');
 
+// Acl Role
+
+Route::get('/acl-role-list', [AclMenuRoleController::class, 'role_list'])->name('role.list');
+Route::get('/acl-role/create', [AclMenuRoleController::class, 'role_create'])->name('role.role_create');
+Route::post('/acl-role/store', [AclMenuRoleController::class, 'role_store'])->name('role.role_store');
+Route::get('/acl-role/edit/{id}', [AclMenuRoleController::class, 'role_edit'])->name('role.role_edit');
+Route::post('/acl-role/update/{id}', [AclMenuRoleController::class, 'role_update'])->name('role.role_update');
+Route::get('/acl-role/delete/{id}', [AclMenuRoleController::class, 'role_destroy'])->name('role.role_delete');
+
 
 Route::get('/clear', function () {
 

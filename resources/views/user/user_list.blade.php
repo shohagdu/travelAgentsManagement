@@ -24,6 +24,7 @@
             <th scope="col">Mobile</th>
             <th scope="col">Email</th>
             <th scope="col">Picture</th>
+            <th scope="col">Role Name</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -32,7 +33,7 @@
           @foreach ($user_info as $item )
           <tr>
             <th scope="row">{{ $i++}}</th>
-            <td>{{$item->name}}</td>
+            <td>{{$item->user_name}}</td>
             <td>{{$item->mobile}}</td>
             <td>{{$item->email}}</td>
             <td>
@@ -42,10 +43,11 @@
               <img width="50px" height="40px"  src="{{ asset('public/assets/images/users/profile.jpg')}}">
               @endif
             </td>
-            <td> <a href="{{ route('user-edit', Crypt::encrypt($item->id))}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
+            <td>{{$item->role_name}}</td>
+            <td> <a href="{{ route('user-edit', Crypt::encrypt($item->UserId))}}" class="btn btn-cyan btn-sm text-white"> <span class="mdi mdi-pencil-box-outline"></span>
               Edit
             </a> 
-            <a   onclick="return confirm('Are you sure you want to delete?')" href="{{ route('user-delete',  $item->id)}}" class="btn btn-danger btn-sm text-white">
+            <a   onclick="return confirm('Are you sure you want to delete?')" href="{{ route('user-delete',  $item->UserId)}}" class="btn btn-danger btn-sm text-white">
               <span class="mdi mdi-delete-circle"></span>  Delete
             </a>
           </td>

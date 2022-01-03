@@ -67,6 +67,22 @@
               </div>
             </div>
             <div class="form-group row">
+              <label for="is_active" class="col-md-3 col-form-label text-end ">{{ __('Role') }}</label>
+              <div class="col-md-9">
+                  <select  class="form-control @error('role_id') is-invalid @enderror" name="role_id" value="{{ old('role_id') }}" >
+                      <option value="">Select</option>
+                      @foreach($role_info as $item)
+                          <option value="{{$item->id}}"> {{$item->role_name}} </option>
+                      @endforeach
+                  </select>
+                  @error('role_id')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
+              </div>
+          </div>
+            <div class="form-group row">
               <label
                 for="password"
                 class="col-sm-3 text-end control-label col-form-label"

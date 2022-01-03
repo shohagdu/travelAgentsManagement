@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\AclMenuInfo;
+use App\Models\AclRoleInfo;
 use DB;
 use session;
 class AclMenuRoleController extends Controller
@@ -93,6 +94,118 @@ class AclMenuRoleController extends Controller
             return redirect()->route('menu.list')->with('flash.message', 'Sucessfully Menu Delated!')->with('flash.class', 'success');
         }else{
             return redirect()->route('menu.create')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
+    }
+
+    // role addd area
+
+    public function role_list()
+    {
+        $role_info = AclRoleInfo::where('is_active', '!=', 0)->get();
+        
+        return view('user.role.list', compact('role_info'));
+
+    }
+
+    public function role_create()
+    {
+        $get_menu_info = AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>1])->get();
+       
+        if(!empty($get_menu_info)){
+            foreach($get_menu_info as $key=> $mainMenu){
+               $get_menu_info[$key]['mainChild']= AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>2,'parent_id'=> $mainMenu->id])->get();
+            }
+        }
+        return view('user.role.create', compact('get_menu_info'));
+    }
+
+    public function role_store(Request $request){
+        $role_info =  $request->role_info;
+
+        $role_data = [
+            'role_name'   => $request->role_name,
+            'role_info'   => (!empty($role_info)? json_encode($role_info,JSON_NUMERIC_CHECK):NULL),
+            'is_active'   => $request->is_active,
+            'created_by'  => Auth::user()->id,
+            'created_ip'  => request()->ip(),
+            'created_at'  => date('Y-m-d H:i:s'),
+        ];
+
+        $data_save = DB::table('acl_role_infos')->insert($role_data);
+
+        if($data_save){
+            return redirect()->route('role.list')->with('flash.message', 'Sucessfully Role Added!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('role.create')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
+    }
+
+    public function role_edit($id)
+    {
+        $menuAccessArray = [];
+        $get_role_info = AclRoleInfo::where(['is_active'=> 1, 'id'=> $id])->first();
+        $menuAccess = json_decode($get_role_info->role_info);
+        foreach($menuAccess as $key=>$access){
+            if(gettype($access) == 'object') {
+                foreach($access as $asses) {
+                    array_push($menuAccessArray, $asses);
+                }
+            }
+            if(gettype($access) == 'integer') {
+                array_push($menuAccessArray, $access);
+            }
+
+            array_push($menuAccessArray, $key);
+        }
+
+        $menus = AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>1])->get();
+       
+        if(!empty($menus)){
+            foreach($menus as $key=> $mainMenu){
+               $menus[$key]['mainChild']= AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>2,'parent_id'=> $mainMenu->id])->get();
+            }
+        }
+
+        return view('user.role.edit', compact('menus', 'acl_role_info', 'menuAccess', 'menuAccessArray'));
+    }
+
+    public function role_update(Request $request, $id){
+
+        $role_info =  $request->role_info;
+    
+        $role_data = [
+            'role_name'   => $request->role_name,
+            'role_info'   => (!empty($role_info)? json_encode($role_info,JSON_NUMERIC_CHECK):NULL),
+            'is_active'   => $request->is_active,
+            'updated_by'  => Auth::user()->id,
+            'updated_ip'  => request()->ip(),
+            'updated_at'  => date('Y-m-d H:i:s'),
+        ];
+
+        $data_save = DB::table('acl_role_infos')->where('id', '=', $id)->update($role_data);
+
+        if($data_save){
+            return redirect()->route('role.list')->with('flash.message', 'Sucessfully Role Updated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('role.create')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
+    }
+
+    public function role_destroy($id){
+    
+        $role_data = [
+            'is_active'   => 0,
+            'updated_by'  => Auth::user()->id,
+            'updated_ip'  => request()->ip(),
+            'updated_at'  => date('Y-m-d H:i:s'),
+        ];
+
+        $data_delete = DB::table('acl_role_infos')->where('id', '=', $id)->update($role_data);
+
+        if($data_delete){
+            return redirect()->route('role.list')->with('flash.message', 'Sucessfully Role Delated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('role.create')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
     }
 }

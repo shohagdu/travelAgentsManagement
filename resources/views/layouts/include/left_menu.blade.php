@@ -1,4 +1,12 @@
 <aside class="left-sidebar" data-sidebarbg="skin5">
+    <?php
+    $segment1 =  Request::segment(1);
+    $segment2 =  Request::segment(2);
+    $combine_segment=$segment1."/".$segment2;
+    $isAdminEmployeeID=[
+        1,2,2253,2267,2515,4277
+    ];
+  ?>
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
@@ -7,180 +15,76 @@
                 <li class="sidebar-item">
                     <a
                         class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{asset('/dashboard')}}"
+                        href="{{ route('dashboard')}}"
                         aria-expanded="false"
                     ><i class="mdi mdi-view-dashboard"></i
                         ><span class="hide-menu">Dashboard</span></a>
                 </li>
+
+                <?php
+                        $user_info =  App\Models\User::where(['id'=> Auth::user()->id])->first();
+                        $id        = $user_info->role_id;
+
+                        $menuAccessArray = [];
+                        $get_role_info = App\Models\AclRoleInfo::where(['is_active'=> 1, 'id'=> $id])->first();
+                        $menuAccess = json_decode($get_role_info->role_info);
+                        foreach($menuAccess as $key=>$access){
+                            if(gettype($access) == 'object') {
+                                foreach($access as $asses) {
+                                    array_push($menuAccessArray, $asses);
+                                }
+                            }
+                            if(gettype($access) == 'integer') {
+                                array_push($menuAccessArray, $access);
+                            }
+                            array_push($menuAccessArray, $key);
+                        }    
+
+
+                        $get_menu_info = App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>1])->get();
+                    
+                        if(!empty($get_menu_info)){
+                            foreach($get_menu_info as $key=> $mainMenu){
+                            
+                                $get_menu_info[$key]['mainChild']= App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>2,'parent_id'=> $mainMenu->id])->get();
+                            }
+                        }
+                    ?>
+                   
+            @foreach($get_menu_info as $item)  
+
                 <li class="sidebar-item">
-                    <a
-                        class="sidebar-link has-arrow waves-effect waves-dark"
-                        href="javascript:void(0)"
-                        aria-expanded="false"
-                    ><i class="mdi mdi-cart"></i
-                        ><span class="hide-menu"> Sales </span></a>
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="{{$item->link}}" aria-expanded="false"
+                        @if(in_array($item->id , $menuAccessArray))
+                        style="display:show"
+                        @else
+                        style="display:none"
+                        @endif
+                        >
+                        <i class="{{$item->glyphicon_icon}}"></i>
+                        <span class="hide-menu"> {{$item->title}}  </span>
+                    </a>
+                    
                     <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ route('sale')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> New Sale </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('today-sale-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Today All Sales Info </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('sale-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> View All Sales </span></a>
-                        </li>
+                        @if(!empty($item->mainChild))
+                            @foreach($item->mainChild as $childKey => $row)  
+                                <li class="sidebar-item"  @if(in_array($row->id , $menuAccessArray))
+                                    style="display:show"
+                                    @else
+                                    style="display:none"
+                                  @endif 
+                         <?php if(in_array($segment1,[$row->link])){ echo 'class="active"';} ?>>
+                                    <a href="{{ route($row->link)}}" class="sidebar-link">
+                                        <i class="mdi mdi-note-outline"></i>
+                                        <span class="hide-menu"> {{$row->title}} </span>
+                                    </a>
+                                </li>
+                            @endforeach
+                      @endif
                     </ul>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow waves-effect waves-dark"
-                       href="javascript:void(0)"
-                       aria-expanded="false"
-                    ><i class="mdi mdi-book-open"></i
-                        ><span class="hide-menu"> Account </span></a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ route('bill-collection')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Credit Bill   </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('debit-bill')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Debit Bill  </span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a
-                        class="sidebar-link has-arrow waves-effect waves-dark"
-                        href="javascript:void(0)"
-                        aria-expanded="false"
-                    ><i class="mdi mdi-receipt"></i
-                        ><span class="hide-menu">Agent Record </span></a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ route('add-agent')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Add New Agent </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('agent-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> View All Agent List </span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a
-                        class="sidebar-link has-arrow waves-effect waves-dark"
-                        href="javascript:void(0)"
-                        aria-expanded="false"
-                    ><i class="mdi mdi-book-open"></i
-                        ><span class="hide-menu"> Reports </span></a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ route('agent-date-wise-statement')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Agents  Statement </span>
-                            </a>
-                        </li>
-{{--                        <li class="sidebar-item">--}}
-{{--                            <a href="{{ route('account-report')}}" class="sidebar-link"--}}
-{{--                            ><i class="mdi mdi-note-outline"></i--}}
-{{--                                ><span class="hide-menu"> Account Report </span></a>--}}
-{{--                        </li>--}}
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow waves-effect waves-dark"
-                       href="javascript:void(0)"
-                       aria-expanded="false"
-                    ><i class="mdi mdi-image-filter-vintage"></i
-                        ><span class="hide-menu">Setting </span></a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ route('airline-setup')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Add New Airlines Setup </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('airline-setup-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> View All Airlines Setup </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('sale-category')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Sale Category </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('sale-category-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> View All Sale Category </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('towards-category')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Towards Category </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('towards-category-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> View All Towards Category </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('bank-create')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Bank Setup </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('bank-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Bank Details </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('organization-setup')}}" class="sidebar-link"
-                            ><i class="mdi mdi-note-outline"></i
-                                ><span class="hide-menu"> Company  Configuration </span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a
-                        class="sidebar-link has-arrow waves-effect waves-dark"
-                        href="javascript:void(0)"
-                        aria-expanded="false"
-                    ><i class="mdi mdi-account-box"></i
-                        ><span class="hide-menu">User Management</span></a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ route('add-user') }}" class="sidebar-link"
-                            ><i class="mdi mdi-account-plus"></i
-                                ><span class="hide-menu"> Add New User </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{  route('user-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-account-card-details"></i
-                                ><span class="hide-menu">View All User </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{  url('acl-menu/create')}}" class="sidebar-link"
-                            ><i class="mdi mdi-account-card-details"></i
-                                ><span class="hide-menu"> Add Menu </span></a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{  url('acl-menu-list')}}" class="sidebar-link"
-                            ><i class="mdi mdi-account-card-details"></i
-                                ><span class="hide-menu"> Menu list </span></a>
-                        </li>
-                    </ul>
-                </li>
+
+            @endforeach    
                 <li class="sidebar-item">
                     <a
                         class="sidebar-link waves-effect waves-dark sidebar-link"

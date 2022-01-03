@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\AclRoleInfo;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +25,11 @@ class UserController extends Controller
     }
     public function index()
     {
-        $user_info = User::orderBy('id', 'DESC')->get();
+        $user_info = DB::table('users AS USR')
+                      ->leftJoin('acl_role_infos AS ROLE', 'ROLE.id', '=', 'USR.role_id')
+                      ->select( 'USR.id as UserId','USR.name as user_name','USR.mobile','USR.email','USR.picture', 'ROLE.role_name')
+                      ->orderBy('USR.id', 'desc')
+                      ->get();
 
         return view('user.user_list', compact('user_info'));
     }
@@ -36,7 +41,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.user_add');
+        $role_info = AclRoleInfo::where('is_active', '!=', 0)->get();
+        return view('user.user_add', compact('role_info'));
     }
 
     /**
@@ -48,8 +54,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'role_id'  => 'required',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
@@ -63,6 +70,7 @@ class UserController extends Controller
           
         $data=  User::create([
             'name'      => $request['name'],
+            'role_id'   => $request['role_id'],
             'mobile'    => $request['mobile'],
             'email'     => $request['email'],
             'picture'   => $pictureName,
@@ -101,8 +109,9 @@ class UserController extends Controller
     {
         $userId    = Crypt::decrypt($id);
         $user_info = User::find($userId);
+        $role_info = AclRoleInfo::where('is_active', '!=', 0)->get();
 
-        return view('user.user_edit' , compact('user_info'));
+        return view('user.user_edit' , compact('user_info','role_info'));
     }
 
     /**
@@ -116,6 +125,7 @@ class UserController extends Controller
     {
          $validated = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
+            'role_id'  => 'required',
             'email'    => ['required', 'string', 'email'],
         ]);
 
@@ -129,6 +139,7 @@ class UserController extends Controller
           
         $user_data =  [
             'name'      => $request['name'],
+            'role_id'   => $request['role_id'],
             'mobile'    => $request['mobile'],
             'email'     => $request['email'],
             'picture'   => $pictureName,

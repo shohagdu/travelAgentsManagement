@@ -7,7 +7,7 @@
         <form class="form-horizontal" method="POST" action="{{ route('menu.store')}}" enctype="multipart/form-data">
                 @csrf
           <div class="card-body">
-            <a href="{{ url('acl-menu/list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
+            <a href="{{ route('menu.list')}}" class="btn btn-success btn-sm text-white rightButtonairline">
               <i class="mdi mdi-format-list-bulleted"></i> Acl Menu  List </a>
             <h4 class="card-title"> Add Menu </h4><br>
             <div class="form-group row">
