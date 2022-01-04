@@ -27,31 +27,33 @@
 
                         $menuAccessArray = [];
                         $get_role_info = App\Models\AclRoleInfo::where(['is_active'=> 1, 'id'=> $id])->first();
-                        $menuAccess = json_decode($get_role_info->role_info);
-                        foreach($menuAccess as $key=>$access){
-                            if(gettype($access) == 'object') {
-                                foreach($access as $asses) {
-                                    array_push($menuAccessArray, $asses);
+                        $menuAccess = (!empty($get_role_info->role_info)? json_decode($get_role_info->role_info):'');
+                        if(!empty($menuAccess)){
+                            foreach($menuAccess as $key=>$access){
+                                if(gettype($access) == 'object') {
+                                    foreach($access as $asses) {
+                                        array_push($menuAccessArray, $asses);
+                                    }
                                 }
+                                if(gettype($access) == 'integer') {
+                                    array_push($menuAccessArray, $access);
+                                }
+                                array_push($menuAccessArray, $key);
                             }
-                            if(gettype($access) == 'integer') {
-                                array_push($menuAccessArray, $access);
-                            }
-                            array_push($menuAccessArray, $key);
-                        }    
+                        }
 
 
                         $get_menu_info = App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>1])->get();
-                    
+
                         if(!empty($get_menu_info)){
                             foreach($get_menu_info as $key=> $mainMenu){
-                            
+
                                 $get_menu_info[$key]['mainChild']= App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>2,'parent_id'=> $mainMenu->id])->get();
                             }
                         }
                     ?>
-                   
-            @foreach($get_menu_info as $item)  
+
+            @foreach($get_menu_info as $item)
 
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="{{$item->link}}" aria-expanded="false"
@@ -64,15 +66,15 @@
                         <i class="{{$item->glyphicon_icon}}"></i>
                         <span class="hide-menu"> {{$item->title}}  </span>
                     </a>
-                    
+
                     <ul aria-expanded="false" class="collapse first-level">
                         @if(!empty($item->mainChild))
-                            @foreach($item->mainChild as $childKey => $row)  
+                            @foreach($item->mainChild as $childKey => $row)
                                 <li class="sidebar-item"  @if(in_array($row->id , $menuAccessArray))
                                     style="display:show"
                                     @else
                                     style="display:none"
-                                  @endif 
+                                  @endif
                          <?php if(in_array($segment1,[$row->link])){ echo 'class="active"';} ?>>
                                     <a href="{{ route($row->link)}}" class="sidebar-link">
                                         <i class="mdi mdi-note-outline"></i>
@@ -84,7 +86,7 @@
                     </ul>
                 </li>
 
-            @endforeach    
+            @endforeach
                 <li class="sidebar-item">
                     <a
                         class="sidebar-link waves-effect waves-dark sidebar-link"

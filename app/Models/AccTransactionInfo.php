@@ -251,7 +251,7 @@ class AccTransactionInfo extends Model
             ->leftJoin('sales', function($join){
                 $join->on('sales.id', '=', 'TRNS.sales_id');
             })
-
+            ->where('TRNS.is_active',1)
             ->select(DB::raw('SQL_CALC_FOUND_ROWS TRNS.id'),'TRNS.credit_amount','TRNS.trans_type','TRNS.debit_amount','TRNS.trans_date', 'TRNS.remarks','AGRD.name as agent_name','AGRD2.name as agent_name2','TRNS.reference_number','TRNS.remarks','TRNS.receipt_cheque_no','sales.invoice_no')
             ->orderBy('trans_date', 'ASC')->orderBy('id', 'ASC');
 
@@ -328,7 +328,7 @@ class AccTransactionInfo extends Model
 
         return $data;
     }
-    
+
     public function balanceSum($receive,$field)
     {
         $query  = DB::table('acc_transaction_infos')->select($field);
