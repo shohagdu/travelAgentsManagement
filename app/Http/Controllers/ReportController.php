@@ -184,7 +184,6 @@ class ReportController extends Controller
     {
         $param['from_date']   = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-d'));
         $param['to_date']     = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d'));
-
         $data                 = $this->transaction_model->searchAgentStatement($param);
         return view('dashboard_view.dailyStatementAction', ['record'=>$data, 'param_info' => $param]);
     }
@@ -199,7 +198,7 @@ class ReportController extends Controller
         if(!empty($to_date)){
             $param['to_date']=$to_date;
         }
-    
+
         $data = $this->transaction_model->searchAgentStatementPdf($param);
 
         $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
