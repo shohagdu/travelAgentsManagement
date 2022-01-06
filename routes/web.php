@@ -12,7 +12,8 @@ use App\Http\Controllers\SaleCategoryController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BillCollectionController;
-use App\Http\Controllers\ReportController; 
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\BankRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -196,6 +197,19 @@ Route::get('/acl-role/edit/{id}', [AclMenuRoleController::class, 'role_edit'])->
 Route::post('/acl-role/update/{id}', [AclMenuRoleController::class, 'role_update'])->name('role.role_update');
 Route::get('/acl-role/delete/{id}', [AclMenuRoleController::class, 'role_destroy'])->name('role.role_delete');
 
+// Bank Debit 
+Route::get('/bank-debit', [BankRecordController::class, "bank_debit"])->name('bank_debit');
+Route::post('/bank-debit-save', [BankRecordController::class, "bank_debit_store"])->name('bank_debit_store');
+Route::post('/bank_debit_row_data', [BankRecordController::class, "bank_debit_row_data"])->name('bank_debit_row_data');
+Route::post('/bank_debit_delete', [BankRecordController::class, "bank_debit_delete"])->name('bank_debit_delete');
+Route::post('/get_bank_debit_list_data', [BankRecordController::class, "get_bank_debit_list_data"])->name('get_bank_debit_list_data');
+
+// Bank Credit 
+Route::get('/bank-credit', [BankRecordController::class, "bank_credit"])->name('bank_credit');
+Route::post('/bank-credit-save', [BankRecordController::class, "bank_credit_store"])->name('bank_credit_store');
+Route::post('/bank_credit_row_data', [BankRecordController::class, "bank_credit_row_data"])->name('bank_credit_row_data');
+Route::post('/bank_credit_delete', [BankRecordController::class, "bank_credit_delete"])->name('bank_credit_delete');
+Route::post('/get_bank_credit_list_data', [BankRecordController::class, "get_bank_credit_list_data"])->name('get_bank_credit_list_data');
 
 Route::get('/clear', function () {
 

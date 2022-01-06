@@ -166,7 +166,7 @@ class AclMenuRoleController extends Controller
             }
         }
 
-        return view('user.role.edit', compact('menus', 'acl_role_info', 'menuAccess', 'menuAccessArray'));
+        return view('user.role.edit', compact('menus', 'get_role_info', 'menuAccess', 'menuAccessArray'));
     }
 
     public function role_update(Request $request, $id){
