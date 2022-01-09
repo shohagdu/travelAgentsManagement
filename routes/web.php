@@ -211,6 +211,13 @@ Route::post('/bank_credit_row_data', [BankRecordController::class, "bank_credit_
 Route::post('/bank_credit_delete', [BankRecordController::class, "bank_credit_delete"])->name('bank_credit_delete');
 Route::post('/get_bank_credit_list_data', [BankRecordController::class, "get_bank_credit_list_data"])->name('get_bank_credit_list_data');
 
+// Bank report 
+Route::get('/bank-deposit', [BankRecordController::class, "bank_deposit"])->name('bank_deposit');
+Route::get('/bank-deposit-pdf', [BankRecordController::class, "bank_deposit_pdf"])->name('bank_deposit_pdf');
+Route::get('/bank-statement', [BankRecordController::class, "bank_statement"])->name('bank_statement');
+Route::post('/bankStatementAction', [BankRecordController::class, "bankStatementAction"])->name('bankStatementAction');
+Route::get('/bank_statement_pdf/{id}/{from_date}/{to_date}', [BankRecordController::class, "bank_statement_pdf"])->name('bank_statement_pdf');
+
 Route::get('/clear', function () {
 
     Artisan::call('cache:clear');

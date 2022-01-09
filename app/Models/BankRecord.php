@@ -84,4 +84,94 @@ class BankRecord extends Model
         $data['data'] = $allData;
         return $data;
     }
+
+    public function bank_deposit(){
+        //DB::enableQueryLog();
+                    
+         return $query  = DB::table("banks AS BNK")
+                        ->select('BNK.name as name_name','BNK.account_no','BNK.branch_name','cr.creditAmount as credit_amount','dr.debitAmount as debit_amount')
+                        ->leftJoinSub(self::CreditAmountSubQuery(), 'cr', function($pcs) {
+                        $pcs->on('cr.bank_id', '=', 'BNK.id');
+                        })
+                        ->leftJoinSub(self::getDebitAmount(), 'dr', function($pcs) {
+                        $pcs->on('dr.bank_id', '=', 'BNK.id');
+                        })
+                        ->where('BNK.type', '=', 2)
+                        ->where('BNK.is_active', '=',1)
+                        ->orderBy('BNK.id', 'DESC')
+                        ->groupBy('BNK.id')
+                        ->get();
+
+    //    echo "<pre>";
+    //    print_r(DB::getQueryLog($query));exit;          
+    }
+
+    public static  function CreditAmountSubQuery()
+    {
+        return DB::table("bank_records")
+            ->selectRaw('SUM(amount) AS creditAmount,bank_id')
+            ->where('type','=',2)
+            ->where('is_active','=',1)
+            ->groupBy('bank_id');
+    }
+    public static  function getDebitAmount()
+    {
+        return DB::table("bank_records as drTbl")
+            ->selectRaw('SUM(drTbl.amount) AS debitAmount,drTbl.bank_id')
+            ->where('drTbl.type','=',1)
+            ->where('drTbl.is_active','=',1)
+            ->groupBy('drTbl.bank_id');
+    }
+
+    public function searchBankStatement($receive)
+    {
+        $query = DB::table("bank_records AS BARD")
+            ->leftJoin('banks AS BNK', function($join){
+                $join->on('BNK.id', '=', 'BARD.bank_id');
+            })
+            ->where('BARD.is_active',1)
+            ->select('BARD.amount','BARD.type','BARD.transaction_date', 'BARD.remarks','BNK.name as bank_name')
+            ->orderBy('BARD.transaction_date', 'ASC')
+            ->orderBy('BARD.id', 'ASC');
+
+        if(!empty($receive['bank_id'])){
+            $query->Where(function ($query) use ($receive) {
+                $query->orWhere('BARD.bank_id', '=' , $receive['bank_id']);
+                $query->orWhere('BARD.bank_id', '=' , $receive['bank_id']);
+            });
+        }
+        if(!empty($receive['from_date']) && !empty($receive['to_date'])){
+            $query->whereBetween("BARD.transaction_date", [$receive['from_date'], $receive['to_date']]);
+
+        }
+    
+        $data['data'] = $query->get();
+
+        return $data;
+    }
+
+    // bank debit amount
+    public function BankDebitBalance($receive)
+    {
+         $query  = DB::table('bank_records')->select('amount')
+                                            ->where('bank_id', $receive['bank_id'])
+                                            ->where("type", "=", 1);
+
+                                            if(!empty($receive['from_date'])) {
+                                                $query->where("transaction_date", "<", $receive['from_date']);
+                                            }
+         return $query->sum('amount');
+    }
+    // bank credit amount
+    public function BankCreditBalance($receive)
+    {
+             $query  = DB::table('bank_records')->select('amount')
+                                                ->where('bank_id', $receive['bank_id'])
+                                                ->where("type", "=", 2);
+
+                                                if(!empty($receive['from_date'])) {
+                                                    $query->where("transaction_date", "<", $receive['from_date']);
+                                                }
+             return $query->sum('amount');
+    }
 }

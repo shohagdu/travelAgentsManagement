@@ -12,6 +12,17 @@ $( document ).ready(function() {
         $(".select2").select2();
     }
 });
+jQuery(".mydatepicker").datepicker();
+jQuery("#from_date").datepicker({
+autoclose: true,
+todayHighlight: true,
+format: 'dd-mm-yyyy',
+});
+jQuery("#to_date").datepicker({
+    autoclose: true,
+    todayHighlight: true,
+    format: 'dd-mm-yyyy',
+});
 
 jQuery("#transaction_date").datepicker({
     autoclose: true,
@@ -394,3 +405,26 @@ $(document).on("click",".BankCreditDelete",function(){
                     }
         });
 });
+
+function searchBankStatementBtn(){
+    $(".showReports").html('')
+   // $('#searchAgentStatement').attr('disabled',true);
+    $.ajax({
+        url:"bankStatementAction",
+        type:"POST",
+        // dataType:"json",
+        data: $("#bankStatementForm").serialize(),
+        processData: false,
+        // contentType: false,
+        success:function(response){
+            console.log(response);
+            $('#searchBankStatement').attr('disabled',false);
+            if (response != '') {
+                $(".showReports").html(response)
+            }else{
+                $("#showReports").html('')
+            }
+        }
+    });
+
+}

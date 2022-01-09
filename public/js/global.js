@@ -14,6 +14,13 @@ $( document ).ready(function() {
         $("#zero_config").DataTable();
     }
  });
+// datatable
+$( document ).ready(function() {
+    var TableEle = document.getElementById("example");
+    if(TableEle){
+        $("#example").DataTable();
+    }
+ });
 
 //  select2
 $( document ).ready(function() {
