@@ -140,7 +140,7 @@ class SaleController extends Controller
             $sale_id   = DB::getPdo()->lastInsertId();
 
             $sale_detail_data = [];
-
+            $addTotalAmount = 0; 
             foreach($flight_id as $key => $item){
                 $sale_detail_data[] = [
                     'sale_id'           => $sale_id,
@@ -162,6 +162,8 @@ class SaleController extends Controller
                     'created_ip'        => request()->ip(),
                     'created_at'        => date('Y-m-d H:i:s'),
                 ];
+
+                $addTotalAmount += $add[$key];
             }
 
             $sale_save = DB::table('sale_details')->insert($sale_detail_data);
@@ -183,6 +185,23 @@ class SaleController extends Controller
             $transaction_data->created_at    = date('Y-m-d H:i:s');
 
             $transaction_save = $transaction_data->save();
+
+            // iata table data insert
+            $iata_data = [
+                'sales_id'   => $invoice_no,
+                'type'       => 1,
+                'add_amount' => $addTotalAmount,
+                'amount'     => $request->invoice_amount,
+                'remarks'    => $request->remarks,
+                'date'       => date('Y-m-d'),
+                "is_active"  => 1,
+                'created_by' => Auth::user()->id,
+                'created_ip' => request()->ip(),
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $iata_save = DB::table('iata_transaction_infos')->insert($iata_data);
+
 
         }else{
 

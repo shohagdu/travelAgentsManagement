@@ -14,6 +14,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\BillCollectionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\BankRecordController;
+use App\Http\Controllers\IataController;  
 
 /*
 |--------------------------------------------------------------------------
@@ -217,6 +218,20 @@ Route::get('/bank-deposit-pdf', [BankRecordController::class, "bank_deposit_pdf"
 Route::get('/bank-statement', [BankRecordController::class, "bank_statement"])->name('bank_statement');
 Route::post('/bankStatementAction', [BankRecordController::class, "bankStatementAction"])->name('bankStatementAction');
 Route::get('/bank_statement_pdf/{id}/{from_date}/{to_date}', [BankRecordController::class, "bank_statement_pdf"])->name('bank_statement_pdf');
+
+// IATA Report 
+Route::get('/iata-debit', [IataController::class, "iata_debit"])->name('iata_debit');
+Route::post('/iata-debit-save', [IataController::class, "iata_debit_store"])->name('iata_debit_store');
+Route::post('/iata_debit_row_data', [IataController::class, "iata_debit_row_data"])->name('iata_debit_row_data');
+Route::post('/iata_debit_delete', [IataController::class, "iata_debit_delete"])->name('iata_debit_delete');
+Route::post('/get_iata_debit_list_data', [IataController::class, "get_iata_debit_list_data"])->name('get_iata_debit_list_data');
+
+// IATA Report 
+Route::get('/iata-credit', [IataController::class, "iata_credit"])->name('iata_credit');
+Route::post('/iata-credit-save', [IataController::class, "iata_credit_store"])->name('iata_credit_store');
+Route::post('/iata_credit_row_data', [IataController::class, "iata_credit_row_data"])->name('iata_credit_row_data');
+Route::post('/iata_credit_delete', [IataController::class, "iata_credit_delete"])->name('iata_credit_delete');
+Route::post('/get_iata_credit_list_data', [IataController::class, "get_iata_credit_list_data"])->name('get_iata_credit_list_data');
 
 Route::get('/clear', function () {
 
