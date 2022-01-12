@@ -71,4 +71,21 @@ class IataTransactionInfo extends Model
         $data['data'] = $allData;
         return $data;
     }
+
+    public function searchIataStatement($receive)
+    {
+        $query = DB::table("iata_transaction_infos")
+            ->where('is_active',1)
+            ->select('type','amount','add_amount','date', 'remarks')
+            ->orderBy('date', 'ASC')
+            ->orderBy('id', 'ASC');
+
+        if(!empty($receive['from_date']) && !empty($receive['to_date'])){
+            $query->whereBetween("date", [$receive['from_date'], $receive['to_date']]);
+        }
+    
+        $data['data'] = $query->get();
+
+        return $data;
+    }
 }

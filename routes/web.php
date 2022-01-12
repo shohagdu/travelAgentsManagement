@@ -233,6 +233,10 @@ Route::post('/iata_credit_row_data', [IataController::class, "iata_credit_row_da
 Route::post('/iata_credit_delete', [IataController::class, "iata_credit_delete"])->name('iata_credit_delete');
 Route::post('/get_iata_credit_list_data', [IataController::class, "get_iata_credit_list_data"])->name('get_iata_credit_list_data');
 
+Route::get('/iata-statement', [IataController::class, "iata_statement"])->name('iata_statement');
+Route::post('/iataStatementAction', [IataController::class, "iataStatementAction"])->name('iataStatementAction');
+Route::get('/iata_statement_pdf/{from_date}/{to_date}', [IataController::class, "iata_statement_pdf"])->name('iata_statement_pdf');
+
 Route::get('/clear', function () {
 
     Artisan::call('cache:clear');

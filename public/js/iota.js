@@ -17,6 +17,16 @@ jQuery("#trans_date").datepicker({
     todayHighlight: true,
     format: 'dd-mm-yyyy',
     });  
+jQuery("#from_date").datepicker({
+    autoclose: true,
+    todayHighlight: true,
+    format: 'dd-mm-yyyy',
+    });
+jQuery("#to_date").datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd-mm-yyyy',
+    });
 
 // IATA debit modoal open
 function AddIATADebit(){
@@ -196,12 +206,12 @@ $(document).ready(function(){
     get_iata_credit_info_list();
 }); 
 
-// iata debit  list
-var iata_table;
+// iata credit  list
+var iata_table2;
 
 function get_iata_credit_info_list() {
     let target = $("#asset").val();
-    iata_table = $('#IATACreditListTable').DataTable({
+    iata_table2 = $('#IATACreditListTable').DataTable({
         scrollCollapse: true,
         autoWidth: false,
         responsive: true,
@@ -224,7 +234,7 @@ function get_iata_credit_info_list() {
              	title: "SL",
                 data: null,
                 render: function(){
-                    return iata_table.page.info().start + iata_table.column(0).nodes().length;
+                    return iata_table2.page.info().start + iata_table2.column(0).nodes().length;
                 }           
             },
             {
@@ -250,6 +260,15 @@ function get_iata_credit_info_list() {
         ],
     });
 }
+
+// search iata credit list
+function search_iata_credit_reports ()
+{
+    trans_date = $("#trans_date").val();
+    $("#IATACreditListTable").dataTable().fnSettings().ajax.data.trans_date = trans_date;
+    iata_table2.ajax.reload();
+}
+
 //  IATA Credit Save
 $(document).on("submit","#IATACreditForm",function (e){
     var target  = $("#target").val();
@@ -316,3 +335,26 @@ $(document).on("click",".IATACreditDelete",function(){
                 }
         });
 });
+
+function searchIataStatementBtn(){
+    $(".showReports").html('')
+   // $('#searchAgentStatement').attr('disabled',true);
+    $.ajax({
+        url:"iataStatementAction",
+        type:"POST",
+        // dataType:"json",
+        data: $("#iataStatementForm").serialize(),
+        processData: false,
+        // contentType: false,
+        success:function(response){
+            console.log(response);
+            $('#searchIataStatement').attr('disabled',false);
+            if (response != '') {
+                $(".showReports").html(response)
+            }else{
+                $("#showReports").html('')
+            }
+        }
+    });
+
+}
