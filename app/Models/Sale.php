@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 use DB;
 
 class Sale extends Model
@@ -104,17 +105,28 @@ class Sale extends Model
             ->get();
     }
     
-    public function search_today_sale_balance($sale_category_id)
+    public function search_today_sale_balance($receive)
     {
-        return $query = DB::table("sales AS SALE")
+        $from_date = new Carbon($receive['from_date']);
+        $to_date  = new Carbon($receive['to_date']);
+
+        $query = DB::table("sales AS SALE")
             ->select('SALE.sale_amount', 'SALE.discount', 'SALE.amount', 'SALE.sale_category_id', 'AGRD.name as agent_name')
             ->join('agent_records AS AGRD', function ($join) {
                 $join->on('AGRD.id', '=', 'SALE.agent_id');
             })
-            ->where('SALE.created_at', '>=', date('Y-m-d') . ' 00:00:00')
-            ->where('SALE.sale_category_id', '=', $sale_category_id)
-            ->orderBy('SALE.id', 'DESC')
-            ->get();
+            ->orderBy('SALE.id', 'DESC');
+
+            if(!empty($receive['sale_category_id'])){
+                $query->Where(function ($query) use ($receive) {
+                    $query->orWhere('SALE.sale_category_id', '=' , $receive['sale_category_id']);
+                });
+            }
+            if(!empty($from_date) && !empty($to_date)){
+                $query->whereBetween("SALE.created_at", [$from_date, $to_date ]);
+            }
+            
+           return $data = $query->get();
     }
 
     public function today_credit_balance()

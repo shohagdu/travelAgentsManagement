@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\IataTransactionInfo;
+use App\Models\AgentRecord;
 use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -18,6 +19,39 @@ class IataController extends Controller
 	    $this->middleware('auth');
         $this->iata_transaction_model = new IataTransactionInfo();
 	}
+    public function iata_sale_list()
+    {
+        $agent_info   = AgentRecord::all();
+        return view('iata_report.iata_sale_list', compact('agent_info'));
+    }
+    public function get_iata_sale_list_data(Request $request)
+    {
+        header("Content-Type: application/json");
+        $sale_category_id   = $request->sale_category_id;
+        $start = $request->start;
+        $limit = $request->length;
+        $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;
+
+
+        $request_data = [
+            'start'   => $start,
+            'limit'   => $limit,
+            'sale_category_id' => $sale_category_id,
+        ];
+
+        // echo "<pre>";
+        // print_r($request_data);exit;
+
+        $response = $this->iata_transaction_model->get_iata_sale_list_data($request_data, $search_content);
+
+        $count = DB::select("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
+        $response['recordsTotal']    = $count;
+        $response['recordsFiltered'] = $count;
+        $response['draw']            = $request->draw;
+
+        echo json_encode($response);
+    }
+
     public function iata_debit(){
       
         return view('iata_report.iata_debit');
@@ -207,9 +241,6 @@ class IataController extends Controller
          }
     
          $data  = $this->iata_transaction_model->searchIataStatement($param);
- 
-         //  echo "<pre>";
-         // print_r($data);exit;      
  
          $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
              $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));

@@ -33,26 +33,25 @@
             <td>{{ $i++ }}</td>
             <td nowrap=""> {{ (!empty($row->transaction_date)?date('d M, Y',strtotime($row->transaction_date)):'') }}</td>
             <td class="text-left">{{$row->remarks}} </td>
-            <td> 
+            <td class="text-right"> 
                 @if ($row->type == 1)
-                  {{ $row->amount}}
+                  {{ number_format((float) $row->amount, 2) }}
                   @php $dr = $row->amount;   $dr_total += $row->amount; @endphp
                 @else
                 @php $dr = 0;  @endphp
                 @endif 
                 </td>
-              <td>   
+              <td class="text-right">   
                 @if ($row->type == 2)
-                {{ $row->amount}}
+                {{ number_format((float) $row->amount, 2) }}
                 @php $cr =  $row->amount;  $cr_total += $row->amount; @endphp
                 @else
                 @php $cr = 0;  @endphp
                 @endif  
               </td>
-              <td> 
-                @php
-                 echo  $balance = $balance + ( $cr - $dr) ;
-                @endphp 
+              <td class="text-right"> 
+                @php $balance = $balance + ( $cr - $dr) ; @endphp
+                {{ number_format((float) $balance, 2) }} 
               </td>
         </tr>
         @endforeach

@@ -138,6 +138,42 @@
                 </div>
             </a>
         </div>
+         <!-- Column -->
+         <div class="col-md-6 col-lg-3 col-xlg-3">
+            <a class="text-white">
+                <div class="card">
+                    <div class="box bg-secondary text-center">
+                        <h1 class="font-light text-white">
+                            @php 
+                             $get_credit_deposit = ($get_credit_deposit->creditAmount > 0 ) ?  $get_credit_deposit->creditAmount : 0;
+                             $get_debit_deposit  = ($get_debit_deposit->debitAmount > 0) ?  $get_debit_deposit->debitAmount : 0;
+                             $deposit = ($get_credit_deposit - $get_debit_deposit);
+                              echo number_format((float) $deposit, 2);
+                             @endphp
+                           
+                        </h1>
+                        <h6 class="text-white">Bank  Deposit Amount</h6>
+                        <a href="{{ route('agent-list') }}" class="btn btn-xs btn-warning text-white"> <i
+                                class="mdi mdi-view-day"></i> View </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+          <!-- Column -->
+          {{-- <div class="col-md-6 col-lg-3 col-xlg-3">
+            <a class="text-white">
+                <div class="card">
+                    <div class="box CurrentTodayBalanceTxtBg text-center">
+                        <h1 class="font-light text-white">
+          
+                        </h1>
+                        <h6 class="text-white">IATA Amount </h6>
+                        <a href="" class="btn btn-xs btn-warning text-white"> <i
+                                class="mdi mdi-view-day"></i> View </a>
+                    </div>
+                </div>
+            </a>
+        </div> --}}
 
     </div>
 

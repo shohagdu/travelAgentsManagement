@@ -9,8 +9,8 @@
 <div class="row margin-top-60px"><br><br><br><br><br>
     <table class="custom-table  width-100" style="float: right">
         <tr>
-            <td> <h4>Today Sale Balance List  </h4> </td>
-            <td class="width-13" ><span style="text-align: right; float: right;"> Date: {{date('d-M-Y')}}</span> </td>
+            <td> <h4> Today Sale Balance List  </h4> </td>
+            <td class="width-13" ><span style="text-align: right; float: right;"> From Date: {{date('d-M-Y', strtotime($from_date))}} To Date: {{date('d-M-Y', strtotime($to_date))}}  </span> </td>
         </tr>
     </table>
 </div>
@@ -54,14 +54,14 @@
             }
         @endphp  
       </td>
-      <td>{{ $item->sale_amount}}</td>
-      <td>{{ $item->discount}}</td>
-      <td>@php  echo $item->amount; $total_amount += $item->amount;  @endphp</td>
+      <td  class="text-right"> {{ number_format((float) $item->sale_amount, 2 )}}</td>
+      <td  class="text-right"> {{ number_format((float) $item->discount, 2 )}}</td>
+      <td  class="text-right">@php  echo number_format((float) $item->amount, 2); $total_amount += $item->amount;  @endphp</td>
     </tr>
     @endforeach
     <tr>
-      <th colspan="5"> <span class="TotalTextSpan"> Total &nbsp;</span></th>
-      <th>  &nbsp; {{ number_format((float)$total_amount, 2, '.', '')}} </th>
+      <th  class="text-right" colspan="5"> <span class="TotalTextSpan"> Total &nbsp;</span></th>
+      <th  class="text-right">  &nbsp; {{ number_format((float)$total_amount, 2, '.', '')}} </th>
     </tr>
     @else
         <tr>

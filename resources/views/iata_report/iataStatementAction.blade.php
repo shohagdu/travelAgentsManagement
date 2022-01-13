@@ -59,12 +59,29 @@
                 </td>
             </tr>
         @endforeach
+        <tr>
+            <th colspan="4" class="text-end"> Total </th>
+            <th class="text-end "> 
+                {{number_format((float) $sale_total, 2)}}
+            </th>
+            <th class="text-end "> 
+                {{number_format((float) $dr_total, 2)}}
+            </th>
+            <th class="text-end "> 
+                {{number_format((float) $cr_total, 2)}}
+            </th>
+        </tr>
+        <tr>
+            <th colspan="6" class="text-end"> Balance </th>
+            <th class="text-end "> 
+                @php $balance = $sale_total - ($cr_total + $dr_total) @endphp
+                {{number_format((float) $balance, 2)}}
+            </th>
+        </tr>
     @else
         <tr>
             <td colspan="6" class="text-center">Please Select Filter Information</td>
         </tr>
     @endif
-
-
     </tbody>
 </table>

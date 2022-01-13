@@ -7,7 +7,9 @@ use App\Models\Sale;
 use App\Models\SaleCategory;
 use App\Models\Bank;
 use App\Models\AgentRecord;
+use App\Models\BankRecord;
 use App\Models\AccTransactionInfo;
+use App\Models\IataTransactionInfo;
 use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -27,6 +29,9 @@ class DashboardController extends Controller
 	    $this->middleware('auth');
         $this->sale_model = new Sale();
         $this->transaction_model = new AccTransactionInfo();
+        $this->bank_record_model = new BankRecord();
+        $this->iata_transaction_model = new IataTransactionInfo();
+        
 	}
     public function index()
     {
@@ -42,6 +47,9 @@ class DashboardController extends Controller
         $todayTransaction     = ($todayTransactionDr-$todayTransactionCr);
         $currentDueAmount     = $this->sale_model->currentDueAmount();
 
+        $get_credit_deposit   = $this->bank_record_model->get_credit_deposit();
+        $get_debit_deposit    = $this->bank_record_model->get_debit_deposit();
+
         return view('dashboard', compact(
                                 'today_sale_balance',
                                 'today_credit_balance',
@@ -49,6 +57,8 @@ class DashboardController extends Controller
                                 'total_agent',
                                 'todayTransaction',
                                 'currentDueAmount',
+                                'get_credit_deposit',
+                                'get_debit_deposit',
         ));
     }
 
@@ -61,14 +71,28 @@ class DashboardController extends Controller
     }
     public function searchTodaySaleBalanceBtnAction(Request $request)
     {
-        $sale_category_id    = (!empty($request->sale_category_id) ? $request->sale_category_id : '');
-        $today_sale_balance  = $this->sale_model->search_today_sale_balance($sale_category_id);
+        $param['sale_category_id'] = (!empty($request->sale_category_id) ? $request->sale_category_id : '');
+        $param['from_date']        = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-d'));
+        $param['to_date']          = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d'));
+        
+        $today_sale_balance  = $this->sale_model->search_today_sale_balance($param);
 
-        return view('dashboard_view.today_sale_balance_view_search', compact('today_sale_balance','sale_category_id'));
+        return view('dashboard_view.today_sale_balance_view_search', ['today_sale_balance'=>$today_sale_balance, 'param_info' => $param]);
     }
-    public function search_today_sale_balance_pdf($sale_category_id) {
+    public function search_today_sale_balance_pdf($sale_category_id,$from_date=NULL, $to_date=NULL) {
         $organization_info  = OrganizationSetup::first();
-        $today_sale_balance  = $this->sale_model->search_today_sale_balance($sale_category_id);
+        
+        if(!empty($sale_category_id)){
+            $param['sale_category_id']=$sale_category_id;
+        }
+        if(!empty($from_date)){
+            $param['from_date']=$from_date;
+        }
+        if(!empty($to_date)){
+            $param['to_date']=$to_date;
+        }
+
+        $today_sale_balance  = $this->sale_model->search_today_sale_balance($param);
 
         $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
             $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));
@@ -95,7 +119,7 @@ class DashboardController extends Controller
             $mpdf->AddPage('P', '', '', '', '', $margin_left, $margin_right, $margin_top, $margin_bottom, 5, 5, '', '', '', '', '', '', '', '', '', $paper_type);
             }];
 
-        $pdf = PDF::loadHtml(view('pdf.search_today_sale_balance_pdf', compact('today_sale_balance')), $config);
+        $pdf = PDF::loadHtml(view('pdf.search_today_sale_balance_pdf', compact('today_sale_balance','from_date','to_date')), $config);
 
         return $pdf->stream('TodaySaleBalance.pdf');
     }

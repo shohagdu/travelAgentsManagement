@@ -105,11 +105,24 @@ class BankRecord extends Model
     //    echo "<pre>";
     //    print_r(DB::getQueryLog($query));exit;          
     }
-
+    public function get_credit_deposit(){
+         return DB::table("bank_records")
+                    ->selectRaw('SUM(amount) AS creditAmount')
+                    ->where('type','=',2)
+                    ->where('is_active','=',1)
+                    ->first();    
+    }
+    public function get_debit_deposit(){
+        return DB::table("bank_records")
+                   ->selectRaw('SUM(amount) AS debitAmount')
+                   ->where('type','=',1)
+                   ->where('is_active','=',1)
+                   ->first();    
+    }    
     public static  function CreditAmountSubQuery()
     {
         return DB::table("bank_records")
-            ->selectRaw('SUM(amount) AS creditAmount,bank_id')
+            ->selectRaw('SUM(amount) AS creditAmount')
             ->where('type','=',2)
             ->where('is_active','=',1)
             ->groupBy('bank_id');

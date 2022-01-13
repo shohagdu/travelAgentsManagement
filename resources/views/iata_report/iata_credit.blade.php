@@ -53,7 +53,7 @@
       </div>
       <div class="modal-body">   
         <div class="form-group row">
-          <label for="payment_amount" class="col-sm-3 text-end control-label col-form-label"> Debit Amount </label>
+          <label for="payment_amount" class="col-sm-3 text-end control-label col-form-label"> Credit Amount </label>
           <div class="col-sm-9">
             <input type="text" name="amount" id="amount" class="form-control" autocomplete="off" placeholder="0.00">
           </div>

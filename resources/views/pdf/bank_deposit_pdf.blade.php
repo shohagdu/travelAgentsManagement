@@ -34,12 +34,12 @@
       <td>{{ $item->name_name}}</td>
       <td>{{ $item->account_no}}</td>
       <td>{{ $item->branch_name}}</td>
-      <td class="text-end width-20"> {{ !empty($item->credit_amount-$item->debit_amount)?number_format($item->credit_amount-$item->debit_amount,2):'0.00' }}  @php  $total_amount+=($item->credit_amount-$item->debit_amount); @endphp </td>
+      <td class="text-right width-20"> {{ !empty($item->credit_amount-$item->debit_amount)?number_format($item->credit_amount-$item->debit_amount,2):'0.00' }}  @php  $total_amount+=($item->credit_amount-$item->debit_amount); @endphp </td>
     </tr>
     @endforeach
     <tr>
-      <th colspan="4"> <span class="TotalTextSpan"> Total &nbsp;</span></th>
-      <th>  &nbsp; {{ number_format((float)$total_amount, 2, '.', '')}} </th>
+      <th colspan="4"> <span class="TotalTextSpan "> Total &nbsp;</span></th>
+      <th class="text-right">  &nbsp; <b>  {{ number_format((float)$total_amount, 2, '.', '')}} </b> </th>
     </tr>
     @else
         <tr>

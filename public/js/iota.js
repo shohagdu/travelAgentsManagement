@@ -28,6 +28,79 @@ jQuery("#to_date").datepicker({
         format: 'dd-mm-yyyy',
     });
 
+    //  select2
+$( document ).ready(function() {
+    if ($(".select2").length > 0){
+        $(".select2").select2();
+    }
+});
+
+$(document).ready(function(){
+    get_iata_sale_info_list();
+});
+
+// iata sale list
+var token_table;
+
+function get_iata_sale_info_list() {
+    let target = $("#asset").val();
+
+    token_table = $('#iata_sale_list_table').DataTable({
+        scrollCollapse: true,
+        autoWidth: false,
+        responsive: true,
+        serverSide: true,
+        processing: true,
+        "paging": true,
+        "searching": { "regex": true },
+        "pageLength": 10,
+
+        ajax:{
+            dataType: "JSON",
+            type: "post",
+            url: target + "get_iata_sale_list_data",
+            data: {
+               // _token : user_csrf
+            },
+        },
+        columns:[
+             {
+             	title: "SL",
+                data: null,
+                render: function(){
+                    return token_table.page.info().start + token_table.column(0).nodes().length;
+                }
+            },
+            {
+            	title: "Transaction Date",
+                data: "TransactionDate"
+            },
+            {
+            	title: "Remarks",
+                data: "remarks"
+            },
+            {
+                title: "Add Amount",
+                data: "add_amount"
+            },
+            {
+                title: "Amount",
+                data: "amount"
+            },
+        ],
+    });
+}
+
+// search sale report
+function search_iata_sale_reports ()
+{
+    sale_category_id  = $("#sale_category_id").val();
+
+    $("#iata_sale_list_table").dataTable().fnSettings().ajax.data.sale_category_id = sale_category_id;
+
+    token_table.ajax.reload();
+}
+
 // IATA debit modoal open
 function AddIATADebit(){
     $("#amount").val('');

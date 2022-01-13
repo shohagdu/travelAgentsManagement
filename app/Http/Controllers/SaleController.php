@@ -44,7 +44,6 @@ class SaleController extends Controller
         $sale_category_id   = $request->sale_category_id;
         $agent_id           = $request->agent_id;
 
-
         $start = $request->start;
         $limit = $request->length;
         $search_content = ($request['search']['value'] != '') ? $request['search']['value'] : false;

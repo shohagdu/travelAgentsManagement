@@ -6,7 +6,17 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
+jQuery(".mydatepicker").datepicker();
+jQuery("#from_date").datepicker({
+autoclose: true,
+todayHighlight: true,
+format: 'dd-mm-yyyy',
+});
+jQuery("#to_date").datepicker({
+    autoclose: true,
+    todayHighlight: true,
+    format: 'dd-mm-yyyy',
+});
 // datatable
 $( document ).ready(function() {
     var TableEle = document.getElementById("zero_config");

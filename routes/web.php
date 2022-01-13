@@ -38,7 +38,7 @@ Route::get('/home', [DashboardController::class, 'index'])->name('home');
 Route::get('/dashboard', [DashboardController::class, "index"])->name('dashboard');
 Route::get('/today-sale-balance-view', [DashboardController::class, "today_sale_balance_view"])->name('today-sale-balance-view');
 Route::post('/searchTodaySaleBalanceBtnAction', [DashboardController::class, "searchTodaySaleBalanceBtnAction"])->name('searchTodaySaleBalanceBtnAction');
-Route::get('/search_today_sale_balance_pdf/{id}', [DashboardController::class, "search_today_sale_balance_pdf"])->name('search_today_sale_balance_pdf');
+Route::get('/search_today_sale_balance_pdf/{id}/{from_date}/{to_date}', [DashboardController::class, "search_today_sale_balance_pdf"])->name('search_today_sale_balance_pdf');
 Route::get('/today-credit-balance-view', [DashboardController::class, "today_credit_balance_view"])->name('today-credit-balance-view');
 Route::get('/today-debit-balance-view', [DashboardController::class, "today_debit_balance_view"])->name('today-debit-balance-view');
 
@@ -227,6 +227,8 @@ Route::post('/iata_debit_delete', [IataController::class, "iata_debit_delete"])-
 Route::post('/get_iata_debit_list_data', [IataController::class, "get_iata_debit_list_data"])->name('get_iata_debit_list_data');
 
 // IATA Report 
+Route::get('/iata-sale-list', [IataController::class, "iata_sale_list"])->name('iata-sale-list');
+Route::post('/get_iata_sale_list_data', [IataController::class, "get_iata_sale_list_data"])->name('get_iata_sale_list_data');
 Route::get('/iata-credit', [IataController::class, "iata_credit"])->name('iata_credit');
 Route::post('/iata-credit-save', [IataController::class, "iata_credit_store"])->name('iata_credit_store');
 Route::post('/iata_credit_row_data', [IataController::class, "iata_credit_row_data"])->name('iata_credit_row_data');
