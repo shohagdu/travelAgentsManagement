@@ -102,6 +102,8 @@
 
 .width-4{
     width: 4% !important;
+}.width-7{
+    width: 7% !important;
 }
 
 /*todo:: for PDF*/
@@ -161,4 +163,11 @@
 }
 .paddingRight5px{
     padding-right: 5px;
+}
+.pdf-heading{
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    text-decoration: underline;
+    padding-bottom: 5px;
 }

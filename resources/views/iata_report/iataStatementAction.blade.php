@@ -10,13 +10,14 @@
             <th>Date</th>
             <th>Remarks</th>
             <th>Type</th>
-            <th class="text-end">Sale Amount </th>
-            <th class="text-end">Debit Amount </th>
-            <th class="text-end">Credit Amount </th>
+            <th class="text-end">Sales  </th>
+            <th class="text-end">Debit  </th>
+            <th class="text-end">Credit  </th>
+            <th class="text-end">Balance </th>
         </tr>
     </thead>
     <tbody>
-    @php $sale_total = 0; $dr_total = 0 ; $cr_total = 0; @endphp
+    @php $sale_total = 0; $dr_total = 0 ; $cr_total = 0; $tBalance=0; @endphp
     @if(!empty($record['data']))
         @foreach($record['data'] as $key=>$row)
             <tr>
@@ -33,48 +34,53 @@
                     @endif
 
                 </td>
-                <td class="text-end"> 
+                <td class="text-end">
                     @if ($row->type == 1)
                       {{number_format((float) $row->amount, 2)}}
                       @php $sale = $row->amount;   $sale_total += $row->amount; @endphp
                     @else
                     @php echo $sale = number_format((float) 0, 2);  @endphp
-                    @endif 
+                    @endif
                 </td>
-                <td class="text-end">   
+                <td class="text-end">
                     @if ($row->type == 2)
                     {{number_format((float) $row->amount, 2)}}
                     @php $dr = $row->amount;   $dr_total += $row->amount; @endphp
                     @else
                     @php echo $dr = number_format((float) 0, 2);  @endphp
-                    @endif 
+                    @endif
                 </td>
-                <td class="text-end">   
+                <td class="text-end">
                     @if ($row->type == 3)
                     {{number_format((float) $row->amount, 2)}}
-                    @php $cr =  $row->amount;  $cr_total += $row->amount; @endphp
+                        @php $cr =  $row->amount;  $cr_total += $row->amount; @endphp
                     @else
-                    @php  echo $cr = number_format((float) 0, 2);  @endphp
-                    @endif  
+                        @php  echo $cr = number_format((float) 0, 2);  @endphp
+                    @endif
                 </td>
+                <td class="text-end">
+                        @php  echo number_format( $tBalance += (($sale+$dr) - $cr),2)   @endphp
+                </td>
+
+
             </tr>
         @endforeach
         <tr>
             <th colspan="4" class="text-end"> Total </th>
-            <th class="text-end "> 
+            <th class="text-end ">
                 {{number_format((float) $sale_total, 2)}}
             </th>
-            <th class="text-end "> 
+            <th class="text-end ">
                 {{number_format((float) $dr_total, 2)}}
             </th>
-            <th class="text-end "> 
+            <th class="text-end ">
                 {{number_format((float) $cr_total, 2)}}
             </th>
         </tr>
         <tr>
-            <th colspan="6" class="text-end"> Balance </th>
-            <th class="text-end "> 
-                @php $balance = $sale_total - ($cr_total + $dr_total) @endphp
+            <th colspan="4" class="text-end"> Balance </th>
+            <th class="text-center " colspan="4">
+                @php $balance = (($sale_total +$dr_total) - $cr_total  ) @endphp
                 {{number_format((float) $balance, 2)}}
             </th>
         </tr>

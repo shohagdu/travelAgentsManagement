@@ -53,7 +53,7 @@ class IataController extends Controller
     }
 
     public function iata_debit(){
-      
+
         return view('iata_report.iata_debit');
     }
     public function get_iata_debit_list_data(Request $request)
@@ -77,7 +77,7 @@ class IataController extends Controller
         $response['recordsTotal']    = $count;
         $response['recordsFiltered'] = $count;
         $response['draw']            = $request->draw;
-        
+
         echo json_encode($response);
     }
 
@@ -103,13 +103,13 @@ class IataController extends Controller
 
         // echo "<pre>";
         // print_r($iata_debit_data);exit;
-    
+
         $iata_data_save = $iata_debit_data->save();
 
         return response()->json([
             'status' => $iata_data_save ? 'success' : 'error',
             'msg'    => $iata_data_save ? 'Successfully IATA Debit' : 'Someting went wrong',
-        ]);     
+        ]);
 
     }
 
@@ -132,7 +132,7 @@ class IataController extends Controller
         ]);
     }
     public function iata_credit(){
-      
+
         return view('iata_report.iata_credit');
     }
     public function get_iata_credit_list_data(Request $request)
@@ -156,7 +156,7 @@ class IataController extends Controller
         $response['recordsTotal']    = $count;
         $response['recordsFiltered'] = $count;
         $response['draw']            = $request->draw;
-        
+
         echo json_encode($response);
     }
 
@@ -182,13 +182,13 @@ class IataController extends Controller
 
         // echo "<pre>";
         // print_r($iata_debit_data);exit;
-    
+
         $iata_data_save = $iata_credit_data->save();
 
         return response()->json([
             'status' => $iata_data_save ? 'success' : 'error',
             'msg'    => $iata_data_save ? 'Successfully IATA Credit' : 'Someting went wrong',
-        ]);     
+        ]);
 
     }
 
@@ -216,14 +216,14 @@ class IataController extends Controller
      {
          return view('iata_report.iata_statement');
      }
- 
+
      public function iataStatementAction(Request $request)
      {
          $param['from_date']   = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : '');
          $param['to_date']     = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : '');
- 
+
          $data  = $this->iata_transaction_model->searchIataStatement($param);
- 
+
          return view('iata_report.iataStatementAction', ['record'=>$data, 'param_info' => $param]);
      }
      // statement pdf
@@ -232,16 +232,18 @@ class IataController extends Controller
          $organization_info = OrganizationSetup::first();
          $from_date         = (($from_date=='0000-00-00')?'':$from_date);
          $to_date           = (($to_date=='0000-00-00')?'':$to_date);
- 
+//         echo $from_date;
+//         exit;
+         $param=[];
          if(!empty($from_date)){
              $param['from_date']= $from_date;
          }
          if(!empty($to_date)){
              $param['to_date']= $to_date;
          }
-    
+
          $data  = $this->iata_transaction_model->searchIataStatement($param);
- 
+
          $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
              $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));
              $mpdf->SetWatermarkImage(
@@ -252,23 +254,23 @@ class IataController extends Controller
              $mpdf->showWatermarkImage = true;
              $mpdf->SetTitle('IATA Statement');
              $page_footer_html = view()->make('pdf.pdfHeader', ['organization_info'=>$organization_info])->render();
- 
+
              $mpdf->SetHTMLHeader($page_footer_html);
- 
+
              $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y');
              $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
- 
+
              $margin_left   = 5;
              $margin_right  = 5;
-             $margin_top    = 10;
+             $margin_top    = 28;
              $margin_bottom = 5;
              $paper_type    = 'a4';
- 
+
              $mpdf->AddPage('P', '', '', '', '', $margin_left, $margin_right, $margin_top, $margin_bottom, 5, 5, '', '', '', '', '', '', '', '', '', $paper_type);
              }];
- 
+
              $pdf = PDF::loadHtml(view('pdf.iata_statement_pdf', compact('from_date','to_date','data')), $config);
-        
+
              return $pdf->stream('iata_statement_pdf.pdf');
      }
 }

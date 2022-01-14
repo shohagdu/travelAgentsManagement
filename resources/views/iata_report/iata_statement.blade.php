@@ -16,7 +16,7 @@
                 <div class="card-header">
                     <h5 class="card-title mb-0 lefttButtonText">IATA Statement </h5>
                     <a href="{{ route('iata_statement')}}" class="btn btn-danger btn-sm text-white rightButton"> <i class="mdi mdi-refresh"></i>  Refresh  </a>
-                    
+
                 </div>
                 <div class="card-body">
                     <form method="post" id="iataStatementForm"  action="javascript:void(0)" >
@@ -49,13 +49,14 @@
                                     <th>Date</th>
                                     <th>Remarks</th>
                                     <th>Type</th>
-                                    <th>Sale Amount</th>
-                                    <th>Debit Amount</th>
-                                    <th>Credit Amount</th>
+                                    <th class="text-end">Sales  </th>
+                                    <th class="text-end">Debit  </th>
+                                    <th class="text-end">Credit  </th>
+                                    <th class="text-end">Balance </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <td colspan="7" class="text-center">Please Select Filter Information</td>
+                                <td colspan="8" class="text-center">Please Select Filter Information</td>
                             </tbody>
                         </table>
                     </div>
