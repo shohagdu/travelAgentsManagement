@@ -6,7 +6,7 @@
 </style>
 <link rel="stylesheet" href="{{ asset('public/css/invoice.css')}}">
 
-<div class="row margin-top-10px"><br><br><br><br>
+<div class="row margin-top-10px">
     <table class="custom-table  width-100" style="float: right">
         <tr>
             <td class="width-10"> Agent Name</td>

@@ -160,8 +160,8 @@ class ReportController extends Controller
 
             $margin_left   = 5;
             $margin_right  = 5;
-            $margin_top    = 10;
-            $margin_bottom = 5;
+            $margin_top    = 30;
+            $margin_bottom = 7;
             $paper_type    = 'a4';
 
             $mpdf->AddPage('P', '', '', '', '', $margin_left, $margin_right, $margin_top, $margin_bottom, 5, 5, '', '', '', '', '', '', '', '', '', $paper_type);
