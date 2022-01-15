@@ -142,7 +142,7 @@
          <div class="col-md-6 col-lg-3 col-xlg-3">
             <a class="text-white">
                 <div class="card">
-                    <div class="box bg-secondary text-center">
+                    <div class="box BankDepositTxtBg text-center">
                         <h1 class="font-light text-white">
                             @php 
                              $get_credit_deposit = ($get_credit_deposit->creditAmount > 0 ) ?  $get_credit_deposit->creditAmount : 0;
@@ -160,20 +160,20 @@
             </a>
         </div>
           <!-- Column -->
-          {{-- <div class="col-md-6 col-lg-3 col-xlg-3">
+         <div class="col-md-6 col-lg-3 col-xlg-3">
             <a class="text-white">
                 <div class="card">
-                    <div class="box CurrentTodayBalanceTxtBg text-center">
+                    <div class="box IATAAmountTxtBg text-center">
                         <h1 class="font-light text-white">
-          
+                           {{ !empty($get_iata_amount) ? number_format((float) $get_iata_amount, 2) : 0.00}}
                         </h1>
-                        <h6 class="text-white">IATA Amount </h6>
+                        <h6 class="text-white"> IATA Amount </h6>
                         <a href="" class="btn btn-xs btn-warning text-white"> <i
                                 class="mdi mdi-view-day"></i> View </a>
                     </div>
                 </div>
             </a>
-        </div> --}}
+        </div> 
 
     </div>
 

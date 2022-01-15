@@ -118,5 +118,25 @@ class IataTransactionInfo extends Model
 
         return $data;
     }
-    
+    public function get_sale_iata(){
+        return DB::table("iata_transaction_infos")
+                   ->selectRaw('SUM(amount) AS saleAmount')
+                   ->where('type','=',1)
+                   ->where('is_active','=',1)
+                   ->first();    
+    }
+   public function get_debit_iata(){
+       return DB::table("iata_transaction_infos")
+                  ->selectRaw('SUM(amount) AS debitAmount')
+                  ->where('type','=',2)
+                  ->where('is_active','=',1)
+                  ->first();    
+   }
+   public function get_credit_iata(){
+    return DB::table("iata_transaction_infos")
+               ->selectRaw('SUM(amount) AS creditAmount')
+               ->where('type','=',3)
+               ->where('is_active','=',1)
+               ->first();    
+    }
 }

@@ -49,6 +49,10 @@ class DashboardController extends Controller
 
         $get_credit_deposit   = $this->bank_record_model->get_credit_deposit();
         $get_debit_deposit    = $this->bank_record_model->get_debit_deposit();
+        $get_sale_iata        = $this->iata_transaction_model->get_sale_iata();
+        $get_credit_iata      = $this->iata_transaction_model->get_credit_iata();
+        $get_debit_iata       = $this->iata_transaction_model->get_debit_iata();
+        $get_iata_amount      = ($get_sale_iata->saleAmount +$get_debit_iata->debitAmount) - $get_credit_iata->creditAmount;
 
         return view('dashboard', compact(
                                 'today_sale_balance',
@@ -59,6 +63,7 @@ class DashboardController extends Controller
                                 'currentDueAmount',
                                 'get_credit_deposit',
                                 'get_debit_deposit',
+                                'get_iata_amount',
         ));
     }
 

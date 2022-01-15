@@ -200,6 +200,9 @@
                                     </span>
                                     @enderror
                                 </p>
+                                <p><span> Date </span>
+                                    <input id="sale_date" name="sale_date" type="text" value="{{ date('d-m-Y') }}" class="saleFooterText" placeholder="dd/mm/yyyy">
+                                </p>
                                 <p>
                                     <input type="hidden" name="target" id="target" value="{{ asset('')}}">
                                     <button type="submit" id="SaleSaveBtn" class="btn btn-primary FlightSaveBtn">
@@ -226,5 +229,6 @@
     <script src="{{ asset('public/js/sweetalert.min.js')}}"></script>
     <script src="{{ asset('public/assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
     <script src="{{ asset('public/assets/libs/select2/dist/js/select2.min.js')}}"></script>
+    <script src="{{ asset('public/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ asset('public/js/sale.js')}}"></script>
 @endsection

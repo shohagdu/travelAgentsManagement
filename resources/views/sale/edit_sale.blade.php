@@ -185,6 +185,9 @@
                     </span>
                     @enderror
                    </p>
+                   <p><span> Date </span>
+                    <input id="sale_date" name="sale_date" type="text" value="{{ date('d-m-Y', strtotime( $sale_data->sale_date)) }}" class="saleFooterText" placeholder="dd/mm/yyyy">
+                </p>
                    <p>
                     <input type="hidden" name="target" id="target" value="{{ asset('')}}">
                     <input type="hidden" name="id" id="id" value="{{ $sale_data->id}}">
@@ -195,7 +198,6 @@
                 </div>
             </div>
             </div>
-{{--          </div>--}}
           <div class="border-top">
             <div class="card-body">
 
@@ -209,5 +211,6 @@
 
 @section('js')
 <script src="{{ asset('public/js/sweetalert.min.js')}}"></script>
+<script src="{{ asset('public/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ asset('public/js/sale.js')}}"></script>
 @endsection

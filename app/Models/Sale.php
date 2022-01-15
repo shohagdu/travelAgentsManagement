@@ -63,8 +63,8 @@ class Sale extends Model
             ->select(DB::raw('SQL_CALC_FOUND_ROWS SALE.id'), 'SALE.sale_amount', 'SALE.discount', 'SALE.amount', 'SALE.sale_category_id','SALE.remarks', 'AGRD.name as agent_name')
             ->offset($receive['start'])
             ->limit($receive['limit'])
-            //->whereRaw('Date(SALE.created_at) = CURDATE()')
-            ->where('SALE.created_at', '>=', date('Y-m-d') . ' 00:00:00')
+            ->where('SALE.sale_date', '=', date('Y-m-d'))
+            //->where('SALE.created_at', '>=', date('Y-m-d') . ' 00:00:00')
             ->orderBy('id', 'DESC');
 
         if ($search_content != false) {
@@ -100,7 +100,8 @@ class Sale extends Model
             ->join('agent_records AS AGRD', function ($join) {
                 $join->on('AGRD.id', '=', 'SALE.agent_id');
             })
-            ->where('SALE.created_at', '>=', date('Y-m-d') . ' 00:00:00')
+            ->where('SALE.sale_date', '>=', date('Y-m-d'))
+            //->where('SALE.created_at', '>=', date('Y-m-d') . ' 00:00:00')
             ->orderBy('SALE.id', 'DESC')
             ->get();
     }
@@ -123,7 +124,7 @@ class Sale extends Model
                 });
             }
             if(!empty($from_date) && !empty($to_date)){
-                $query->whereBetween("SALE.created_at", [$from_date, $to_date ]);
+                $query->whereBetween("SALE.sale_date", [$from_date, $to_date ]);
             }
             
            return $data = $query->get();
@@ -138,7 +139,8 @@ class Sale extends Model
                 $join->on('AGRD.id', '=', 'TRNS.credit_acc');
             })
             ->where('TRNS.trans_type', '=', 2)
-            ->where('TRNS.created_at', '>=', date('Y-m-d') . ' 00:00:00')
+            ->where('TRNS.trans_date', '>=', date('Y-m-d'))
+            //->where('TRNS.created_at', '>=', date('Y-m-d') . ' 00:00:00')
             ->orderBy('TRNS.id', 'DESC')
             ->get();
     }
@@ -151,7 +153,8 @@ class Sale extends Model
                 $join->on('AGRD.id', '=', 'TRNS.debit_acc');
             })
             ->where('TRNS.trans_type', '=', 3)
-            ->where('TRNS.created_at', '>=', date('Y-m-d') . ' 00:00:00')
+            ->where('TRNS.trans_date', '>=', date('Y-m-d'))
+            //->where('TRNS.created_at', '>=', date('Y-m-d') . ' 00:00:00')
             ->orderBy('TRNS.id', 'DESC')
             ->get();
     }

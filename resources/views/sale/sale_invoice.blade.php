@@ -49,7 +49,7 @@
                             </tr>
                             <tr>
                                 <th class="text-end"> Inv. Date</th>
-                                <th>  {{ date('d M, Y', strtotime($sale_invoice_information[0]->created_at))}}  </th>
+                                <th>  {{ date('d M, Y', strtotime($sale_invoice_information[0]->sale_date))}}  </th>
                             </tr>
                         </table>
                     </div>

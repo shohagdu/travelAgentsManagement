@@ -117,6 +117,7 @@ class SaleController extends Controller
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
                 'remarks'          => $request->remarks,
+                'sale_date'        => date('Y-m-d', strtotime($request->sale_date)),
                 "is_active"        => 1,
                 'created_by'       => Auth::user()->id,
                 'created_ip'       => request()->ip(),
@@ -178,7 +179,7 @@ class SaleController extends Controller
             $transaction_data->trans_type    = 1;
             $transaction_data->remarks       = $request->remarks;
             $transaction_data->is_active     = 1;
-            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->trans_date    = date('Y-m-d', strtotime($request->sale_date));
             $transaction_data->created_by    = Auth::user()->id;
             $transaction_data->created_ip    = request()->ip();
             $transaction_data->created_at    = date('Y-m-d H:i:s');
@@ -187,12 +188,12 @@ class SaleController extends Controller
 
             // iata table data insert
             $iata_data = [
-                'sales_id'   => $invoice_no,
+                'sales_id'   => $sale_id,
                 'type'       => 1,
                 'add_amount' => $addTotalAmount,
-                'amount'     => $request->invoice_amount,
+                'amount'     => ($request->invoice_amount - $addTotalAmount),
                 'remarks'    => $request->remarks,
-                'date'       => date('Y-m-d'),
+                'date'       => date('Y-m-d', strtotime($request->sale_date)),
                 "is_active"  => 1,
                 'created_by' => Auth::user()->id,
                 'created_ip' => request()->ip(),
@@ -212,6 +213,7 @@ class SaleController extends Controller
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
                 'remarks'          => $request->remarks,
+                'sale_date'        => date('Y-m-d', strtotime($request->sale_date)),
                 "is_active"        => 1,
                 'created_by'       => Auth::user()->id,
                 'created_ip'       => request()->ip(),
@@ -256,7 +258,7 @@ class SaleController extends Controller
             $transaction_data->trans_type    = 1;
             $transaction_data->remarks       = $request->remarks;
             $transaction_data->is_active     = 1;
-            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->trans_date    = date('Y-m-d', strtotime($request->sale_date));
             $transaction_data->created_by    = Auth::user()->id;
             $transaction_data->created_ip    = request()->ip();
             $transaction_data->created_at    = date('Y-m-d H:i:s');
@@ -326,6 +328,7 @@ class SaleController extends Controller
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
                 'remarks'          => $request->remarks,
+                'sale_date'        => date('Y-m-d', strtotime($request->sale_date)),
                 "is_active"        => 1,
                 'updated_by'       => Auth::user()->id,
                 'updated_ip'       => request()->ip(),
@@ -347,7 +350,7 @@ class SaleController extends Controller
 
             //$sale_detail_data = [];
             $sale_detail_data_new = [];
-
+            $addTotalAmount = 0; 
             for($i=0;$i<count($flight_id);$i++){
 
                 if(isset($request->data_primary_id[$i]) > 0){
@@ -399,6 +402,8 @@ class SaleController extends Controller
                     ];
                 }
 
+                $addTotalAmount += $add[$i];
+
             }
 
             if($sale_detail_data_new !='' ){
@@ -416,12 +421,28 @@ class SaleController extends Controller
             $transaction_data->trans_type    = 1;
             $transaction_data->remarks       = $request->remarks;
             $transaction_data->is_active     = 1;
-            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->trans_date    = date('Y-m-d', strtotime($request->sale_date));
             $transaction_data->updated_by    = Auth::user()->id;
             $transaction_data->updated_ip    = request()->ip();
             $transaction_data->created_at    = date('Y-m-d H:i:s');
 
             $transaction_save = $transaction_data->save();
+
+             // iata table data update
+             $iata_data = [
+                'sales_id'   => $id,
+                'type'       => 1,
+                'add_amount' => $addTotalAmount,
+                'amount'     => ($request->invoice_amount - $addTotalAmount),
+                'remarks'    => $request->remarks,
+                'date'       => date('Y-m-d', strtotime($request->sale_date)),
+                "is_active"  => 1,
+                'created_by' => Auth::user()->id,
+                'created_ip' => request()->ip(),
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $iata_save = DB::table('iata_transaction_infos')->where('sales_id', $id)->update($iata_data);
 
 
         }else{
@@ -433,6 +454,7 @@ class SaleController extends Controller
                 'discount'         => $request->discount,
                 'amount'           => $request->invoice_amount,
                 'remarks'          => $request->remarks,
+                'sale_date'        => date('Y-m-d', strtotime($request->sale_date)),
                 "is_active"        => 1,
                 'updated_by'       => Auth::user()->id,
                 'updated_ip'       => request()->ip(),
@@ -496,7 +518,7 @@ class SaleController extends Controller
             $transaction_data->trans_type    = 1;
             $transaction_data->remarks       = $request->remarks;
             $transaction_data->is_active     = 1;
-            $transaction_data->trans_date    = date('Y-m-d');
+            $transaction_data->trans_date    = date('Y-m-d', strtotime($request->sale_date));
             $transaction_data->updated_by    = Auth::user()->id;
             $transaction_data->updated_ip    = request()->ip();
             $transaction_data->updated_at    = date('Y-m-d H:i:s');

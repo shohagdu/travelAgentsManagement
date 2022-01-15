@@ -54,7 +54,7 @@
 }
 .FlightSaveBtn{
     text-align: center;
-    width: 58%;
+    width: 53%;
     margin-top: 20px;
     float: right;
 }
@@ -256,4 +256,10 @@ input::-webkit-input-placeholder {
 }
 .CurrentTodayBalanceTxtBg{
     background-color: #2e7995;
+}
+.BankDepositTxtBg{
+    background-color: #288178;
+}
+.IATAAmountTxtBg{
+    background-color: #3b7229;
 }

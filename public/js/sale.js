@@ -7,6 +7,11 @@ $.ajaxSetup({
     }
 });
 
+jQuery("#sale_date").datepicker({
+    autoclose: true,
+    todayHighlight: true,
+    format: 'dd-mm-yyyy',
+});
 
 $(document).ready(function(){
     $(".select2").select2();
