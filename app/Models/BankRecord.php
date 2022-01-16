@@ -122,7 +122,7 @@ class BankRecord extends Model
     public static  function CreditAmountSubQuery()
     {
         return DB::table("bank_records")
-            ->selectRaw('SUM(amount) AS creditAmount')
+            ->selectRaw('SUM(amount) AS creditAmount,bank_id')
             ->where('type','=',2)
             ->where('is_active','=',1)
             ->groupBy('bank_id');

@@ -114,17 +114,17 @@ class AgentRecordController extends Controller
         // agent primary id
         $agent_id = DB::getPdo()->lastInsertId();
 
-        $user_data = new User();
+        // $user_data = new User();
 
-        $user_data->record_id  = $agent_id;
-        $user_data->name       = $request->name;
-        $user_data->email      = $request->email;
-        $user_data->password   = Hash::make($request['mobile']);
-        $user_data->created_by = Auth::user()->id;
-        $user_data->created_ip = request()->ip();
-        $user_data->created_at = date('Y-m-d H:i:s');
+        // $user_data->record_id  = $agent_id;
+        // $user_data->name       = $request->name;
+        // $user_data->email      = $request->email;
+        // $user_data->password   = Hash::make($request['mobile']);
+        // $user_data->created_by = Auth::user()->id;
+        // $user_data->created_ip = request()->ip();
+        // $user_data->created_at = date('Y-m-d H:i:s');
 
-        $user_save =  $user_data->save();
+        // $user_save =  $user_data->save();
 
         $opening_balance = $request->opening_balance;
 
@@ -160,7 +160,7 @@ class AgentRecordController extends Controller
 
         $transaction_save = DB::table('acc_transaction_infos')->insert($transaction_data);
 
-        if($user_data){
+        if($agent_data){
             return redirect()->route('agent-list')->with('flash.message', 'Agent Sucessfully Added!')->with('flash.class', 'success');
         }else{
             return redirect()->route('agent-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
