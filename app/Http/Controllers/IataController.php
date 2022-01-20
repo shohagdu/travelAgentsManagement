@@ -51,7 +51,7 @@ class IataController extends Controller
 
         echo json_encode($response);
     }
-
+    
     public function iata_debit(){
 
         return view('iata_report.iata_debit');

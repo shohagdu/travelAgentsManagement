@@ -225,4 +225,88 @@ class SaleCategoryController extends Controller
             return redirect()->route('towards-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
         }
     } 
+
+    // expense category
+    public function expense_index()
+    {
+        $category_info = SaleCategory::where('type','=', 21)->get();
+
+        return view('expense_category.expense_category_list',compact('category_info'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function expense_create()
+    {
+        return view('expense_category.expense_category');
+    }
+
+    public function expense_store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => ['required'],
+        ]);
+
+        $category = new SaleCategory();
+
+        $category->title      = $request->title;
+        $category->type       = 21;
+        $category->is_active  = 1;
+        $category->created_by = Auth::user()->id;
+        $category->created_ip = request()->ip();
+        $category->created_at = date('Y-m-d H:i:s');
+
+        $save = $category->save();
+
+        if($save){
+            return redirect()->route('expense-category-list')->with('flash.message', 'Expense Category Sucessfully Added!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('expense-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
+    }
+    public function expense_edit($id)
+    {
+        $category_info = SaleCategory::find($id);
+
+        return view('expense_category.edit_expense_category', compact('category_info'));
+    }
+
+    public function expense_update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => ['required'],
+        ]);
+
+        $category =  SaleCategory::find($id);
+
+        $category->title      = $request->title;
+        $category->type       = 21;
+        $category->is_active  = 1;
+        $category->updated_by = Auth::user()->id;
+        $category->updated_ip = request()->ip();
+        $category->updated_at = date('Y-m-d H:i:s');
+
+        $save = $category->save();
+
+        if($save){
+            return redirect()->route('expense-category-list')->with('flash.message', 'Expense Category Sucessfully Updated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('expense-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
+    }
+
+    public function expense_destroy($id)
+    {
+        $delete = SaleCategory::find($id);
+        $delete->delete();
+        
+        if($delete){
+            return redirect()->route('expense-category-list')->with('flash.message', 'Expense Category Sucessfully delated!')->with('flash.class', 'success');
+        }else{
+            return redirect()->route('expense-category-list')->with('flash.message', 'Somthing went to wrong!')->with('flash.class', 'danger');
+        }
+    } 
 }
