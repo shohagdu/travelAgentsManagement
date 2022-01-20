@@ -144,16 +144,16 @@
                 <div class="card">
                     <div class="box BankDepositTxtBg text-center">
                         <h1 class="font-light text-white">
-                            @php 
+                            @php
                              $get_credit_deposit = ($get_credit_deposit->creditAmount > 0 ) ?  $get_credit_deposit->creditAmount : 0;
                              $get_debit_deposit  = ($get_debit_deposit->debitAmount > 0) ?  $get_debit_deposit->debitAmount : 0;
                              $deposit = ($get_credit_deposit - $get_debit_deposit);
                               echo number_format((float) $deposit, 2);
                              @endphp
-                           
+
                         </h1>
                         <h6 class="text-white">Bank  Deposit Amount</h6>
-                        <a href="{{ route('agent-list') }}" class="btn btn-xs btn-warning text-white"> <i
+                        <a href="{{ url('bank-deposit') }}" class="btn btn-xs btn-warning text-white"> <i
                                 class="mdi mdi-view-day"></i> View </a>
                     </div>
                 </div>
@@ -168,12 +168,12 @@
                            {{ !empty($get_iata_amount) ? number_format((float) $get_iata_amount, 2) : 0.00}}
                         </h1>
                         <h6 class="text-white"> IATA Amount </h6>
-                        <a href="" class="btn btn-xs btn-warning text-white"> <i
+                        <a href="{{ url('iata-statement') }}" class="btn btn-xs btn-warning text-white"> <i
                                 class="mdi mdi-view-day"></i> View </a>
                     </div>
                 </div>
             </a>
-        </div> 
+        </div>
 
     </div>
 
