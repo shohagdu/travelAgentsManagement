@@ -174,7 +174,21 @@
                 </div>
             </a>
         </div>
-
+         <!-- Column -->
+         <div class="col-md-6 col-lg-3 col-xlg-3">
+            <a class="text-white">
+                <div class="card">
+                    <div class="box ExpenseAmountTxtBg text-center">
+                        <h1 class="font-light text-white">
+                           {{ !empty($expenses_balance) ? number_format((float) $expenses_balance, 2) : 0.00}}
+                        </h1>
+                        <h6 class="text-white"> Expense Amount </h6>
+                        <a href="{{ url('expense-reports') }}" class="btn btn-xs btn-warning text-white"> <i
+                                class="mdi mdi-view-day"></i> View </a>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 
 @endsection

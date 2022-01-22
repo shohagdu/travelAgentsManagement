@@ -41,14 +41,12 @@
                                 array_push($menuAccessArray, $key);
                             }
                         }
-
-
-                        $get_menu_info = App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>1])->get();
+                        $get_menu_info = App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>1])->orderBy('display_position', 'ASC')->get();
 
                         if(!empty($get_menu_info)){
                             foreach($get_menu_info as $key=> $mainMenu){
 
-                                $get_menu_info[$key]['mainChild']= App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>2,'parent_id'=> $mainMenu->id])->get();
+                                $get_menu_info[$key]['mainChild']= App\Models\AclMenuInfo::where(['is_active'=> 1,'is_main_menu'=>2,'parent_id'=> $mainMenu->id])->orderBy('display_position', 'ASC')->get();
                             }
                         }
                     ?>

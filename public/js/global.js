@@ -129,3 +129,27 @@ function searchTodaySaleBalanceBtn(){
     });
 
 }
+
+// expense report
+function searchExpenseReportBalanceBtn(){
+    $(".showReportsExpense").html('')
+    $.ajax({
+        url:"searchExpenseReportBtnAction",
+        type:"POST",
+        // dataType:"json",
+        data: $("#expenseReportBalanceForm").serialize(),
+        processData: false,
+        // contentType: false,
+        success:function(response){
+            console.log(response);
+            $('#searchExpenseReportBalance').attr('disabled',false);
+            if (response != '') {
+                $(".showReportsExpense").html(response)
+                $(".showReportsHide").hide();
+            }else{
+                $("#showReportsExpense").html('')
+            }
+        }
+    });
+
+}

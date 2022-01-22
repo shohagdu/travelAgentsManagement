@@ -78,6 +78,7 @@ class ExpenseController extends Controller
     public function expense_row_data(Request $request)
     {
         $data =  Expense::find($request->id);
+        $data->TransactionDate = date('d-m-Y', strtotime($data->date));
         return response()->json([
             'status' => !empty($data) ? 'success' : 'error',
             'msg'    => !empty($data) ? 'Data Found' : 'Something went wrong',

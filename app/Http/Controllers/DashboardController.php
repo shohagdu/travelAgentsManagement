@@ -10,6 +10,7 @@ use App\Models\AgentRecord;
 use App\Models\BankRecord;
 use App\Models\AccTransactionInfo;
 use App\Models\IataTransactionInfo;
+use App\Models\Expense;
 use App\Models\OrganizationSetup;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -24,6 +25,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public $sale_model;
+    public $expense_model;
 	public function __construct()
 	{
 	    $this->middleware('auth');
@@ -31,6 +33,7 @@ class DashboardController extends Controller
         $this->transaction_model = new AccTransactionInfo();
         $this->bank_record_model = new BankRecord();
         $this->iata_transaction_model = new IataTransactionInfo();
+        $this->expense_model = new Expense();
         
 	}
     public function index()
@@ -39,6 +42,7 @@ class DashboardController extends Controller
         $today_sale_balance   = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 1)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
         $today_credit_balance = DB::table('acc_transaction_infos')->select('credit_amount')->where('trans_type', 2)->where('trans_date', date('Y-m-d'))->sum('credit_amount');
         $today_debit_balance  = DB::table('acc_transaction_infos')->select('debit_amount')->where('trans_type', 3)->where('trans_date', date('Y-m-d'))->sum('debit_amount');
+        $expenses_balance   = DB::table('expenses')->select('amount')->where('is_active', 1)->whereMonth('date', date('m'))->sum('amount');
         $total_agent          = AgentRecord::where('is_active','=', 1)->count();
 
         $todayTransaction     = '0.00';
@@ -64,6 +68,7 @@ class DashboardController extends Controller
                                 'get_credit_deposit',
                                 'get_debit_deposit',
                                 'get_iata_amount',
+                                'expenses_balance',
         ));
     }
 
@@ -174,4 +179,67 @@ class DashboardController extends Controller
         $today_sale_balance = $this->sale_model->today_sale_balance();
         return view('dashboard_view.due_statement', compact('today_sale_balance'));
     }
+    // Expense reports
+    public function expense_reports(){
+        $expense_category_info = SaleCategory::where('type', '=',21)->get();
+        $expense_balance = $this->expense_model->expense_reports();
+
+        return view('dashboard_view.expense_reports', compact('expense_category_info','expense_balance'));
+    }
+    public function searchExpenseReportBtnAction(Request $request)
+    {
+        $param['expense_category_id'] = (!empty($request->expense_category_id) ? $request->expense_category_id : '');
+        $param['from_date']        = (!empty($request->from_date) ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-d'));
+        $param['to_date']          = (!empty($request->to_date) ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d'));
+        
+        $expense_balance  = $this->expense_model->search_expense_reports($param);
+
+        return view('dashboard_view.expense_reports_search', ['expense_balance'=>$expense_balance, 'param_info' => $param]);
+    }
+
+    public function search_expense_reports_balance_pdf($expense_category_id,$from_date=NULL, $to_date=NULL) {
+        $organization_info  = OrganizationSetup::first();
+        
+        if(!empty($expense_category_id)){
+            $param['expense_category_id']=$expense_category_id;
+        }
+        if(!empty($from_date)){
+            $param['from_date']=$from_date;
+        }
+        if(!empty($to_date)){
+            $param['to_date']=$to_date;
+        }
+
+        $expense_balance  = $this->expense_model->search_expense_reports($param);
+
+        $config = ['instanceConfigurator' => function ($mpdf) use($organization_info) {
+            $mpdf->SetWatermarkImage(asset('public/assets/images/'.$organization_info->logo));
+            $mpdf->SetWatermarkImage(
+                asset('public/assets/images/'.$organization_info->logo) . "", .1,
+                array(70, 20),
+                array(77, 150)
+            );
+            $mpdf->showWatermarkImage = true;
+            $mpdf->SetTitle('Expense Reports');
+            $page_footer_html = view()->make('pdf.pdfHeader', ['organization_info'=>$organization_info])->render();
+
+            $mpdf->SetHTMLHeader($page_footer_html);
+
+            $pagefooter="If you have any question, please contact ".(!empty($organization_info->mobile)?" Mobile:".$organization_info->mobile:'').(!empty($organization_info->email)?", Email: ".$organization_info->email:'').". Printed Date:".date('d M, Y');
+            $mpdf->SetHTMLFooter("<div style='text-align: center;font-size:10px;color:gray;'>".$pagefooter." || Page No: {PAGENO} of {nb}</div>");
+
+            $margin_left   = 5;
+            $margin_right  = 5;
+            $margin_top    = 10;
+            $margin_bottom = 5;
+            $paper_type    = 'a4';
+
+            $mpdf->AddPage('P', '', '', '', '', $margin_left, $margin_right, $margin_top, $margin_bottom, 5, 5, '', '', '', '', '', '', '', '', '', $paper_type);
+            }];
+
+        $pdf = PDF::loadHtml(view('pdf.search_expense_reports_pdf', compact('expense_balance','from_date','to_date')), $config);
+
+        return $pdf->stream('ExpenseReports.pdf');
+    }
+
 }

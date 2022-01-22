@@ -40,4 +40,37 @@ class Expense extends Model
         $data['data'] = $allData;
         return $data;
     }
+    public function expense_reports()
+    {
+    	return $query = DB::table("expenses AS EXP")
+    		->select('EXP.amount','EXP.date', 'EXP.remarks', 'CAT.title')
+            ->leftJoin('sale_categories AS CAT', function($join){
+                $join->on('CAT.id', '=', 'EXP.category_id');
+            })
+            ->whereMonth('EXP.date', date('m'))
+            ->orderBy('EXP.id', 'DESC')
+            ->get();
+
+    }
+
+    public function search_expense_reports($receive)
+    {
+    	$query = DB::table("expenses AS EXP")
+    		->select('EXP.amount','EXP.date', 'EXP.remarks', 'CAT.title')
+            ->leftJoin('sale_categories AS CAT', function($join){
+                $join->on('CAT.id', '=', 'EXP.category_id');
+            })
+            ->orderBy('EXP.id', 'DESC');
+            
+            if(!empty($receive['expense_category_id'])){
+                $query->Where(function ($query) use ($receive) {
+                    $query->orWhere('EXP.category_id', '=' , $receive['expense_category_id']);
+                });
+            }
+            if(!empty($from_date) && !empty($to_date)){
+                $query->whereBetween("EXP.date", [$from_date, $to_date ]);
+            }
+            
+           return $data = $query->get();
+    }
 }

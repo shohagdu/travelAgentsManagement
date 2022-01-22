@@ -27,12 +27,14 @@
         <div class="col-sm-3">
             <input type="text" class="form-control" name="trans_date" id="trans_date" placeholder="dd-mm-yyyy" autocomplete="off">
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-3">
             <button onclick="search_expense_reports()" id="" class="btn btn-primary">Search</button>
         </div>
-        <h5 class="card-title mb-0 lefttButtonText">    <button class="btn btn-success btn-sm text-white rightButton" onclick="AddExpense()">
+        <div class="col-sm-3">
+        <h5 class="card-title mb-0 ">    <button class="btn btn-success btn-sm text-white rightButton" onclick="AddExpense()">
           <i class="mdi mdi-plus-box"></i> Add Expense </button> 
         </h5>
+        </div>
       </div>
       <table id="ExpenseListTable" class="table table-bordered">
   
@@ -46,7 +48,7 @@
   <div class="modal-dialog modal-lg ">
     <div class="modal-content ">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">New Expense</h4>
+        <h4 class="modal-title" id="ExpenseModalLabel">New Expense</h4>
         <button onclick="ModalExpenseClose()" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

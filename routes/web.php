@@ -247,12 +247,16 @@ Route::get('/iata-statement', [IataController::class, "iata_statement"])->name('
 Route::post('/iataStatementAction', [IataController::class, "iataStatementAction"])->name('iataStatementAction');
 Route::get('/iata_statement_pdf/{from_date}/{to_date}', [IataController::class, "iata_statement_pdf"])->name('iata_statement_pdf');
 
-// Expense Report 
+// Expense  
 Route::get('/new-expense', [ExpenseController::class, "expense"])->name('expense');
 Route::post('/expense-save', [ExpenseController::class, "expense_save"])->name('expense_save');
 Route::post('/expense_row_data', [ExpenseController::class, "expense_row_data"])->name('iata_debit_row_data');
 Route::post('/expense_delete', [ExpenseController::class, "expense_delete"])->name('expense_delete');
 Route::post('/get_expense_list_data', [ExpenseController::class, "get_expense_list_data"])->name('get_expense_list_data');
+
+Route::get('/expense-reports', [DashboardController::class, "expense_reports"])->name('expense_reports');
+Route::post('/searchExpenseReportBtnAction', [DashboardController::class, "searchExpenseReportBtnAction"])->name('searchExpenseReportBtnAction');
+Route::get('/search_expense_reports_balance_pdf/{id}/{from_date}/{to_date}', [DashboardController::class, "search_expense_reports_balance_pdf"])->name('search_expense_reports_balance_pdf');
 
 Route::get('/clear', function () {
 

@@ -28,6 +28,7 @@ function AddExpense(){
 
     $('#ExpenseModal').modal('show');
     document.getElementById("BillCollectionSaveBtn").innerHTML = "Submit";
+    document.getElementById("ExpenseModalLabel").innerHTML = "New Expense";
 }
 
 function ModalExpenseClose(){
@@ -75,16 +76,16 @@ function get_expense_info_list() {
                 data: "title"
             },
             {
-                title: "Amount",
-                data: "amount"
-            },
-            {
                 title: "Transaction date",
                 data: "TransactionDate"
             },
             {
                 title: "Remarks",
                 data: "remarks"
+            },
+            {
+                title: "Amount",
+                data: "amount"
             },
             {
             	title: "Action",
@@ -149,14 +150,15 @@ $(document).on("submit","#ExpenseForm",function (e){
             id: id
         },
         success:function(response){
-               // console.log(response.data);
+               // console.log(response.data.date);
                 $("#id").val(response.data.id);
                 $("#category_id").val(response.data.category_id);
                 $("#amount").val(response.data.amount);
-                $("#transaction_date").val(response.data.date);
+                $("#transaction_date").val(response.data.TransactionDate);
                 $("#remarks").val(response.data.remarks);
 
                 document.getElementById("BillCollectionSaveBtn").innerHTML = "Update";
+                document.getElementById("ExpenseModalLabel").innerHTML = "Update Expense";
 
             $("#ExpenseModal").modal('show');
         }
