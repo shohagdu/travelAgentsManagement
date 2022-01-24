@@ -1,7 +1,9 @@
 @extends('layouts.master')
 @section('title', 'User List')
 @section('css')
-<link href="{{ asset('public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>    
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/buttons.bootstrap4.min.css')}}">
 @endsection
 @section('main_content')
 <div class="row">
@@ -15,8 +17,8 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title ">User List</h5>
-      </div>
-      <table id="zero_config" class="table table-bordered">
+      
+      <table id="example" class="table table-bordered table-striped">
         <thead>
           <tr>
             <th scope="col">Sl</th>
@@ -54,12 +56,17 @@
           </tr>
           @endforeach
         </tbody>
-      </table><br><br>
+      </table>
+    </div><br><br>
     </div>
   </div>
 </div>
 @endsection
 @section('js')
-<script src="{{ asset('public/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+ <!-- DataTables  -->
+ <script src="{{ asset('public/assets/datatable/js/jquery.dataTables.min.js')}}"></script>
+ <script src="{{ asset('public/assets/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
+ <script src="{{ asset('public/assets/datatable/js/dataTables.responsive.min.js')}}"></script>
+ <script src="{{ asset('public/assets/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('public/js/global.js')}}"></script>
 @endsection

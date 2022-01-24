@@ -14,7 +14,7 @@
       <form method="post" action="{{ route('agent-advance-balance-view')}}" >
         @csrf
       <div class="form-group row">
-        <div class="col-sm-1"></div>
+        <div class="col-sm-1"></div> 
         <div class="col-sm-2">
           <label> Agent Name </label>
         </div>

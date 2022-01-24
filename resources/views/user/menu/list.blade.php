@@ -1,10 +1,9 @@
 @extends('layouts.master')
 @section('title', 'Acl Menu List')
 @section('css')
- <!-- DataTables -->
- <link rel="stylesheet" href="{{ asset('public/assets/datatable/css/dataTables.bootstrap4.min.css')}}">
- <link rel="stylesheet" href="{{ asset('public/assets/datatable/css/responsive.bootstrap4.min.css')}}">
- <link rel="stylesheet" href="{{ asset('public/assets/datatable/css/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('public/assets/datatable/css/buttons.bootstrap4.min.css')}}">
 @endsection
 @section('main_content')
 <div class="row">
@@ -16,11 +15,12 @@
     </div>
     @endif
     <div class="card">
-      <div class="card-body">
+      <div class="card-header">
         <h5 class="card-title mb-0 lefttButtonText" > Menu  List</h5>
         <a href="{{ url('acl-menu/create')}}" class="btn btn-success btn-sm text-white rightButton">
           <i class="mdi mdi-plus-box"></i> Add Menu </a>
-  
+      </div>
+      <div class="card-body">
        <table id="example" class="table table-bordered table-striped">
         <thead>
             <tr>

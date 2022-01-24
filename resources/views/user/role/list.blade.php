@@ -14,11 +14,12 @@
     </div>
     @endif
     <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0 lefttButtonText" > Role  List</h5>
+            <a href="{{ url('acl-role/create')}}" class="btn btn-success btn-sm text-white rightButton">
+              <i class="mdi mdi-plus-box"></i> Add Role </a>
+        </div>
       <div class="card-body">
-        <h5 class="card-title mb-0 lefttButtonText" > Role  List</h5>
-        <a href="{{ url('acl-role/create')}}" class="btn btn-success btn-sm text-white rightButton">
-          <i class="mdi mdi-plus-box"></i> Add Role </a>
-      </div>
       <table id="zero_config" class="table table-bordered">
             <thead>
                 <tr>
@@ -51,6 +52,7 @@
                     </tbody>
                 @endforeach
         </table>
+    </div>
     </div>
   </div>
 </div>

@@ -6,17 +6,30 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-jQuery(".mydatepicker").datepicker();
-jQuery("#from_date").datepicker({
-autoclose: true,
-todayHighlight: true,
-format: 'dd-mm-yyyy',
-});
-jQuery("#to_date").datepicker({
-    autoclose: true,
-    todayHighlight: true,
-    format: 'dd-mm-yyyy',
-});
+$( document ).ready(function() {
+    var DateEle = document.getElementById("from_date");
+    var DateEle2 = document.getElementById("to_date");
+
+    if(DateEle){
+        jQuery(".mydatepicker").datepicker();
+        jQuery("#from_date").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd-mm-yyyy',
+            });
+    }
+
+    if(DateEle){
+        jQuery(".mydatepicker").datepicker();
+        jQuery("#to_date").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd-mm-yyyy',
+        });
+    }
+
+});    
+
 // datatable
 $( document ).ready(function() {
     var TableEle = document.getElementById("zero_config");
